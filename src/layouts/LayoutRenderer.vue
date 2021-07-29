@@ -31,7 +31,7 @@ import {
   useJsonFormsLayout,
   RendererProps
 } from '../../config/jsonforms';
-import { useVanillaLayout } from '../util';
+import { useVuetifyLayout } from '../util';
 
 const layoutRenderer = defineComponent({
   name: 'layout-renderer',
@@ -42,7 +42,7 @@ const layoutRenderer = defineComponent({
     ...rendererProps<Layout>()
   },
   setup(props: RendererProps<Layout>) {
-    return useVanillaLayout(useJsonFormsLayout(props));
+    return useVuetifyLayout(useJsonFormsLayout(props));
   },
   computed: {
     layoutClassObject(): any {

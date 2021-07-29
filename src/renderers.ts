@@ -3,7 +3,7 @@ import { controlRenderers } from './controls';
 import { labelRenderers } from './label';
 import { layoutRenderers } from './layouts';
 
-export const vanillaRenderers = [
+export const vuetifyRenderers = [
   ...controlRenderers,
   ...layoutRenderers,
   ...arrayRenderers,

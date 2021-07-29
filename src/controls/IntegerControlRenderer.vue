@@ -31,7 +31,7 @@ import {
 import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useVanillaControl } from '../util';
+import { useVuetifyControl } from '../util';
 
 const controlRenderer = defineComponent({
   name: 'integer-control-renderer',
@@ -42,7 +42,7 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVanillaControl(useJsonFormsControl(props), target => parseInt(target.value, 10));
+    return useVuetifyControl(useJsonFormsControl(props), target => parseInt(target.value, 10));
   },
 });
 

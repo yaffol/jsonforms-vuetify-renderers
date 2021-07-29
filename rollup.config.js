@@ -7,7 +7,7 @@ const buildFormats = [
   {
     input: 'src/index.ts',
     output: {
-      file: 'lib/jsonforms-vue2-vanilla.js',
+      file: 'lib/jsonforms-vue2-vuetify.js',
       format: 'commonjs',
       exports: 'named',
       sourcemap: true

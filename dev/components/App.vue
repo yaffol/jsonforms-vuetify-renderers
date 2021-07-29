@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from '../../config/vue';
 import { JsonForms, JsonFormsChangeEvent } from '../../config/jsonforms';
-import { vanillaRenderers, mergeStyles, defaultStyles } from '../../src';
-import '../../vanilla.css';
+import { vuetifyRenderers, mergeStyles, defaultStyles } from '../../src';
+import '../../vuetify.css';
 
 const schema = {
   properties: {
@@ -203,7 +203,7 @@ export default defineComponent({
   },
   data: function() {
     return {
-      renderers: Object.freeze(vanillaRenderers),
+      renderers: Object.freeze(vuetifyRenderers),
       data: {
         number: 5
       },

@@ -30,7 +30,7 @@ import {
 import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useVanillaControl } from '../util';
+import { useVuetifyControl } from '../util';
 
 const toISOString = (inputDateTime: string) => {
   return inputDateTime === '' ? '' : inputDateTime + ':00.000Z';
@@ -45,7 +45,7 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVanillaControl(useJsonFormsControl(props), target => toISOString(target.value));
+    return useVuetifyControl(useJsonFormsControl(props), target => toISOString(target.value));
   },
   computed: {
     dataTime(): string {

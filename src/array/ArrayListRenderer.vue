@@ -58,7 +58,7 @@ import {
   useJsonFormsArrayControl,
   RendererProps
 } from '../../config/jsonforms';
-import { useVanillaArrayControl } from '../util';
+import { useVuetifyArrayControl } from '../util';
 import ArrayListElement from './ArrayListElement.vue';
 
 const controlRenderer = defineComponent({
@@ -71,7 +71,7 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVanillaArrayControl(useJsonFormsArrayControl(props));
+    return useVuetifyArrayControl(useJsonFormsArrayControl(props));
   },
   computed: {
     noData(): boolean {

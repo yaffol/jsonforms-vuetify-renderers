@@ -5,9 +5,9 @@
 
 JSON Forms eliminates the tedious task of writing fully-featured forms by hand by leveraging the capabilities of JSON, JSON Schema and Javascript.
 
-## Vue 2 Vanilla Renderers
+## Vue 2 Vuetify Renderers
 
-This is the JSON Forms Vue 2 Vanilla renderers package which provides a HTML5-based renderer set for [JSON Forms Vue 2](https://github.com/eclipsesource/jsonforms/blob/master/packages/vue2).
+This is the JSON Forms Vue 2 Vuetify renderers package which provides a HTML5-based renderer set for [JSON Forms Vue 2](https://github.com/eclipsesource/jsonforms/blob/master/packages/vue2).
 
 ### JSON Forms Vue 2 seed app
 
@@ -16,10 +16,10 @@ Make sure to switch to branch `vue2`.
 
 ### Quick start
 
-Install JSON Forms Core, Vue 2 and Vue 2 Vanilla Renderers.
+Install JSON Forms Core, Vue 2 and Vue 2 Vuetify Renderers.
 
 ```bash
-npm i --save @jsonforms/core @jsonforms/vue2 @jsonforms/vue2-vanilla
+npm i --save @jsonforms/core @jsonforms/vue2 @jsonforms/vue2-vuetify
 ```
 
 Use the `json-forms` component for each form you want to render and hand over the renderer set.
@@ -27,10 +27,10 @@ Use the `json-forms` component for each form you want to render and hand over th
 ```vue
 <script>
 import { JsonForms } from '@jsonforms/vue2';
-import { vanillaRenderers } from '@jsonforms/vue2-vanilla'
+import { vuetifyRenderers } from '@jsonforms/vue2-vuetify'
 
 const renderers = [
-  ...vanillaRenderers,
+  ...vuetifyRenderers,
   // here you can add custom renderers
 ]
 
@@ -65,9 +65,6 @@ export default defineComponent({
 </template>
 ```
 
-By default the Vanilla Renderers don't apply any CSS at all.
-For a quick start you can use `@jsonforms/vue-vanilla/vanilla.css`.
-
 As JSON Forms uses the Vue 3 composition API you need to add the `@vue/composition-api` plugin to your Vue 2 app.
 
 ```ts
@@ -82,7 +79,7 @@ For more information on how JSON Forms can be configured, please see the [README
 
 Each rendered HTML element specifies a CSS class which can be used to style it.
 This process can also be customized so that each element declares user-specified CSS classes.
-Therefore JSON Forms Vue Vanilla can be integrated with any CSS-only UI framework quite easily.
+Therefore JSON Forms Vue Vuetify can be integrated with any CSS-only UI framework quite easily.
 
 You can find the default CSS classes in `[defaultStyles.ts](src/styles/defaultStyles.ts).
 
@@ -93,7 +90,7 @@ If you want to fall back to `defaultStyles` or combine them with your own classe
 ```vue
 <script>
 import { JsonForms } from '@jsonforms/vue';
-import { defaultStyles, mergeStyles, vanillaRenderers } from '@jsonforms/vue-vanilla'
+import { defaultStyles, mergeStyles, vuetifyRenderers } from '@jsonforms/vue-vuetify'
 
 // mergeStyles combines all classes from both styles definitions
 const myStyles = mergeStyles(defaultStyles, { control: { root: 'my-control' } });
@@ -105,7 +102,7 @@ export default defineComponent({
   },
   data() {
     return {
-      renderers: Object.freeze(vanillaRenderers),
+      renderers: Object.freeze(vuetifyRenderers),
       data,
       schema,
       uischema,

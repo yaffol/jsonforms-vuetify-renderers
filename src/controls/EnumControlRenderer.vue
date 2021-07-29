@@ -38,7 +38,7 @@ import {
 import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsEnumControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useVanillaControl } from '../util';
+import { useVuetifyControl } from '../util';
 
 const controlRenderer = defineComponent({
   name: 'enum-control-renderer',
@@ -49,7 +49,7 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVanillaControl(useJsonFormsEnumControl(props));
+    return useVuetifyControl(useJsonFormsEnumControl(props));
   }
 });
 

@@ -18,7 +18,7 @@ import {
   useJsonFormsLayout,
   RendererProps
 } from '../../config/jsonforms';
-import { useVanillaLayout } from '../util';
+import { useVuetifyLayout } from '../util';
 
 const labelRenderer = defineComponent({
   name: 'label-renderer',
@@ -30,7 +30,7 @@ const labelRenderer = defineComponent({
   },
   setup(props: RendererProps<Layout>) {
     // reuse layout bindings for label
-    return useVanillaLayout(useJsonFormsLayout(props));
+    return useVuetifyLayout(useJsonFormsLayout(props));
   }
 });
 
