@@ -118,5 +118,9 @@
         }
       }
     }
-  ]
+  ],
+  "options": {
+    "variant": "stepper",
+    "showNavButtons": true
+  }
 }

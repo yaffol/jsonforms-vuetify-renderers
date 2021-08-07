@@ -20,7 +20,7 @@
       :error-messages="control.errors"
       :readonly="appliedOptions.readonly"
 
-      :value="dataTime"
+      v-model="control.data"
 
       @change="onChange"
       @focus="isFocused = true"

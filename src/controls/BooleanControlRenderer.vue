@@ -19,7 +19,7 @@
       :error-messages="control.errors"
       :readonly="appliedOptions.readonly"
 
-      :checked="!!control.data"
+      v-model="control.data"
       
       @change="onChange"
       @focus="isFocused = true"

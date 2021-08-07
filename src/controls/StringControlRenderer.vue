@@ -20,8 +20,9 @@
         :required="control.required"
         :error-messages="control.errors"
         :readonly="appliedOptions.readonly"
-        :value="control.data"
 
+        v-model="control.data"
+        
         :maxlength="appliedOptions.restrict ? control.schema.maxLength : undefined"
         :size="appliedOptions.trim && control.schema.maxLength !== undefined ? control.schema.maxLength : undefined"
         :counter="control.schema.maxLength !== undefined ? control.schema.maxLength: undefined"
