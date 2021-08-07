@@ -5,19 +5,27 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <input
-      type="number"
-      :step="step"
-      :id="control.id + '-input'"
-      :class="styles.control.input"
-      :value="control.data"
-      :disabled="!control.enabled"
-      :autofocus="appliedOptions.focus"
-      :placeholder="appliedOptions.placeholder"
-      @change="onChange"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
-    />
+      <v-text-field
+        type="number"
+        :step="step"
+        :id="control.id + '-input'"
+        :class="styles.control.input"
+        :disabled="!control.enabled"
+        :autofocus="appliedOptions.focus"
+        :placeholder="appliedOptions.placeholder"
+        :label="control.label"
+        :hint="control.description"
+        :persistent-hint="persistentHint()"
+        :required="control.required"
+        :error-messages="control.errors"
+        :readonly="appliedOptions.readonly"
+
+        :value="control.data"
+
+        @change="onChange"
+        @focus="isFocused = true"
+        @blur="isFocused = false"
+      />
   </control-wrapper>
 </template>
 
@@ -42,9 +50,10 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props), target =>
-      Number(target.value)
-    );
+    const toNumber = (value: string) => value === '' ? undefined : parseFloat(value);
+
+    return useVuetifyControl(useJsonFormsControl(props), toNumber);
+    //return useVuetifyControl(useJsonFormsControl(props), target => Number(target.value));
   },
   computed: {
     step(): number {

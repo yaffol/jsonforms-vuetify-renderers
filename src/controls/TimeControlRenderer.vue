@@ -5,14 +5,23 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <input
+    <v-text-field
       type="time"
+
       :id="control.id + '-input'"
       :class="styles.control.input"
-      :value="control.data"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
+      :label="control.label"
+      :hint="control.description"
+      :persistent-hint="persistentHint()"
+      :required="control.required"
+      :error-messages="control.errors"
+      :readonly="appliedOptions.readonly"
+
+      :value="control.data"
+
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
@@ -32,6 +41,7 @@ import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
 
+
 const controlRenderer = defineComponent({
   name: 'time-control-renderer',
   components: {
@@ -41,7 +51,7 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props));
+    return { ...useVuetifyControl(useJsonFormsControl(props))};
   }
 });
 

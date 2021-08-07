@@ -5,19 +5,29 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <input
+    <v-text-field
       type="number"
-      :step="1"
+      :step="step"
+
       :id="control.id + '-input'"
       :class="styles.control.input"
-      :value="control.data"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
+      :label="control.label"
+      :hint="control.description"
+      :persistent-hint="persistentHint()"
+      :required="control.required"
+      :error-messages="control.errors"
+      :readonly="appliedOptions.readonly"
+
+      :value="control.data"
+
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
+
   </control-wrapper>
 </template>
 
@@ -42,8 +52,24 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props), target => parseInt(target.value, 10));
+    const toInteger = (value: string) => {
+      var regex = /^[-+]?\d+$/;
+
+      if (regex.test(value)) {
+        return parseInt(value, 10);
+      }
+    
+      return value === '' ? undefined : value;
+    }
+    return useVuetifyControl(useJsonFormsControl(props), toInteger);
+    //return useVuetifyControl(useJsonFormsControl(props), target => parseInt(target.value, 10));
   },
+  computed: {
+    step(): number {
+      const options: any = this.appliedOptions;
+      return options.step ?? 1;
+    }
+  }  
 });
 
 export default controlRenderer;

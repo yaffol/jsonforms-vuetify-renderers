@@ -1,7 +1,8 @@
 <template>
   <div v-if="layout.visible" :class="layoutClassObject.root">
+
     <div
-      v-for="(element, index) in layout.uischema.elements"
+      v-for="(element, index) in layoutUiSchema.elements"
       :key="`${layout.path}-${index}`"
       :class="layoutClassObject.item"
     >
@@ -49,6 +50,9 @@ const layoutRenderer = defineComponent({
       return this.layout.direction === 'row'
         ? this.styles.horizontalLayout
         : this.styles.verticalLayout;
+    },
+    layoutUiSchema(): Layout {
+      return this.layout.uischema as Layout
     }
   }
 });

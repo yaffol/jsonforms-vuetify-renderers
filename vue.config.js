@@ -3,5 +3,9 @@ module.exports = {
     // remove typecheck
     config.plugins.delete('fork-ts-checker');
     return config;
-  }
+  },
+
+  transpileDependencies: [
+    'vuetify'
+  ]
 };

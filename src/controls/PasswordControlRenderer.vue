@@ -5,8 +5,11 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-     <v-text-field
-      type="datetime-local"
+
+    <v-text-field
+      :type="passwordVisible ? 'text': 'password'"
+      :append-icon="passwordVisible ?  'mdi-eye' : 'mdi-eye-off'"
+      @click:append="() => (passwordVisible = !passwordVisible)"
 
       :id="control.id + '-input'"
       :class="styles.control.input"
@@ -20,13 +23,15 @@
       :error-messages="control.errors"
       :readonly="appliedOptions.readonly"
 
-      :value="dataTime"
+      :value="control.data"
+
+      :maxlength="appliedOptions.restrict ? control.schema.maxLength : undefined"
+      :size="appliedOptions.trim && control.schema.maxLength !== undefined ? control.schema.maxLength : undefined"
 
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
-
   </control-wrapper>
 </template>
 
@@ -35,19 +40,17 @@ import {
   ControlElement,
   JsonFormsRendererRegistryEntry,
   rankWith,
-  isDateTimeControl
+  isStringControl,
+  and,
+  formatIs
 } from '@jsonforms/core';
-import { defineComponent } from '../../config/vue';
+import { defineComponent, ref } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
 
-const toISOString = (inputDateTime: string) => {
-  return inputDateTime === '' ? '' : inputDateTime + ':00.000Z';
-};
-
 const controlRenderer = defineComponent({
-  name: 'datetime-control-renderer',
+  name: 'password-control-renderer',
   components: {
     ControlWrapper
   },
@@ -55,20 +58,17 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props), value => toISOString(value));
-    //return useVuetifyControl(useJsonFormsControl(props), target => toISOString(target.value));
-  },
-  computed: {
-    dataTime(): string {
-      return (this.control.data ?? '').substr(0, 16);
-    }
-  },
+    const passwordVisible = ref(false);
+
+    return { ...useVuetifyControl(useJsonFormsControl(props), value => value || undefined), passwordVisible };
+  }
 });
 
 export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(2, isDateTimeControl)
+  tester: rankWith(2, and(isStringControl, formatIs('password')))
 };
+
 </script>

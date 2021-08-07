@@ -1,60 +1,77 @@
 {
-  "definitions": {
-    "order": {
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Please enter your first name"
+    },
+    "secondName": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Please enter your second name"
+    },
+    "vegetarian": {
+      "type": "boolean"
+    },
+    "birthDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Please enter your birth date."
+    },
+    "nationality": {
+      "type": "string",
+      "enum": [
+        "DE",
+        "IT",
+        "JP",
+        "US",
+        "RU",
+        "Other"
+      ]
+    },
+    "provideAddress": {
+      "type": "boolean"
+    },
+    "address": {
       "type": "object",
       "properties": {
-        "customer": {
-          "type": "object",
-          "properties": {
-            "id": { "type": "string" },
-            "name": { "type": "string"},
-            "department": { "type": "string" },
-            "emailAddress": { "type": "string", "format": "email" }
-          }
-        },
-        "title": {
-          "type": "string",
-          "minLength": 5
-        },
-        "description": {
+        "street": {
           "type": "string"
         },
-        "ordered": { "type": "boolean" },
-        "processId": {
-          "type": "number",
-          "minimum": 0
+        "streetNumber": {
+          "type": "string"
         },
-        "assignee": { "type": "string" },
-        "startDate": {
+        "city": {
+          "type": "string"
+        },
+        "postalCode": {
           "type": "string",
-          "format": "date"
+          "maxLength": 5
+        }
+      }
+    },
+    "vegetarianOptions": {
+      "type": "object",
+      "properties": {
+        "vegan": {
+          "type": "boolean"
         },
-        "endDate": {
+        "favoriteVegetable": {
           "type": "string",
-          "format": "date"
+          "enum": [
+            "Tomato",
+            "Potato",
+            "Salad",
+            "Aubergine",
+            "Cucumber",
+            "Other"
+          ]
         },
-        "status": {
-          "type": "string",
-          "enum": ["unordered", "planned", "ordered"]
-        },
-        "amount": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 100,
-          "default": 10,
-          "multipleOf": 1
+        "otherFavoriteVegetable": {
+          "type": "string"
         }
       }
     }
-  },
-  "type": "object",
-  "properties": {
-    "orders": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/order"
-      }
-    }
-  },
-  "required": ["title"]
+  }
 }

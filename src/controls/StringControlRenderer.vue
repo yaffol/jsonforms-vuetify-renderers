@@ -5,17 +5,33 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <input
-      :id="control.id + '-input'"
-      :class="styles.control.input"
-      :value="control.data"
-      :disabled="!control.enabled"
-      :autofocus="appliedOptions.focus"
-      :placeholder="appliedOptions.placeholder"
-      @change="onChange"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
-    />
+
+    <v-hover v-slot="{ hover }">
+      <v-text-field
+
+        :id="control.id + '-input'"
+        :class="styles.control.input"
+        :disabled="!control.enabled"
+        :autofocus="appliedOptions.focus"
+        :placeholder="appliedOptions.placeholder"
+        :label="control.label"
+        :hint="control.description"
+        :persistent-hint="persistentHint()"
+        :required="control.required"
+        :error-messages="control.errors"
+        :readonly="appliedOptions.readonly"
+        :value="control.data"
+
+        :maxlength="appliedOptions.restrict ? control.schema.maxLength : undefined"
+        :size="appliedOptions.trim && control.schema.maxLength !== undefined ? control.schema.maxLength : undefined"
+        :counter="control.schema.maxLength !== undefined ? control.schema.maxLength: undefined"
+
+        :clearable="hover == true"
+        @change="onChange"
+        @focus="isFocused = true"
+        @blur="isFocused = false"
+      />
+    </v-hover>
   </control-wrapper>
 </template>
 
@@ -40,7 +56,7 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props));
+    return useVuetifyControl(useJsonFormsControl(props), value => value || undefined);
   }
 });
 

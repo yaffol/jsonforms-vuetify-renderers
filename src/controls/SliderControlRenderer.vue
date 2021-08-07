@@ -5,11 +5,16 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <v-hover v-slot="{ hover }">
-      <v-textarea
+      <!-- value={Number(data || schema.default)} -->
+
+      <v-slider
+        :step="control.schema.multipleOf || 1"
+        :min="control.schema.minimum"
+        :max="control.schema.maximum"
+        :thumb-label=true
 
         :id="control.id + '-input'"
-        :class="styles.control.textarea"
+        :class="styles.control.input"
         :disabled="!control.enabled"
         :autofocus="appliedOptions.focus"
         :placeholder="appliedOptions.placeholder"
@@ -22,16 +27,10 @@
 
         :value="control.data"
 
-        :maxlength="appliedOptions.restrict ? control.schema.maxLength : undefined"
-        :size="appliedOptions.trim && control.schema.maxLength !== undefined ? control.schema.maxLength : undefined"
-
-        :clearable="hover == true"
-        multi-line
         @change="onChange"
         @focus="isFocused = true"
         @blur="isFocused = false"
       />
-    </v-hover>  
   </control-wrapper>
 </template>
 
@@ -40,9 +39,7 @@ import {
   ControlElement,
   JsonFormsRendererRegistryEntry,
   rankWith,
-  isStringControl,
-  isMultiLineControl,
-  and
+  isRangeControl
 } from '@jsonforms/core';
 import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
@@ -50,7 +47,7 @@ import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
 
 const controlRenderer = defineComponent({
-  name: 'multi-string-control-renderer',
+  name: 'slider-control-renderer',
   components: {
     ControlWrapper
   },
@@ -58,7 +55,7 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props), value => value || undefined);
+    return useVuetifyControl(useJsonFormsControl(props), value => Number(value));
   }
 });
 
@@ -66,6 +63,6 @@ export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(2, and(isStringControl, isMultiLineControl))
+  tester: rankWith(4, isRangeControl)
 };
 </script>

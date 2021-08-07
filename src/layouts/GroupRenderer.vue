@@ -1,10 +1,10 @@
 <template>
   <fieldset v-if="layout.visible" :class="styles.group.root">
-    <legend v-if="layout.uischema.label" :class="styles.group.label">
-      {{ layout.uischema.label }}
+    <legend v-if="groupLayoutUiSchema.label" :class="styles.group.label">
+      {{ groupLayoutUiSchema.label }}
     </legend>
     <div
-      v-for="(element, index) in layout.uischema.elements"
+      v-for="(element, index) in groupLayoutUiSchema.elements"
       :key="`${layout.path}-${index}`"
       :class="styles.group.item"
     >
@@ -24,6 +24,7 @@
 import {
   JsonFormsRendererRegistryEntry,
   Layout,
+  GroupLayout,
   rankWith,
   and,
   isLayout,
@@ -48,7 +49,12 @@ const layoutRenderer = defineComponent({
   },
   setup(props: RendererProps<Layout>) {
     return useVuetifyLayout(useJsonFormsLayout(props));
-  }
+  },
+  computed: {
+    groupLayoutUiSchema(): GroupLayout {
+      return this.layout.uischema as GroupLayout
+    }
+  }  
 });
 
 export default layoutRenderer;

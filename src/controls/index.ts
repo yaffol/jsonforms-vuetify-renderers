@@ -9,7 +9,11 @@ export { default as DateControlRenderer} from './DateControlRenderer.vue';
 export { default as DateTimeControlRenderer} from './DateTimeControlRenderer.vue';
 export { default as TimeControlRenderer} from './TimeControlRenderer.vue';
 export { default as BooleanControlRenderer } from './BooleanControlRenderer.vue'
-
+export { default as BooleanToggleControlRenderer } from './BooleanToggleControlRenderer.vue'
+export { default as PasswordControlRenderer } from './PasswordControlRenderer.vue'
+export { default as SliderControlRenderer } from './SliderControlRenderer.vue'
+export { default as RadioEnumControlRenderer } from './RadioEnumControlRenderer.vue'
+export { default as RadioEnumOneOfControlRenderer } from './RadioEnumOneOfControlRenderer.vue'
 
 import { entry as stringControlRendererEntry } from './StringControlRenderer.vue';
 import { entry as multiStringControlRendererEntry } from './MultiStringControlRenderer.vue';
@@ -21,7 +25,11 @@ import { entry as dateControlRendererEntry } from './DateControlRenderer.vue';
 import { entry as dateTimeControlRendererEntry } from './DateTimeControlRenderer.vue';
 import { entry as timeControlRendererEntry } from './TimeControlRenderer.vue';
 import { entry as booleanControlRendererEntry} from './BooleanControlRenderer.vue';
-
+import { entry as booleanToggleControlRendererEntry} from './BooleanToggleControlRenderer.vue';
+import { entry as passwordControlRendererEntry} from './PasswordControlRenderer.vue';
+import { entry as sliderControlRendererEntry} from './SliderControlRenderer.vue';
+import { entry as radioEnumControlRenderer} from './RadioEnumControlRenderer.vue';
+import { entry as radioEnumOneOfControlRenderer} from './RadioEnumOneOfControlRenderer.vue';
 
 
 export const controlRenderers = [
@@ -34,5 +42,10 @@ export const controlRenderers = [
   dateControlRendererEntry,
   dateTimeControlRendererEntry,
   timeControlRendererEntry,
-  booleanControlRendererEntry
+  booleanControlRendererEntry,
+  booleanToggleControlRendererEntry,
+  passwordControlRendererEntry,
+  sliderControlRendererEntry,
+  radioEnumControlRenderer,
+  radioEnumOneOfControlRenderer
 ]

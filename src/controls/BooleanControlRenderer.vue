@@ -5,18 +5,26 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <input
-      type="checkbox"
-      :class="styles.control.input"
+    <v-checkbox
+
       :id="control.id + '-input'"
-      :checked="!!control.data"
+      :class="styles.control.input"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
+      :label="control.label"
+      :hint="control.description"
+      :persistent-hint="persistentHint()"
+      :required="control.required"
+      :error-messages="control.errors"
+      :readonly="appliedOptions.readonly"
+
+      :checked="!!control.data"
+      
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
-    />
+     />
   </control-wrapper>
 </template>
 
@@ -41,7 +49,8 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props), target => target.checked);
+    return useVuetifyControl(useJsonFormsControl(props));
+    //return useVuetifyControl(useJsonFormsControl(props), target => target.checked);
   }
 });
 

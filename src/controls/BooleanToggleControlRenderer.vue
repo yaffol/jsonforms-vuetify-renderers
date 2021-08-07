@@ -5,9 +5,7 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-     <v-text-field
-      type="datetime-local"
-
+    <v-switch
       :id="control.id + '-input'"
       :class="styles.control.input"
       :disabled="!control.enabled"
@@ -20,13 +18,12 @@
       :error-messages="control.errors"
       :readonly="appliedOptions.readonly"
 
-      :value="dataTime"
-
+      :checked="!!control.data"
+      
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
-
   </control-wrapper>
 </template>
 
@@ -35,19 +32,17 @@ import {
   ControlElement,
   JsonFormsRendererRegistryEntry,
   rankWith,
-  isDateTimeControl
+  isBooleanControl,
+  optionIs,
+  and
 } from '@jsonforms/core';
 import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
 
-const toISOString = (inputDateTime: string) => {
-  return inputDateTime === '' ? '' : inputDateTime + ':00.000Z';
-};
-
 const controlRenderer = defineComponent({
-  name: 'datetime-control-renderer',
+  name: 'boolean-toggle-control-renderer',
   components: {
     ControlWrapper
   },
@@ -55,20 +50,15 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props), value => toISOString(value));
-    //return useVuetifyControl(useJsonFormsControl(props), target => toISOString(target.value));
-  },
-  computed: {
-    dataTime(): string {
-      return (this.control.data ?? '').substr(0, 16);
-    }
-  },
+    return useVuetifyControl(useJsonFormsControl(props));
+    //return useVuetifyControl(useJsonFormsControl(props), target => target.checked);
+  }
 });
 
 export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(2, isDateTimeControl)
+  tester: rankWith(3, and(isBooleanControl, optionIs('toggle', true)))
 };
 </script>

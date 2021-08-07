@@ -5,26 +5,30 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <select
+    <v-select
       :id="control.id + '-input'"
-      :class="styles.control.select"
-      :value="control.data"
+      :class="styles.control.input"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
+      :placeholder="appliedOptions.placeholder"
+      :label="control.label"
+      :hint="control.description"
+      :persistent-hint="persistentHint()"
+      :required="control.required"
+      :error-messages="control.errors"
+      :readonly="appliedOptions.readonly"
+
+      v-model="control.data"
+
+      :items="control.options"
+      item-text="label"
+      item-value="value"
+
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
-    >
-      <option value="" key="empty" :class="styles.control.option"/>
-      <option
-        v-for="optionElement in control.options"
-        :key="optionElement.value"
-        :value="optionElement.value"
-        :label="optionElement.label"
-        :class="styles.control.option"
-      >
-      </option
-    ></select>
+    />
+
   </control-wrapper>
 </template>
 

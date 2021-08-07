@@ -1,4 +1,11 @@
 <template>
+    
+    <v-container v-if="visible" :class="styles.control.root" :id="id"
+      :fluid="!appliedOptions.trim"
+    >
+       <slot></slot>
+    </v-container>      
+  <!--
   <div v-if="visible" :class="styles.control.root" :id="id">
     <label :for="id + '-input'" :class="styles.control.label">
       {{ computedLabel }}
@@ -10,6 +17,7 @@
       {{ errors ? errors : showDescription ? description : null }}
     </div>
   </div>
+    -->
 </template>
 
 <script lang="ts">

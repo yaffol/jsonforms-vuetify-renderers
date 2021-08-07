@@ -6,7 +6,8 @@ import {
   composePaths,
   findUISchema,
   getFirstPrimitiveProp,
-  Resolve
+  Resolve,
+  isDescriptionHidden
 } from '@jsonforms/core';
 
 /**
@@ -16,7 +17,8 @@ export const useVuetifyControl = <
   I extends { control: any; handleChange: any }
 >(
   input: I,
-  adaptTarget: (target: any) => any = v => v.value
+  //adaptTarget: (target: any) => any = v => v.value
+  adaptValue: (target: any) => any = v => v
 ) => {
   const appliedOptions = computed(() =>
     merge(
@@ -27,9 +29,34 @@ export const useVuetifyControl = <
   );
 
   const isFocused = ref(false);
+  const onChange = (value: any) => {
+    input.handleChange(input.control.value.path, adaptValue(value));
+  };
+  /*
   const onChange = (event: Event) => {
     input.handleChange(input.control.value.path, adaptTarget(event.target));
   };
+*/
+
+  const persistentHint = (): boolean => {
+    return !isDescriptionHidden(
+      input.control.value.visible,
+      input.control.value.description,
+      isFocused.value,
+      !!appliedOptions.value?.showUnfocusedDescription
+    );
+  };
+
+  
+  /*
+  const finalLabel = computed((): string => {
+    return computeLabel(
+      input.control.value.label,
+      input.control.value.required,
+      !!appliedOptions.value?.hideRequiredAsterisk
+    );
+  });
+  */
 
   const controlWrapper = computed(() => {
     const {
@@ -40,16 +67,22 @@ export const useVuetifyControl = <
       visible,
       required
     } = input.control.value;
-    return { id, description, errors, label, visible, required };
+    return { id, description, errors, label, visible, required};
   });
+
+  const styles = useStyles(input.control.value.uischema);
+
 
   return {
     ...input,
-    styles: useStyles(input.control.value.uischema),
+    styles,
     isFocused,
     appliedOptions,
     controlWrapper,
-    onChange
+    onChange,
+
+    persistentHint,
+    //onChangeValue
   };
 };
 

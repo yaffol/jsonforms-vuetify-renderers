@@ -5,18 +5,29 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <input
+
+      <v-text-field
       type="date"
+
       :id="control.id + '-input'"
       :class="styles.control.input"
-      :value="control.data"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
+      :label="control.label"
+      :hint="control.description"
+      :persistent-hint="persistentHint()"
+      :required="control.required"
+      :error-messages="control.errors"
+      :readonly="appliedOptions.readonly"
+
+      :value="control.data"
+
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
+
   </control-wrapper>
 </template>
 
