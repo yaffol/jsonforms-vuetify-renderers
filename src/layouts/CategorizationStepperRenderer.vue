@@ -7,7 +7,7 @@
     >
       <v-stepper-header>
         <template v-for="(element, index) in visibleCategories">
-          <v-stepper-step :key="`${layout.path}-${index}`" :step="index">
+          <v-stepper-step :key="`${layout.path}-${index}`" :step="index" editable> 
             {{ element.label }}
           </v-stepper-step>
           <v-divider v-if="index !== visibleCategories.length - 1" :key="index"></v-divider>
