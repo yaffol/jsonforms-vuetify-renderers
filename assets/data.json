@@ -1,4 +1,11 @@
 {
+  "firstName": "John",
+  "secondName": "Doe",
+  "birthDate": "1985-06-02",
+  "personalData": {
+    "age": 34
+  },
+  "postalCode": "12345",
   "provideAddress": true,
   "vegetarian": false
 }
