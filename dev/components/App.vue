@@ -6,9 +6,9 @@ import { vuetifyRenderers, mergeStyles, defaultStyles } from '../../src';
 import '../../vuetify.css';
 import ajvErrorsPlugin from "ajv-errors"
 
-import schema from '../../assets/schema.json'
-import uischema from '../../assets/uischema.json'
-import data from '../../assets/data.json'
+import schema from '../../assets/example.schema.json'
+import uischema from '../../assets/example.uischema.json'
+import data from '../../assets/example.data.json'
 
 const ajv = createAjv({useDefaults: true, allErrors: true});
 ajv.addFormat('password', (_) => true);

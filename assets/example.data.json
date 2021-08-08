@@ -1,4 +1,6 @@
 {
+  "$schema": "./example.schema.json",
+
   "firstName": "John",
   "secondName": "Doe",
   "birthDate": "1985-06-02",
