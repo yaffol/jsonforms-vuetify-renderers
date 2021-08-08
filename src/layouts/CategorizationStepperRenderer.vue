@@ -36,7 +36,7 @@
               <v-card-actions>
                 <v-btn
                   text
-                  rigtht
+                  right
                   color="primary"
                   :disabled="activeCategory >= visibleCategories.length - 1"
                   @click="activeCategory++"
