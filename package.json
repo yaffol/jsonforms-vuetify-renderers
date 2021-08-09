@@ -1,10 +1,10 @@
 {
   "name": "@jsonforms/vue2-vuetify",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "Vue 2 Vuetify renderers for JSON Forms",
   "scripts": {
     "serve": "vue-cli-service serve dev/serve.ts",
-    "build": "cross-env NODE_ENV=production rollup --config rollup.config.js",
+    "build": "cross-env NODE_ENV=production rollup --config rollup.config.js && npm link",
     "clean": "rimraf lib",
     "doc": "typedoc --name 'JSON Forms Vue 2 Vuetify Renderers' --mode file --out docs src --ignoreCompilerErrors"
   },
@@ -55,7 +55,7 @@
     "vue-template-compiler": "^2.6.14",
     "vuetify-loader": "^1.7.0"
   },
-  "bugs": "https://github.com/eclipsesource/jsonforms/issues",
+  "bugs": "https://github.com/kchobantonov/jsonforms-vue2-vuetify/issues",
   "homepage": "http://jsonforms.io/",
   "keywords": [
     "vue",
@@ -79,6 +79,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/eclipsesource/jsonforms",
+  "repository": "https://github.com/kchobantonov/jsonforms-vue2-vuetify",
   "types": "lib/src/index.d.ts"
 }
