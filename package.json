@@ -1,66 +1,15 @@
 {
-  "name": "@jsonforms/vue2-vuetify",
+  "name": "jsonforms-vue2-vuetify",
   "version": "3.0.0-alpha.1",
   "description": "Vue 2 Vuetify renderers for JSON Forms",
-  "scripts": {
-    "serve": "vue-cli-service serve dev/serve.ts",
-    "build": "cross-env NODE_ENV=production rollup --config rollup.config.js && npm link",
-    "clean": "rimraf lib",
-    "doc": "typedoc --name 'JSON Forms Vue 2 Vuetify Renderers' --mode file --out docs src --ignoreCompilerErrors"
-  },
-  "main": "lib/jsonforms-vue2-vuetify.js",
-  "files": [
-    "lib/*",
-    "src/*",
-    "vuetify.css"
-  ],
-  "dependencies": {
-    "@mdi/font": "^5.9.55",
-    "ajv": "^6.10.2",
-    "ajv-errors": "^1.0.1",
-    "lodash": "^4.17.15",
-    "@jsonforms/core": "^3.0.0-alpha.1",
-    "@jsonforms/vue2": "^3.0.0-alpha.1",
-    "@vue/composition-api": "^1.0.0-rc.3",
-    "vue": "^2.6.14",
-    "vuetify": "^2.4.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/preset-typescript": "^7.9.0",
-    "@rollup/plugin-alias": "^2.2.0",
-    "@types/ajv-errors": "^1.0.1",
-    "@types/jest": "^24.0.23",
-    "@types/lodash": "^4.14.172",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-plugin-unit-jest": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/test-utils": "^1.0.3",
-    "cp-cli": "^2.0.0",
-    "cross-env": "^7.0.2",
-    "npm-run-all": "^4.1.5",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.7.3",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-typescript2": "^0.29.0",
-    "rollup-plugin-vue": "^5.1.9",
-    "sass": "~1.32.0",
-    "sass-loader": "^10.0.0",
-    "symlink-dir": "^5.0.0",
-    "typedoc": "^0.19.2",
-    "typescript": "3.8.3",
-    "vue-cli-plugin-vuetify": "~2.4.1",
-    "vue-template-compiler": "^2.6.14",
-    "vuetify-loader": "^1.7.0"
-  },
+  "repository": "https://github.com/kchobantonov/jsonforms-vue2-vuetify",
   "bugs": "https://github.com/kchobantonov/jsonforms-vue2-vuetify/issues",
   "homepage": "http://jsonforms.io/",
   "keywords": [
     "vue",
     "vue2",
     "vue 2",
+    "vuetify",
     "form",
     "forms",
     "json",
@@ -79,6 +28,65 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/kchobantonov/jsonforms-vue2-vuetify",
-  "types": "lib/src/index.d.ts"
+  "scripts": {
+    "watch": "vue-cli-service serve --open",
+    "serve": "vue-cli-service serve dev/serve.ts",
+    "build": "cross-env NODE_ENV=production rollup --config rollup.config.js",
+    "clean": "rimraf lib",
+    "doc": "typedoc --name 'JSON Forms Vue 2 Vuetify Renderers' --mode file --out docs src --ignoreCompilerErrors"
+  },
+  "main": "lib/jsonforms-vue2-vuetify.js",
+  "types": "lib/src/index.d.ts",
+  "files": [
+    "lib/*",
+    "src/*",
+    "vuetify.css"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-typescript": "^7.9.0",
+    "@rollup/plugin-alias": "^2.2.0",
+    "@types/ajv-errors": "^1.0.1",
+    "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.172",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/composition-api": "^1.0.0-rc.3",
+    "@vue/test-utils": "^1.0.3",
+    "cp-cli": "^2.0.0",
+    "cross-env": "^7.0.2",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.7.3",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "rollup-plugin-vue": "^5.1.9",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "symlink-dir": "^5.0.0",
+    "typedoc": "^0.19.2",
+    "typescript": "3.8.3",
+    "vue-cli-plugin-vuetify": "~2.4.1",
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.7.0",
+    "@jsonforms/core": "^3.0.0-alpha.1",
+    "@jsonforms/vue2": "^3.0.0-alpha.1",
+    "vue": "^2.6.14",
+    "@mdi/font": "^5.9.55",
+    "vuetify": "^2.4.0",
+    "ajv-errors": "^1.0.1"
+  },
+  "peerDependencies": {
+    "@jsonforms/core": "^3.0.0-alpha.1",
+    "@jsonforms/vue2": "^3.0.0-alpha.1",
+    "vue": "^2.6.14",
+    "@mdi/font": "^5.9.55",
+    "vuetify": "^2.4.0"
+  }
 }

@@ -17,6 +17,8 @@ const buildFormats = [
       '@vue/composition-api',
       '@jsonforms/core',
       '@jsonforms/vue2',
+      "@mdi/font",
+      "vuetify",
       'lodash/maxBy',
       'lodash/merge',
       'lodash/mergeWith',

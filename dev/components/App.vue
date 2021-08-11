@@ -1,8 +1,7 @@
 <script lang="ts">
-import { createAjv } from '@jsonforms/core';
 import { defineComponent } from '../../config/vue';
 import { JsonForms, JsonFormsChangeEvent } from '../../config/jsonforms';
-import { vuetifyRenderers, mergeStyles, defaultStyles } from '../../src';
+import { createAjv, vuetifyRenderers, mergeStyles, defaultStyles } from '../../src';
 import '../../vuetify.css';
 import ajvErrorsPlugin from "ajv-errors"
 
@@ -10,14 +9,15 @@ import schema from '../../assets/example.schema.json'
 import uischema from '../../assets/example.uischema.json'
 import data from '../../assets/example.data.json'
 
-const ajv = createAjv({useDefaults: true, allErrors: true});
-ajv.addFormat('password', (_) => true);
+const ajv = createAjv({useDefaults: true});
 ajvErrorsPlugin(ajv);
 
 // mergeStyles combines all classes from both styles definitions into one
 const myStyles = mergeStyles(defaultStyles, {
   control: { root: 'my-control' }
 });
+
+const renderers = Object.freeze(vuetifyRenderers);
 
 export default defineComponent({
   name: 'app',
@@ -26,7 +26,8 @@ export default defineComponent({
   },
   data: function() {
     return {
-      renderers: Object.freeze(vuetifyRenderers),
+      renderers: renderers,
+      cells: renderers,
       handleDefaultsAjv: ajv,
       data,
       schema,
@@ -210,6 +211,7 @@ export default defineComponent({
           :schema="schema"
           :uischema="uischema"
           :renderers="renderers"
+          :cells="cells"
           :config="config"
           :ajv="handleDefaultsAjv"
           @change="onChange"
