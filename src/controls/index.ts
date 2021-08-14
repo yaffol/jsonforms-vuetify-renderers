@@ -31,7 +31,6 @@ import { entry as sliderControlRendererEntry} from './SliderControlRenderer.vue'
 import { entry as radioEnumControlRenderer} from './RadioEnumControlRenderer.vue';
 import { entry as radioEnumOneOfControlRenderer} from './RadioEnumOneOfControlRenderer.vue';
 
-
 export const controlRenderers = [
   stringControlRendererEntry,
   multiStringControlRendererEntry,

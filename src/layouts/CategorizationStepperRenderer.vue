@@ -7,10 +7,17 @@
     >
       <v-stepper-header>
         <template v-for="(element, index) in visibleCategories">
-          <v-stepper-step :key="`${layout.path}-${index}`" :step="index" editable> 
+          <v-stepper-step
+            :key="`${layout.path}-${index}`"
+            :step="index + 1"
+            editable
+          >
             {{ element.label }}
           </v-stepper-step>
-          <v-divider v-if="index !== visibleCategories.length - 1" :key="index"></v-divider>
+          <v-divider
+            v-if="index !== visibleCategories.length - 1"
+            :key="index"
+          ></v-divider>
         </template>
       </v-stepper-header>
 
@@ -18,7 +25,7 @@
         <v-stepper-content
           v-for="(element, index) in visibleCategories"
           :key="`${layout.path}-${index}`"
-          :step="index"
+          :step="index + 1"
         >
           <v-card elevation="0">
             <dispatch-renderer
@@ -38,7 +45,7 @@
                   text
                   right
                   color="primary"
-                  :disabled="activeCategory >= visibleCategories.length - 1"
+                  :disabled="activeCategory - 1 >= visibleCategories.length - 1"
                   @click="activeCategory++"
                 >
                   Next
@@ -48,7 +55,7 @@
                   text
                   left
                   color="secondary"
-                  :disabled="activeCategory <= 0"
+                  :disabled="activeCategory - 1 <= 0"
                   @click="activeCategory--"
                 >
                   Previous
@@ -85,17 +92,37 @@ import {
   RendererProps,
 } from "../../config/jsonforms";
 import { useVuetifyLayout } from "../util";
+import {
+  VStepper,
+  VStepperHeader,
+  VStepperStep,
+  VDivider,
+  VStepperItems,
+  VStepperContent,
+  VCard,
+  VCardActions,
+  VBtn,
+} from "vuetify/lib";
 
 const layoutRenderer = defineComponent({
   name: "categorization-stepper-renderer",
   components: {
     DispatchRenderer,
+    VStepper,
+    VStepperHeader,
+    VStepperStep,
+    VDivider,
+    VStepperItems,
+    VStepperContent,
+    VCard,
+    VCardActions,
+    VBtn,
   },
   props: {
     ...rendererProps<Layout>(),
   },
   setup(props: RendererProps<Layout>) {
-    const activeCategory = ref(0);
+    const activeCategory = ref(1);
 
     return { ...useVuetifyLayout(useJsonFormsLayout(props)), activeCategory };
   },

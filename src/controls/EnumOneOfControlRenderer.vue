@@ -43,11 +43,13 @@ import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsOneOfEnumControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
+import { VSelect } from 'vuetify/lib';
 
 const controlRenderer = defineComponent({
   name: 'enum-oneof-control-renderer',
   components: {
-    ControlWrapper
+    ControlWrapper,
+    VSelect
   },
   props: {
     ...rendererProps<ControlElement>()

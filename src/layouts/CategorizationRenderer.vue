@@ -49,11 +49,17 @@ import {
   RendererProps,
 } from "../../config/jsonforms";
 import { useVuetifyLayout } from "../util";
+import { VCard, VTabs, VTab, VTabsItems, VTabItem } from "vuetify/lib";
 
 const layoutRenderer = defineComponent({
   name: "categorization-renderer",
   components: {
     DispatchRenderer,
+    VCard,
+    VTabs,
+    VTab,
+    VTabsItems,
+    VTabItem,
   },
   props: {
     ...rendererProps<Layout>(),

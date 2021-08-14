@@ -1,191 +1,194 @@
+<template>
+  <v-app>
+    <v-navigation-drawer app clipped>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6"> Examples </v-list-item-title>
+          <v-list-item-subtitle> Vuetify Renderers </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list dense nav>
+        <v-list-item
+          v-for="(example, index) in examples"
+          :key="example.title"
+          link
+        >
+          <v-list-item-content @click="selectExample(index)">
+            <v-list-item-title>{{ example.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar app clipped-left>
+      <v-toolbar-title>JSON Forms</v-toolbar-title>
+
+      <v-spacer expand></v-spacer>
+
+      <v-select
+        dense
+        v-model="validationMode"
+        :items="validationModes"
+      ></v-select>
+    </v-app-bar>
+
+    <!-- Sizes your content based upon application components -->
+    <v-main>
+      <!-- Provides the application the proper gutter -->
+      <v-container fluid class="demo" v-if="example != null">
+        <v-tabs v-model="activeTab">
+          <v-tab :key="0">Demo</v-tab>
+          <v-spacer expand />
+          <v-tab :key="1">Schema</v-tab>
+          <v-tab :key="2">UI Schema</v-tab>
+          <v-tab :key="3">Data</v-tab>
+
+          <v-tab-item :key="0">
+            <json-forms
+              v-if="selectedExample.value >= 0"
+              :data="data"
+              :schema="example.schema"
+              :uischema="example.uischema"
+              :renderers="renderers"
+              :cells="cells"
+              :config="config"
+              :validationMode="validationMode"
+              :ajv="handleDefaultsAjv"
+              :readonly="readonly"
+              @change="onChange"
+            />
+          </v-tab-item>
+          <v-tab-item :key="1">
+            <v-card>
+              <v-card-title>Schema</v-card-title>
+              <v-divider class="mx-4"></v-divider>
+              <div>
+                <pre>{{ JSON.stringify(example.schema, null, 2) }}</pre>
+              </div>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item :key="2">
+            <v-card>
+              <v-card-title>UI Schema</v-card-title>
+              <v-divider class="mx-4"></v-divider>
+              <div>
+                <pre>{{ JSON.stringify(example.uischema, null, 2) }}</pre>
+              </div>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item :key="3">
+            <v-card>
+              <v-card-title>Data</v-card-title>
+              <v-divider class="mx-4"></v-divider>
+              <div>
+                <pre>{{ JSON.stringify(data, null, 2) }}</pre>
+              </div>
+            </v-card>
+          </v-tab-item>
+        </v-tabs>
+      </v-container>
+    </v-main>
+
+    <v-footer app>
+      <!-- -->
+    </v-footer>
+  </v-app>
+</template>
+
 <script lang="ts">
-import { defineComponent } from '../../config/vue';
-import { JsonForms, JsonFormsChangeEvent } from '../../config/jsonforms';
-import { createAjv, vuetifyRenderers, mergeStyles, defaultStyles } from '../../src';
-import '../../vuetify.css';
-import ajvErrorsPlugin from "ajv-errors"
+import { defineComponent, ref } from "../../config/vue";
+import { UISchemaElement, JsonSchema } from "@jsonforms/core";
+import { ErrorObject } from "ajv";
+import { JsonForms, JsonFormsChangeEvent } from "../../config/jsonforms";
+import {
+  createAjv,
+  vuetifyRenderers,
+  mergeStyles,
+  defaultStyles,
+} from "../../src";
+import "../../vuetify.css";
+import ajvErrorsPlugin from "ajv-errors";
 
-import schema from '../../assets/example.schema.json'
-import uischema from '../../assets/example.uischema.json'
-import data from '../../assets/example.data.json'
+import { examples } from "./examples";
 
-const ajv = createAjv({useDefaults: true});
+const ajv = createAjv({ useDefaults: true });
 ajvErrorsPlugin(ajv);
 
 // mergeStyles combines all classes from both styles definitions into one
 const myStyles = mergeStyles(defaultStyles, {
-  control: { root: 'my-control' }
+  control: { root: "my-control" },
 });
 
 const renderers = Object.freeze(vuetifyRenderers);
 
 export default defineComponent({
-  name: 'app',
+  name: "app",
   components: {
-    JsonForms
+    JsonForms,
   },
-  data: function() {
+  data() {
+    const selectedExample = ref(-1);
+    const data = ref({});
+    const errors = ref([] as ErrorObject[]);
+
     return {
+      readonly: false,
+      validationMode: "ValidateAndShow",
+      validationModes: ["ValidateAndShow", "ValidateAndHide", "NoValidation"],
+      activeTab: 0,
       renderers: renderers,
       cells: renderers,
       handleDefaultsAjv: ajv,
-      data,
-      schema,
-      uischema,
       config: {
-        hideRequiredAsterisk: false
-      }
+        hideRequiredAsterisk: false,
+      },
+      selectedExample,
+      data,
+      errors,
+      examples,
     };
   },
   methods: {
-    setSchema() {
-      this.schema = {
-        properties: {
-          name: {
-            type: 'string',
-            title: 'NAME',
-            description: 'The name'
-          }
-        }
-      };
-    },
     onChange(event: JsonFormsChangeEvent) {
-      console.log(event);
       this.data = event.data;
+      if (event.errors) {
+        this.errors.value = event.errors;
+      }
     },
-    switchAsterisk() {
-      this.config.hideRequiredAsterisk = !this.config.hideRequiredAsterisk;
+    selectExample(index: number) {
+      this.selectedExample.value = index;
+      const e = this.example;
+      if (e) {
+        this.data = JSON.parse(e.data);
+      }
     },
-    adaptData() {
-      this.data.number = 10;
+  },
+  computed: {
+    example(): {
+      schema: JsonSchema;
+      uischema: UISchemaElement;
+      data: any;
+    } | null {
+      const e = this.examples[this.selectedExample.value];
+      if (e) {
+        return {
+          schema: e.input.schema,
+          uischema: e.input.uischema,
+          data: e.input.data,
+        };
+      }
+
+      return null;
     },
-    adaptUiSchema() {
-      this.uischema = {
-        type: 'VerticalLayout',
-        elements: [
-          {
-            type: 'HorizontalLayout',
-            elements: [
-              {
-                type: 'VerticalLayout',
-                elements: [
-                  {
-                    type: 'Control',
-                    scope: '#/properties/string',
-                    options: {
-                      placeholder: 'this is a placeholder'
-                    }
-                  },
-                  {
-                    type: 'Control',
-                    scope: '#/properties/multiString'
-                  },
-                  {
-                    type: 'Control',
-                    scope: '#/properties/boolean',
-                    options: {
-                      placeholder: 'boolean placeholder'
-                    }
-                  },
-                  {
-                    type: 'Control',
-                    scope: '#/properties/boolean2'
-                  },
-                  {
-                    type: 'Control',
-                    scope: '#/properties/number',
-                    rule: {
-                      effect: 'DISABLE',
-                      condition: {
-                        scope: '#/properties/boolean',
-                        schema: {
-                          const: true
-                        }
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                type: 'Group',
-                label: 'My group',
-                elements: [
-                  {
-                    type: 'Control',
-                    scope: '#/properties/integer',
-                    rule: {
-                      effect: 'HIDE',
-                      condition: {
-                        scope: '#/properties/boolean2',
-                        schema: {
-                          const: true
-                        }
-                      }
-                    }
-                  },
-                  {
-                    type: 'HorizontalLayout',
-                    elements: [
-                      {
-                        type: 'Control',
-                        scope: '#/properties/enum'
-                      },
-                      {
-                        type: 'Control',
-                        scope: '#/properties/oneOfEnum'
-                      },
-                      {
-                        type: 'Control',
-                        scope: '#/properties/date',
-                        options: {
-                          placeholder: 'date placeholder'
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    type: 'Control',
-                    scope: '#/properties/dateTime',
-                    options: {
-                      placeholder: 'date-time placeholder'
-                    }
-                  },
-                  {
-                    type: 'Control',
-                    scope: '#/properties/time',
-                    options: {
-                      placeholder: 'time placeholder',
-                      styles: {
-                        control: {
-                          root: 'control my-time'
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: 'Label',
-            text: 'This is my label'
-          },
-          {
-            type: 'Control',
-            scope: '#/properties/array',
-            options: {
-              childLabelProp: 'age'
-            }
-          }
-        ]
-      };
-    }
   },
   provide() {
     return {
-      styles: myStyles
+      styles: myStyles,
     };
-  }
+  },
 });
 </script>
 
@@ -200,37 +203,8 @@ export default defineComponent({
 .data {
   flex: 1;
 }
-</style>
 
-<template>
-  <v-app>
-    <div class="container">
-      <div class="form">
-        <json-forms
-          :data="data"
-          :schema="schema"
-          :uischema="uischema"
-          :renderers="renderers"
-          :cells="cells"
-          :config="config"
-          :ajv="handleDefaultsAjv"
-          @change="onChange"
-        />
-        <button @click="setSchema">Set Schema</button>
-        <button @click="switchAsterisk">Switch Asterisk</button>
-        <button @click="adaptData">Adapt data</button>
-        <button @click="adaptUiSchema">Adapt uischema</button>
-      </div>
-      <div class="data">
-        <pre
-          >{{ JSON.stringify(data, null, 2) }}
-      </pre
-        >
-        <pre
-          >{{ JSON.stringify(config, null, 2) }}
-      </pre
-        >
-      </div>
-    </div>
-  </v-app>
-</template>
+.demo {
+  max-width: 900px;
+}
+</style>

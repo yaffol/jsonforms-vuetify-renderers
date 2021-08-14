@@ -20,7 +20,6 @@
       :readonly="appliedOptions.readonly"
 
       v-model="control.data"
-      
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
@@ -39,10 +38,12 @@ import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
+import { VCheckbox } from 'vuetify/lib';
 
 const controlRenderer = defineComponent({
   name: 'boolean-control-renderer',
   components: {
+    VCheckbox,
     ControlWrapper
   },
   props: {
@@ -60,4 +61,5 @@ export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
   tester: rankWith(1, isBooleanControl)
 };
+
 </script>

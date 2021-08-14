@@ -50,11 +50,14 @@ import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsOneOfEnumControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
+import { VRadioGroup, VRadio } from 'vuetify/lib';
 
 const controlRenderer = defineComponent({
   name: 'radio-enum-oneof-control-renderer',
   components: {
-    ControlWrapper
+    ControlWrapper,
+    VRadioGroup,
+    VRadio,
   },
   props: {
     ...rendererProps<ControlElement>()

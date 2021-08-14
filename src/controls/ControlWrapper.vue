@@ -25,9 +25,13 @@ import { isDescriptionHidden, computeLabel } from '@jsonforms/core';
 import { defineComponent, CompType } from '../../config/vue';
 import { Styles } from '../styles';
 import { Options } from '../util';
+import { VContainer } from 'vuetify/lib';
 
 export default defineComponent({
   name: 'control-wrapper',
+  components: {
+    VContainer,
+  },
   props: {
     id: {
       required: true as true,

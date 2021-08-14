@@ -40,12 +40,13 @@ import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
-
+import { VTextField } from 'vuetify/lib';
 
 const controlRenderer = defineComponent({
   name: 'time-control-renderer',
   components: {
-    ControlWrapper
+    ControlWrapper,
+    VTextField,
   },
   props: {
     ...rendererProps<ControlElement>()

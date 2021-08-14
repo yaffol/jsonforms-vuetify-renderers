@@ -48,11 +48,14 @@ import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
+import { VHover, VTextarea } from 'vuetify/lib';
 
 const controlRenderer = defineComponent({
   name: 'multi-string-control-renderer',
   components: {
-    ControlWrapper
+    ControlWrapper,
+    VHover,
+    VTextarea
   },
   props: {
     ...rendererProps<ControlElement>()

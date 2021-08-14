@@ -40,11 +40,13 @@ import { defineComponent } from '../../config/vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useVuetifyControl } from '../util';
+import { VSwitch } from 'vuetify/lib';
 
 const controlRenderer = defineComponent({
   name: 'boolean-toggle-control-renderer',
   components: {
-    ControlWrapper
+    ControlWrapper,
+    VSwitch
   },
   props: {
     ...rendererProps<ControlElement>()
