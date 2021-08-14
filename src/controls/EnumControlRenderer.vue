@@ -21,7 +21,7 @@
 
       v-model="control.data"
 
-      :items="control.options"
+      :items="options"
       item-text="label"
       item-value="value"
 
@@ -35,6 +35,7 @@
 
 <script lang="ts">
 import {
+  EnumOption,
   ControlElement,
   JsonFormsRendererRegistryEntry,
   rankWith,
@@ -57,7 +58,12 @@ const controlRenderer = defineComponent({
   },
   setup(props: RendererProps<ControlElement>) {
     return useVuetifyControl(useJsonFormsEnumControl(props));
-  }
+  },
+  computed: {
+    options(): EnumOption[] {
+      return [ {label : '', value: ''}, ...this.control.options ];
+    }
+  },
 });
 
 export default controlRenderer;

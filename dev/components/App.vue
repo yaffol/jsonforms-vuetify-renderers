@@ -48,8 +48,7 @@
 
           <v-tab-item :key="0">
             <json-forms
-              v-if="selectedExample.value >= 0"
-              :data="data"
+              :data="example.data"
               :schema="example.schema"
               :uischema="example.uischema"
               :renderers="renderers"
@@ -146,24 +145,19 @@ export default defineComponent({
         hideRequiredAsterisk: false,
       },
       selectedExample,
-      data,
       errors,
       examples,
     };
   },
   methods: {
     onChange(event: JsonFormsChangeEvent) {
-      this.data = event.data;
+      //this.data = event.data;
       if (event.errors) {
         this.errors.value = event.errors;
       }
     },
     selectExample(index: number) {
       this.selectedExample.value = index;
-      const e = this.example;
-      if (e) {
-        this.data = JSON.parse(e.data);
-      }
     },
   },
   computed: {
