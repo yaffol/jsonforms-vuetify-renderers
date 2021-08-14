@@ -64,7 +64,6 @@ const controlRenderer = defineComponent({
       return value === '' ? undefined : value;
     }
     return useVuetifyControl(useJsonFormsControl(props), toInteger);
-    //return useVuetifyControl(useJsonFormsControl(props), target => parseInt(target.value, 10));
   },
   computed: {
     step(): number {

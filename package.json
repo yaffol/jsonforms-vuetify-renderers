@@ -43,6 +43,7 @@
     "vuetify.css"
   ],
   "dependencies": {
+    "dayjs": "^1.10.6",
     "lodash": "^4.17.15"
   },
   "devDependencies": {

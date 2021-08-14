@@ -98,7 +98,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "../../config/vue";
+import { defineComponent, ref, Ref } from "../../config/vue";
 import { UISchemaElement, JsonSchema } from "@jsonforms/core";
 import { ErrorObject } from "ajv";
 import { JsonForms, JsonFormsChangeEvent } from "../../config/jsonforms";
@@ -131,7 +131,7 @@ export default defineComponent({
   data() {
     const selectedExample = ref(-1);
     const data = ref({});
-    const errors = ref([] as ErrorObject[]);
+    const errors: Ref<ErrorObject[] | undefined> = ref(undefined);
 
     return {
       readonly: false,
@@ -145,16 +145,15 @@ export default defineComponent({
         hideRequiredAsterisk: false,
       },
       selectedExample,
+      data,
       errors,
       examples,
     };
   },
   methods: {
     onChange(event: JsonFormsChangeEvent) {
-      //this.data = event.data;
-      if (event.errors) {
-        this.errors.value = event.errors;
-      }
+      this.data.value = event.data;
+      this.errors.value = event.errors;
     },
     selectExample(index: number) {
       this.selectedExample.value = index;
