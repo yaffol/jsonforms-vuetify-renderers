@@ -64,27 +64,42 @@
             <v-card>
               <v-card-title>Schema</v-card-title>
               <v-divider class="mx-4"></v-divider>
-              <div>
-                <pre>{{ JSON.stringify(example.schema, null, 2) }}</pre>
-              </div>
+              <monaco-editor
+                height="500"
+                language="json"
+                v-model="monacoSchema"
+                @change="onChangeEditSchema"
+                :editorBeforeMount="schemaEditorBeforeMount"
+                :editorMounted="editorMounted"
+              ></monaco-editor>
             </v-card>
           </v-tab-item>
           <v-tab-item :key="2">
             <v-card>
               <v-card-title>UI Schema</v-card-title>
               <v-divider class="mx-4"></v-divider>
-              <div>
-                <pre>{{ JSON.stringify(example.uischema, null, 2) }}</pre>
-              </div>
+              <monaco-editor
+                height="500"
+                language="json"
+                v-model="monacoUISchema"
+                @change="onChangeEditUISchema"
+                :editorBeforeMount="uiSchemaEditorBeforeMount"
+                :editorMounted="editorMounted"
+              ></monaco-editor>
             </v-card>
           </v-tab-item>
           <v-tab-item :key="3">
             <v-card>
               <v-card-title>Data</v-card-title>
               <v-divider class="mx-4"></v-divider>
-              <div>
-                <pre>{{ JSON.stringify(data, null, 2) }}</pre>
-              </div>
+              <monaco-editor
+                height="500"
+                language="json"
+                v-model="monacoData"
+                @change="onChangeEditData"
+                :editorBeforeMount="dataEditorBeforeMount"
+                :editorMounted="editorMounted"
+              ></monaco-editor>
             </v-card>
           </v-tab-item>
         </v-tabs>
@@ -112,6 +127,16 @@ import "../../vuetify.css";
 import ajvErrorsPlugin from "ajv-errors";
 
 import { examples } from "./examples";
+import MonacoEditor from "monaco-editor-vue";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+
+import { Uri } from "monaco-editor/esm/vs/editor/editor.api";
+import {
+  configureJsonSchemaValidation,
+  configureUISchemaValidation,
+  configureDataValidation,
+  EditorApi,
+} from "../core/jsonSchemaValidation";
 
 const ajv = createAjv({ useDefaults: true });
 ajvErrorsPlugin(ajv);
@@ -123,10 +148,17 @@ const myStyles = mergeStyles(defaultStyles, {
 
 const renderers = Object.freeze(vuetifyRenderers);
 
+type JsonInput = {
+  schema: JsonSchema;
+  uischema: UISchemaElement;
+  data: any;
+} | null;
+
 export default defineComponent({
   name: "app",
   components: {
     JsonForms,
+    MonacoEditor,
   },
   data() {
     const selectedExample = ref(-1);
@@ -148,6 +180,9 @@ export default defineComponent({
       data,
       errors,
       examples,
+      monacoOptions: {
+        ...monaco.languages.json.jsonDefaults,
+      },
     };
   },
   methods: {
@@ -158,13 +193,52 @@ export default defineComponent({
     selectExample(index: number) {
       this.selectedExample.value = index;
     },
+    onChangeEditSchema() {
+      console.log("on change schema");
+    },
+    onChangeEditUISchema() {
+      console.log("on change ui schema");
+    },
+    onChangeEditData() {
+      console.log("on change data");
+    },
+    schemaEditorBeforeMount(editor: EditorApi) {
+      if (true) return;
+      const modelUri = Uri.parse("json://core/specification/schema.json");
+      console.log("register schema for JSON Schema");
+      configureJsonSchemaValidation(editor, modelUri);
+    },
+    uiSchemaEditorBeforeMount(editor: EditorApi) {
+      if (true) return;
+      const modelUri = Uri.parse("json://core/specification/uischema.json");
+      console.log("register schema for JSON UI Schema");
+      configureUISchemaValidation(editor, modelUri);
+    },
+    dataEditorBeforeMount(editor: EditorApi) {
+      if (true) return;
+      const example = this.example;
+      let modelUri: string = "";
+
+      if (example && example.data && example.data.hasOwnProperty("$schema")) {
+        modelUri = example.data.data.$schema;
+      }
+      console.log("modelUri=" + modelUri);
+
+      if (example) {
+        console.log("register schema for JSON data");
+        configureDataValidation(editor, {
+          uri: modelUri,
+          schema: example.schema,
+        });
+      }
+    },
+    editorMounted(editor: monaco.editor.IStandaloneCodeEditor, _: EditorApi) {
+      console.log("editor mounted");
+      console.log(editor);
+    },
   },
   computed: {
-    example(): {
-      schema: JsonSchema;
-      uischema: UISchemaElement;
-      data: any;
-    } | null {
+    example(): JsonInput {
       const e = this.examples[this.selectedExample.value];
       if (e) {
         return {
@@ -175,6 +249,35 @@ export default defineComponent({
       }
 
       return null;
+    },
+    monacoSchema: {
+      get(comp) {
+        return comp.example ? JSON.stringify(comp.example.schema, null, 2) : "";
+      },
+
+      set(_: string) {
+        console.log("on change schema");
+      },
+    },
+    monacoUISchema: {
+      get(comp) {
+        return comp.example
+          ? JSON.stringify(comp.example.uischema, null, 2)
+          : "";
+      },
+
+      set(_: string) {
+        console.log("on change ui schema");
+      },
+    },
+    monacoData: {
+      get(comp) {
+        return comp.example ? JSON.stringify(comp.data, null, 2) : "";
+      },
+
+      set(_: string) {
+        console.log("on change data");
+      },
     },
   },
   provide() {
@@ -199,5 +302,24 @@ export default defineComponent({
 
 .demo {
   max-width: 900px;
+}
+</style>
+
+<style>
+/* required class */
+.code-editor {
+}
+
+/* optional class for removing the outline */
+.prism-editor__textarea:focus {
+  outline: none;
+}
+
+.vue-code-hightlight pre {
+  background-color: transparent !important;
+}
+
+.vue-code-hightlight pre code {
+  background-color: transparent !important;
 }
 </style>
