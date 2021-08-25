@@ -13,6 +13,7 @@ import { input as listWithDetails } from './list-with-details';
 import { input as login } from './login';
 import { input as main } from './main';
 import { input as nestedArray } from './nested-array';
+import { input as nestedArrayWithSort } from './nested-array-with-sort';
 import { input as nestedLayout } from './nested-layout';
 import { input as noSchemas } from './no-schemas';
 import { input as noUISchema } from './no-ui-schema';
@@ -74,6 +75,10 @@ export const examples = [
     {
         title: "Nested Array",
         input: nestedArray
+    },
+    {
+        title: "Nested Array With Reorder",
+        input: nestedArrayWithSort
     },
     {
         title: "Rule",

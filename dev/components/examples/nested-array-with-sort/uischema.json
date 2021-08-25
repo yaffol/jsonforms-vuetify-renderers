@@ -7,7 +7,10 @@
         "text": "Example Array",
         "show": true
       },
-      "scope": "#/properties/exampleArray"
+      "scope": "#/properties/exampleArray",
+      "options": {
+        "showSortButtons": true
+      }
     }
   ]
 }

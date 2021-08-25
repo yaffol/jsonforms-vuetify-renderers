@@ -1,8 +1,8 @@
 {
   "exampleArray": [
     {
-      "phoned": ["555-1212", "(888)555-1212"],
-      "name": "John Smith"
+      "choices": ["This", "is", "an", "example"],
+      "name": "Hi there"
     }
   ]
 }
