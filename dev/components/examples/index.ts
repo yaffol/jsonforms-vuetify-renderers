@@ -12,6 +12,7 @@ import { input as horizontalLayout } from './horizontal-layout';
 import { input as listWithDetails } from './list-with-details';
 import { input as login } from './login';
 import { input as main } from './main';
+import { input as nestedArray } from './nested-array';
 import { input as nestedLayout } from './nested-layout';
 import { input as noSchemas } from './no-schemas';
 import { input as noUISchema } from './no-ui-schema';
@@ -19,6 +20,7 @@ import { input as oneOf } from './oneOf';
 import { input as radio } from './radio';
 import { input as rule } from './rule';
 import { input as verticalLayout } from './vertical-layout';
+import { input as huge } from './huge';
 
 export const examples = [
     {
@@ -70,6 +72,10 @@ export const examples = [
         input: array
     },
     {
+        title: "Nested Array",
+        input: nestedArray
+    },
+    {
         title: "Rule",
         input: rule
     },
@@ -104,5 +110,9 @@ export const examples = [
     {
         title: "List With Details",
         input: listWithDetails
+    },
+    {
+        title: "Huge",
+        input: huge
     },
 ]
