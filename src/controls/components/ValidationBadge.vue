@@ -5,13 +5,15 @@
         <v-badge
           :color="color"
           :bordered="bordered"
-          :content="errors.length"
           :inline="inline"
           :offsetX="offsetX"
           :offsetY="offsetY"
           :overlap="overlap"
         >
-          <div v-on="onTooltip"><slot></slot></div>
+          <template v-slot:badge>
+            <span v-on="onTooltip">{{errors.length}}</span>
+          </template>
+          <slot></slot>
         </v-badge>
       </template>
 

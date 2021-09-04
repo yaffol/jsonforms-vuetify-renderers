@@ -1,21 +1,19 @@
 <template>
-  <v-container v-if="layout.visible" fluid>
-    <v-layout column>
-      <v-flex
-        v-for="(element, index) in layoutUiSchema.elements"
-        :key="`${layout.path}-${index}`"
-      >
-        <dispatch-renderer
-          :schema="layout.schema"
-          :uischema="element"
-          :path="layout.path"
-          :enabled="layout.enabled"
-          :renderers="layout.renderers"
-          :cells="layout.cells"
-        />
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-layout v-if="layout.visible" column>
+    <v-flex
+      v-for="(element, index) in layoutUiSchema.elements"
+      :key="`${layout.path}-${index}`"
+    >
+      <dispatch-renderer
+        :schema="layout.schema"
+        :uischema="element"
+        :path="layout.path"
+        :enabled="layout.enabled"
+        :renderers="layout.renderers"
+        :cells="layout.cells"
+      />
+    </v-flex>
+  </v-layout>
 </template>
 
 <script lang="ts">

@@ -11,9 +11,14 @@ module.exports = {
         languages: ["json"],
       },
     ]);
-
+   
     return config;
   },
-
+  devServer: {
+    watchOptions: {
+      ignored: ['node_modules'],
+      poll: true,
+    },
+  },
   transpileDependencies: ["vuetify"],
 };

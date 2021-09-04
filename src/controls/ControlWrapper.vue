@@ -1,8 +1,6 @@
 <template>
     
-    <v-container v-if="visible" :class="styles.control.root" :id="id"
-      :fluid="!appliedOptions.trim"
-    >
+    <v-container v-if="visible" :class="styles.control.root" :id="id">
        <slot></slot>
     </v-container>      
   <!--

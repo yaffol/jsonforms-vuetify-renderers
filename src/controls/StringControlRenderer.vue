@@ -22,9 +22,7 @@
         :readonly="appliedOptions.readonly"
 
         v-model="control.data"
-        
         :maxlength="appliedOptions.restrict ? control.schema.maxLength : undefined"
-        :size="appliedOptions.trim && control.schema.maxLength !== undefined ? control.schema.maxLength : undefined"
         :counter="control.schema.maxLength !== undefined ? control.schema.maxLength: undefined"
 
         :clearable="hover == true"
@@ -34,6 +32,7 @@
       />
     </v-hover>
   </control-wrapper>
+  <!--         :full-width="!appliedOptions.trim || control.schema.maxLength === undefined" -->
 </template>
 
 <script lang="ts">

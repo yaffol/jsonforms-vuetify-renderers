@@ -29,7 +29,9 @@
       <v-spacer expand></v-spacer>
 
       <v-select
+        class="shrink mx-4"
         dense
+        rounded
         v-model="validationMode"
         :items="validationModes"
       ></v-select>
@@ -39,70 +41,77 @@
     <v-main>
       <!-- Provides the application the proper gutter -->
       <v-container fluid class="demo" v-if="example != null">
-        <v-tabs v-model="activeTab">
-          <v-tab :key="0">Demo</v-tab>
-          <v-spacer expand />
-          <v-tab :key="1">Schema</v-tab>
-          <v-tab :key="2">UI Schema</v-tab>
-          <v-tab :key="3">Data</v-tab>
+        <v-flex>
+          <v-card>
+            <v-card-title>{{ example.title }}</v-card-title>
+            <v-card-text>
+              <v-tabs v-model="activeTab">
+                <v-tab :key="0">Demo</v-tab>
+                <v-spacer expand />
+                <v-tab :key="1">Schema</v-tab>
+                <v-tab :key="2">UI Schema</v-tab>
+                <v-tab :key="3">Data</v-tab>
 
-          <v-tab-item :key="0">
-            <json-forms
-              :data="example.data"
-              :schema="example.schema"
-              :uischema="example.uischema"
-              :renderers="renderers"
-              :cells="cells"
-              :config="config"
-              :validationMode="validationMode"
-              :ajv="handleDefaultsAjv"
-              :readonly="readonly"
-              @change="onChange"
-            />
-          </v-tab-item>
-          <v-tab-item :key="1">
-            <v-card>
-              <v-card-title>Schema</v-card-title>
-              <v-divider class="mx-4"></v-divider>
-              <monaco-editor
-                height="500"
-                language="json"
-                v-model="monacoSchema"
-                @change="onChangeEditSchema"
-                :editorBeforeMount="schemaEditorBeforeMount"
-                :editorMounted="editorMounted"
-              ></monaco-editor>
-            </v-card>
-          </v-tab-item>
-          <v-tab-item :key="2">
-            <v-card>
-              <v-card-title>UI Schema</v-card-title>
-              <v-divider class="mx-4"></v-divider>
-              <monaco-editor
-                height="500"
-                language="json"
-                v-model="monacoUISchema"
-                @change="onChangeEditUISchema"
-                :editorBeforeMount="uiSchemaEditorBeforeMount"
-                :editorMounted="editorMounted"
-              ></monaco-editor>
-            </v-card>
-          </v-tab-item>
-          <v-tab-item :key="3">
-            <v-card>
-              <v-card-title>Data</v-card-title>
-              <v-divider class="mx-4"></v-divider>
-              <monaco-editor
-                height="500"
-                language="json"
-                v-model="monacoData"
-                @change="onChangeEditData"
-                :editorBeforeMount="dataEditorBeforeMount"
-                :editorMounted="editorMounted"
-              ></monaco-editor>
-            </v-card>
-          </v-tab-item>
-        </v-tabs>
+                <v-tab-item :key="0">
+                  <json-forms
+                    :data="example.data"
+                    :schema="example.schema"
+                    :uischema="example.uischema"
+                    :renderers="renderers"
+                    :cells="cells"
+                    :config="config"
+                    :validationMode="validationMode"
+                    :ajv="handleDefaultsAjv"
+                    :readonly="readonly"
+                    @change="onChange"
+                  />
+                </v-tab-item>
+                <v-tab-item :key="1">
+                  <v-card>
+                    <v-card-title>Schema</v-card-title>
+                    <v-divider class="mx-4"></v-divider>
+                    <monaco-editor
+                      height="500"
+                      language="json"
+                      v-model="monacoSchema"
+                      @change="onChangeEditSchema"
+                      :editorBeforeMount="schemaEditorBeforeMount"
+                      :editorMounted="editorMounted"
+                    ></monaco-editor>
+                  </v-card>
+                </v-tab-item>
+                <v-tab-item :key="2">
+                  <v-card>
+                    <v-card-title>UI Schema</v-card-title>
+                    <v-divider class="mx-4"></v-divider>
+                    <monaco-editor
+                      height="500"
+                      language="json"
+                      v-model="monacoUISchema"
+                      @change="onChangeEditUISchema"
+                      :editorBeforeMount="uiSchemaEditorBeforeMount"
+                      :editorMounted="editorMounted"
+                    ></monaco-editor>
+                  </v-card>
+                </v-tab-item>
+                <v-tab-item :key="3">
+                  <v-card>
+                    <v-card-title>Data</v-card-title>
+                    <v-divider class="mx-4"></v-divider>
+                    <monaco-editor
+                      height="500"
+                      language="json"
+                      v-model="monacoData"
+                      @change="onChangeEditData"
+                      :editorBeforeMount="dataEditorBeforeMount"
+                      :editorMounted="editorMounted"
+                    ></monaco-editor>
+                  </v-card>
+                </v-tab-item>
+              </v-tabs>
+            </v-card-text>
+          </v-card>
+        </v-flex>
       </v-container>
     </v-main>
 
@@ -149,6 +158,7 @@ const myStyles = mergeStyles(defaultStyles, {
 const renderers = Object.freeze(vuetifyRenderers);
 
 type JsonInput = {
+  title: string;
   schema: JsonSchema;
   uischema: UISchemaElement;
   data: any;
@@ -168,7 +178,11 @@ export default defineComponent({
     return {
       readonly: false,
       validationMode: "ValidateAndShow",
-      validationModes: ["ValidateAndShow", "ValidateAndHide", "NoValidation"],
+      validationModes: [
+        { text: "Validate And Show", value: "ValidateAndShow" },
+        { text: "Validate And Hide", value: "ValidateAndHide" },
+        { text: "No Validation", value: "NoValidation" },
+      ],
       activeTab: 0,
       renderers: renderers,
       cells: renderers,
@@ -242,6 +256,7 @@ export default defineComponent({
       const e = this.examples[this.selectedExample.value];
       if (e) {
         return {
+          title: e.title,
           schema: e.input.schema,
           uischema: e.input.uischema,
           data: e.input.data,
