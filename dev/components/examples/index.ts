@@ -1,6 +1,7 @@
 import { input as allOf } from './allOf';
 import { input as anyOf } from './anyOf';
 import { input as array } from './array';
+import { input as arrayWithReorder } from './array-with-reorder';
 import { input as basic } from './basic';
 import { input as categorization } from './categorization';
 import { input as categorizationStepper } from './categorization-stepper';
@@ -13,7 +14,7 @@ import { input as listWithDetails } from './list-with-details';
 import { input as login } from './login';
 import { input as main } from './main';
 import { input as nestedArray } from './nested-array';
-import { input as nestedArrayWithSort } from './nested-array-with-sort';
+import { input as nestedArrayWithReorder } from './nested-array-with-reorder';
 import { input as nestedLayout } from './nested-layout';
 import { input as noSchemas } from './no-schemas';
 import { input as noUISchema } from './no-ui-schema';
@@ -73,12 +74,16 @@ export const examples = [
         input: array
     },
     {
+        title: "Array With Reorder",
+        input: arrayWithReorder
+    },
+    {
         title: "Nested Array",
         input: nestedArray
     },
     {
         title: "Nested Array With Reorder",
-        input: nestedArrayWithSort
+        input: nestedArrayWithReorder
     },
     {
         title: "Rule",
