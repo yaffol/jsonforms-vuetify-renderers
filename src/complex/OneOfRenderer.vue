@@ -1,0 +1,176 @@
+<template>
+  <div v-if="control.visible">
+    <combinator-properties
+      :schema="_schema"
+      :combinatorKeyword="'oneOf'"
+      :path="path"
+    />
+
+    <v-tabs v-model="newSelectedIndex">
+      <v-tab
+        @change="handleTabChange"
+        v-for="(oneOfRenderInfo, oneOfIndex) in oneOfRenderInfos"
+        :key="`${control.path}-${oneOfIndex}`"
+      >
+        {{ oneOfRenderInfo.label }}
+      </v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="selectedIndex">
+      <v-tab-item
+        v-for="(oneOfRenderInfo, oneOfIndex) in oneOfRenderInfos"
+        :key="`${control.path}-${oneOfIndex}`"
+      >
+        <dispatch-renderer
+          v-if="selectedIndex === oneOfIndex"
+          :key="oneOfIndex"
+          :schema="oneOfRenderInfo.schema"
+          :uischema="oneOfRenderInfo.uischema"
+          :path="control.path"
+          :renderers="control.renderers"
+          :cells="control.cells"
+        />
+      </v-tab-item>
+    </v-tabs-items>
+
+    <v-dialog v-model="dialog" max-width="600">
+      <v-card>
+        <v-card-title class="text-h5"> Clear form? </v-card-title>
+
+        <v-card-text>
+          Your data will be cleared if you navigate away from this tab. Do you
+          want to proceed?
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn text @click="cancel"> No </v-btn>
+
+          <v-btn text @click="confirm"> Yes </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
+</template>
+
+<script lang="ts">
+import {
+  ControlElement,
+  createCombinatorRenderInfos,
+  isOneOfControl,
+  JsonFormsRendererRegistryEntry,
+  rankWith,
+  createDefaultValue,
+  resolveSubSchemas,
+} from "@jsonforms/core";
+import {
+  DispatchRenderer,
+  rendererProps,
+  RendererProps,
+  useJsonFormsOneOfControl,
+} from "../../config/jsonforms";
+import {
+  VDialog,
+  VCard,
+  VCardTitle,
+  VCardText,
+  VCardActions,
+  VSpacer,
+  VBtn,
+  VTabs,
+  VTab,
+  VTabsItems,
+  VTabItem,
+} from "vuetify/lib";
+import { defineComponent, ref } from "../../config/vue";
+import { useVuetifyControl } from "../util";
+import { CombinatorProperties } from "./components";
+import isEmpty from "lodash/isEmpty";
+
+const controlRenderer = defineComponent({
+  name: "oneof-renderer",
+  components: {
+    DispatchRenderer,
+    CombinatorProperties,
+    VDialog,
+    VCard,
+    VCardTitle,
+    VCardText,
+    VCardActions,
+    VSpacer,
+    VBtn,
+    VTabs,
+    VTab,
+    VTabsItems,
+    VTabItem,
+  },
+  props: {
+    ...rendererProps<ControlElement>(),
+  },
+  setup(props: RendererProps<ControlElement>) {
+    const input = useJsonFormsOneOfControl(props);
+    const control = (input.control as any).value as typeof input.control;
+
+    const _schema = resolveSubSchemas(
+      control.schema,
+      control.rootSchema,
+      "oneOf"
+    );
+    const oneOfRenderInfos = createCombinatorRenderInfos(
+      _schema.oneOf!,
+      control.rootSchema,
+      "oneOf",
+      control.uischema,
+      control.path,
+      control.uischemas
+    );
+
+    const selectedIndex = ref(control.indexOfFittingSchema || 0);
+    const newSelectedIndex = ref(selectedIndex.value);
+    const dialog = ref(false);
+
+    return {
+      ...useVuetifyControl(input),
+      _schema,
+      oneOfRenderInfos,
+      selectedIndex,
+      dialog,
+      newSelectedIndex,
+    };
+  },
+  methods: {
+    handleTabChange(): void {
+      if (!isEmpty(this.control.data)) {
+        this.dialog = true;
+      } else {
+        this.$nextTick(() => {
+          this.selectedIndex = this.newSelectedIndex;
+        });
+      }
+    },
+    confirm(_event: Event): void {
+      this.openNewTab();
+      this.dialog = false;
+    },
+    cancel(_event: Event): void {
+      this.newSelectedIndex = this.selectedIndex;
+      this.dialog = false;
+    },
+    openNewTab(): void {
+      this.handleChange(
+        this.path,
+        createDefaultValue(this.control.schema.oneOf![this.newSelectedIndex])
+      );
+      this.selectedIndex = this.newSelectedIndex;
+    },
+  },
+});
+
+export default controlRenderer;
+
+export const entry: JsonFormsRendererRegistryEntry = {
+  renderer: controlRenderer,
+  tester: rankWith(3, isOneOfControl),
+};
+</script>

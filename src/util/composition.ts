@@ -1,14 +1,12 @@
-import { useStyles } from '../styles';
-import { computed, ref } from '../../config/vue';
-import merge from 'lodash/merge';
-import cloneDeep from 'lodash/cloneDeep';
 import {
   composePaths,
   findUISchema,
-  getFirstPrimitiveProp,
-  Resolve,
-  isDescriptionHidden
+  getFirstPrimitiveProp, isDescriptionHidden, Resolve
 } from '@jsonforms/core';
+import cloneDeep from 'lodash/cloneDeep';
+import merge from 'lodash/merge';
+import { computed, ref } from '../../config/vue';
+import { useStyles } from '../styles';
 
 /**
  * Adds styles, isFocused, appliedOptions and onChange
@@ -149,5 +147,37 @@ export const useVuetifyArrayControl = <I extends { control: any }>(
     appliedOptions,
     childUiSchema,
     childLabelForIndex
+  };
+};
+
+
+/**
+ * Adds styles, appliedOptions and childUiSchema
+ */
+ export const useVuetifyMultiEnumControl = <I extends { control: any }>(
+  input: I
+) => {
+  const appliedOptions = computed(() =>
+    merge(
+      {},
+      cloneDeep(input.control.value.config),
+      cloneDeep(input.control.value.uischema.options)
+    )
+  );
+
+  const childUiSchema = computed(() =>
+    findUISchema(
+      input.control.value.uischemas,
+      input.control.value.schema,
+      input.control.value.uischema.scope,
+      input.control.value.path
+    )
+  );
+
+  return {
+    ...input,
+    styles: useStyles(input.control.value.uischema),
+    appliedOptions,
+    childUiSchema,
   };
 };

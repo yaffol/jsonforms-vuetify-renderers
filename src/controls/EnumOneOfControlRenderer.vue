@@ -20,7 +20,7 @@
         :readonly="appliedOptions.readonly"
         :clearable="hover == true"
         v-model="control.data"
-        :items="options"
+        :items="control.options"
         item-text="label"
         item-value="value"
         @change="onChange"
@@ -67,6 +67,6 @@ export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(2, isOneOfEnumControl),
+  tester: rankWith(5, isOneOfEnumControl),
 };
 </script>
