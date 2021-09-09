@@ -8,18 +8,23 @@ import { input as categorizationStepper } from './categorization-stepper';
 import { input as categorizationStepperNav } from './categorization-stepper-nav';
 import { input as control } from './control';
 import { input as controlOptions } from './control-options';
+import { input as enumExample } from './enum';
+import { input as enumInArray } from './enum-in-array';
 import { input as groupLayout } from './group-layout';
 import { input as horizontalLayout } from './horizontal-layout';
 import { input as listWithDetails } from './list-with-details';
 import { input as login } from './login';
 import { input as main } from './main';
+import { input as multiEnum } from './multi-enum';
 import { input as nestedArray } from './nested-array';
 import { input as nestedArrayWithReorder } from './nested-array-with-reorder';
 import { input as nestedLayout } from './nested-layout';
 import { input as noSchemas } from './no-schemas';
 import { input as noUISchema } from './no-ui-schema';
+import { input as object } from './object';
 import { input as oneOf } from './oneOf';
 import { input as radio } from './radio';
+import { input as rootObject } from './root-object';
 import { input as rule } from './rule';
 import { input as verticalLayout } from './vertical-layout';
 import { input as huge } from './huge';
@@ -41,6 +46,18 @@ export const examples = [
         title: "Control Options",
         input: controlOptions
     },
+    {
+        title: "Enum",
+        input: enumExample
+    },    
+    {
+        title: "Enum In Array",
+        input: enumInArray
+    },    
+    {
+        title: "Multi Enum",
+        input: multiEnum
+    },    
     {
         title: "Categorization",
         input: categorization
@@ -100,6 +117,14 @@ export const examples = [
     {
         title: "Generate UI Schema",
         input: noUISchema
+    },
+    {
+        title: "Object",
+        input: object
+    },
+    {
+        title: "Root Object",
+        input: rootObject
     },
     {
         title: "Generate Both Schemas",
