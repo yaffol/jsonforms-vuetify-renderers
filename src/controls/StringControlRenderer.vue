@@ -5,10 +5,9 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-
     <v-hover v-slot="{ hover }">
       <v-text-field
-
+        v-disabled-icon-focus
         :id="control.id + '-input'"
         :class="styles.control.input"
         :disabled="!control.enabled"
@@ -20,12 +19,16 @@
         :required="control.required"
         :error-messages="control.errors"
         :readonly="appliedOptions.readonly"
-
         v-model="control.data"
-        :maxlength="appliedOptions.restrict ? control.schema.maxLength : undefined"
-        :counter="control.schema.maxLength !== undefined ? control.schema.maxLength: undefined"
-
-        :clearable="hover == true"
+        :maxlength="
+          appliedOptions.restrict ? control.schema.maxLength : undefined
+        "
+        :counter="
+          control.schema.maxLength !== undefined
+            ? control.schema.maxLength
+            : undefined
+        "
+        :clearable="hover"
         @change="onChange"
         @focus="isFocused = true"
         @blur="isFocused = false"
@@ -40,33 +43,45 @@ import {
   ControlElement,
   JsonFormsRendererRegistryEntry,
   rankWith,
-  isStringControl
-} from '@jsonforms/core';
-import { defineComponent } from '../../config/vue';
-import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
-import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useVuetifyControl } from '../util';
-import { VHover, VTextField } from 'vuetify/lib';
+  isStringControl,
+} from "@jsonforms/core";
+import { defineComponent } from "../../config/vue";
+import {
+  rendererProps,
+  useJsonFormsControl,
+  RendererProps,
+} from "../../config/jsonforms";
+import { default as ControlWrapper } from "./ControlWrapper.vue";
+import { useVuetifyControl } from "../util";
+import { VHover, VTextField } from "vuetify/lib";
+import { DisabledIconFocus } from "./directives";
 
 const controlRenderer = defineComponent({
-  name: 'string-control-renderer',
+  name: "string-control-renderer",
   components: {
     ControlWrapper,
     VHover,
     VTextField,
   },
+  directives: {
+    DisabledIconFocus,
+  },
   props: {
-    ...rendererProps<ControlElement>()
+    ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props), value => value || undefined);
-  }
+    return useVuetifyControl(
+      useJsonFormsControl(props),
+      (value) => value || undefined
+    );
+  },
 });
 
 export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(1, isStringControl)
+  tester: rankWith(1, isStringControl),
 };
 </script>
+

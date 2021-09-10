@@ -1,17 +1,19 @@
 <template>
   <v-layout v-if="control.visible" row>
     <v-flex v-for="(o, index) in control.options" :key="o.value">
-      <v-checkbox
-        :label="o.label"
-        :value="o.value"
-        :id="control.id + `-input-${index}`"
-        :path="composePaths(control.path, `${index}`)"
-        :error-messages="control.errors"
-        :readonly="appliedOptions.readonly"
-        multiple
-        v-model="control.data"
-        @change="onChange"
-      ></v-checkbox>
+      <v-container fluid>
+        <v-checkbox
+          :label="o.label"
+          :value="o.value"
+          :id="control.id + `-input-${index}`"
+          :path="composePaths(control.path, `${index}`)"
+          :error-messages="control.errors"
+          :readonly="appliedOptions.readonly"
+          multiple
+          v-model="control.data"
+          @change="onChange"
+        ></v-checkbox>
+      </v-container>
     </v-flex>
   </v-layout>
 </template>

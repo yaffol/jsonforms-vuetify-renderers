@@ -23,11 +23,14 @@ import { input as noSchemas } from './no-schemas';
 import { input as noUISchema } from './no-ui-schema';
 import { input as object } from './object';
 import { input as oneOf } from './oneOf';
+import { input as oneOfRecursive } from './oneOf-recursive';
 import { input as radio } from './radio';
+import { input as radioGroup } from './radio-group';
 import { input as rootObject } from './root-object';
 import { input as rule } from './rule';
 import { input as verticalLayout } from './vertical-layout';
 import { input as huge } from './huge';
+import { input as ifThenElse } from './if-then-else';
 
 export const examples = [
     {
@@ -115,8 +118,8 @@ export const examples = [
         input: radio
     },
     {
-        title: "Generate UI Schema",
-        input: noUISchema
+        title: "Radio Group",
+        input: radioGroup
     },
     {
         title: "Object",
@@ -127,12 +130,20 @@ export const examples = [
         input: rootObject
     },
     {
+        title: "Generate UI Schema",
+        input: noUISchema
+    },
+    {
         title: "Generate Both Schemas",
         input: noSchemas
     },
     {
         title: "Combinators oneOf",
         input: oneOf
+    },
+    {
+        title: "Combinators oneOf recursive",
+        input: oneOfRecursive
     },
     {
         title: "Combinators anyOf",
@@ -145,6 +156,10 @@ export const examples = [
     {
         title: "List With Details",
         input: listWithDetails
+    },
+    {
+        title: "If Then Else",
+        input: ifThenElse
     },
     {
         title: "Huge",

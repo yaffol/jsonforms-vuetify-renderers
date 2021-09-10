@@ -7,7 +7,7 @@
   >
     <v-hover v-slot="{ hover }">
       <v-textarea
-
+        v-disabled-icon-focus
         :id="control.id + '-input'"
         :class="styles.control.textarea"
         :disabled="!control.enabled"
@@ -19,19 +19,22 @@
         :required="control.required"
         :error-messages="control.errors"
         :readonly="appliedOptions.readonly"
-
         v-model="control.data"
- 
-        :maxlength="appliedOptions.restrict ? control.schema.maxLength : undefined"
-        :size="appliedOptions.trim && control.schema.maxLength !== undefined ? control.schema.maxLength : undefined"
-
-        :clearable="hover == true"
+        :maxlength="
+          appliedOptions.restrict ? control.schema.maxLength : undefined
+        "
+        :size="
+          appliedOptions.trim && control.schema.maxLength !== undefined
+            ? control.schema.maxLength
+            : undefined
+        "
+        :clearable="hover"
         multi-line
         @change="onChange"
         @focus="isFocused = true"
         @blur="isFocused = false"
       />
-    </v-hover>  
+    </v-hover>
   </control-wrapper>
 </template>
 
@@ -42,33 +45,44 @@ import {
   rankWith,
   isStringControl,
   isMultiLineControl,
-  and
-} from '@jsonforms/core';
-import { defineComponent } from '../../config/vue';
-import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
-import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useVuetifyControl } from '../util';
-import { VHover, VTextarea } from 'vuetify/lib';
+  and,
+} from "@jsonforms/core";
+import { defineComponent } from "../../config/vue";
+import {
+  rendererProps,
+  useJsonFormsControl,
+  RendererProps,
+} from "../../config/jsonforms";
+import { default as ControlWrapper } from "./ControlWrapper.vue";
+import { useVuetifyControl } from "../util";
+import { VHover, VTextarea } from "vuetify/lib";
+import { DisabledIconFocus } from "./directives";
 
 const controlRenderer = defineComponent({
-  name: 'multi-string-control-renderer',
+  name: "multi-string-control-renderer",
   components: {
     ControlWrapper,
     VHover,
-    VTextarea
+    VTextarea,
+  },
+  directives: {
+    DisabledIconFocus,
   },
   props: {
-    ...rendererProps<ControlElement>()
+    ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsControl(props), value => value || undefined);
-  }
+    return useVuetifyControl(
+      useJsonFormsControl(props),
+      (value) => value || undefined
+    );
+  },
 });
 
 export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(2, and(isStringControl, isMultiLineControl))
+  tester: rankWith(2, and(isStringControl, isMultiLineControl)),
 };
 </script>

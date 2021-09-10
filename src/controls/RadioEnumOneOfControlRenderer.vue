@@ -5,27 +5,24 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-
-    <v-radio-group 
+    <v-label :for="control.id + '-input'">{{ control.label }}</v-label>
+    <v-radio-group
       :id="control.id + '-input'"
       :class="styles.control.input"
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
-      :label="control.label"
       :hint="control.description"
       :persistent-hint="persistentHint()"
       :required="control.required"
       :error-messages="control.errors"
       :readonly="appliedOptions.readonly"
-
+      row
       v-model="control.data"
-
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
-      >
-
+    >
       <v-radio
         v-for="o in control.options"
         :key="o.value"
@@ -33,7 +30,6 @@
         :value="o.value"
       ></v-radio>
     </v-radio-group>
-
   </control-wrapper>
 </template>
 
@@ -44,33 +40,38 @@ import {
   rankWith,
   isOneOfEnumControl,
   optionIs,
-  and
-} from '@jsonforms/core';
-import { defineComponent } from '../../config/vue';
-import { rendererProps, useJsonFormsOneOfEnumControl, RendererProps } from '../../config/jsonforms';
-import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useVuetifyControl } from '../util';
-import { VRadioGroup, VRadio } from 'vuetify/lib';
+  and,
+} from "@jsonforms/core";
+import { defineComponent } from "../../config/vue";
+import {
+  rendererProps,
+  useJsonFormsOneOfEnumControl,
+  RendererProps,
+} from "../../config/jsonforms";
+import { default as ControlWrapper } from "./ControlWrapper.vue";
+import { useVuetifyControl } from "../util";
+import { VRadioGroup, VRadio, VLabel } from "vuetify/lib";
 
 const controlRenderer = defineComponent({
-  name: 'radio-enum-oneof-control-renderer',
+  name: "radio-enum-oneof-control-renderer",
   components: {
     ControlWrapper,
     VRadioGroup,
     VRadio,
+    VLabel,
   },
   props: {
-    ...rendererProps<ControlElement>()
+    ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
     return useVuetifyControl(useJsonFormsOneOfEnumControl(props));
-  }
+  },
 });
 
 export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(20, and(isOneOfEnumControl, optionIs('format', 'radio')))
+  tester: rankWith(20, and(isOneOfEnumControl, optionIs("format", "radio"))),
 };
 </script>

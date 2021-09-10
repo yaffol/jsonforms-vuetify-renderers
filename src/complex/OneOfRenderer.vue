@@ -6,7 +6,7 @@
       :path="path"
     />
 
-    <v-tabs v-model="newSelectedIndex">
+    <v-tabs v-model="tabIndex">
       <v-tab
         @change="handleTabChange"
         v-for="(oneOfRenderInfo, oneOfIndex) in oneOfRenderInfos"
@@ -33,7 +33,7 @@
       </v-tab-item>
     </v-tabs-items>
 
-    <v-dialog v-model="dialog" max-width="600">
+    <v-dialog v-model="dialog" persistent max-width="600" @keydown.esc="cancel">
       <v-card>
         <v-card-title class="text-h5"> Clear form? </v-card-title>
 
@@ -47,7 +47,7 @@
 
           <v-btn text @click="cancel"> No </v-btn>
 
-          <v-btn text @click="confirm"> Yes </v-btn>
+          <v-btn text ref="confirm" @click="confirm"> Yes </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -87,6 +87,7 @@ import { defineComponent, ref } from "../../config/vue";
 import { useVuetifyControl } from "../util";
 import { CombinatorProperties } from "./components";
 import isEmpty from "lodash/isEmpty";
+import Vue from "vue";
 
 const controlRenderer = defineComponent({
   name: "oneof-renderer",
@@ -127,7 +128,8 @@ const controlRenderer = defineComponent({
     );
 
     const selectedIndex = ref(control.indexOfFittingSchema || 0);
-    const newSelectedIndex = ref(selectedIndex.value);
+    const tabIndex = ref(selectedIndex.value);
+    const newSelectedIndex = ref(0);
     const dialog = ref(false);
 
     return {
@@ -135,6 +137,7 @@ const controlRenderer = defineComponent({
       _schema,
       oneOfRenderInfos,
       selectedIndex,
+      tabIndex,
       dialog,
       newSelectedIndex,
     };
@@ -143,9 +146,18 @@ const controlRenderer = defineComponent({
     handleTabChange(): void {
       if (!isEmpty(this.control.data)) {
         this.dialog = true;
+        this.$nextTick(() => {
+          this.newSelectedIndex = this.tabIndex;
+          // revert the selection while the dialog is open
+          this.tabIndex = this.selectedIndex;
+        });
+        // this.$nextTick does not work so use setTimeout
+        setTimeout(() =>
+          ((this.$refs.confirm as Vue).$el as HTMLElement).focus()
+        );
       } else {
         this.$nextTick(() => {
-          this.selectedIndex = this.newSelectedIndex;
+          this.selectedIndex = this.tabIndex;
         });
       }
     },
@@ -162,6 +174,7 @@ const controlRenderer = defineComponent({
         this.path,
         createDefaultValue(this.control.schema.oneOf![this.newSelectedIndex])
       );
+      this.tabIndex = this.newSelectedIndex;
       this.selectedIndex = this.newSelectedIndex;
     },
   },

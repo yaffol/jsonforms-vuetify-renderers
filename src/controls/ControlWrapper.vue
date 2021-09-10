@@ -1,8 +1,8 @@
 <template>
     
-    <v-container v-if="visible" :class="styles.control.root" :id="id">
+    <div v-if="visible" :class="styles.control.root" :id="id">
        <slot></slot>
-    </v-container>      
+    </div>      
   <!--
   <div v-if="visible" :class="styles.control.root" :id="id">
     <label :for="id + '-input'" :class="styles.control.label">

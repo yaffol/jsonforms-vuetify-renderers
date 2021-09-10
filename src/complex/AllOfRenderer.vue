@@ -10,10 +10,7 @@
         :cells="control.cells"
       />
     </template>
-    <template
-      v-else
-      v-for="(allOfRenderInfo, allOfIndex) in allOfRenderInfos"
-    >
+    <template v-else-if="allOfRenderInfos" v-for="(allOfRenderInfo, allOfIndex) in allOfRenderInfos">
       <dispatch-renderer
         :key="allOfIndex"
         :schema="allOfRenderInfo.schema"
@@ -29,24 +26,22 @@
 
 <script lang="ts">
 import {
+  CombinatorSubSchemaRenderInfo,
+  ControlElement,
+  createCombinatorRenderInfos,
+  findMatchingUISchema,
+  isAllOfControl,
   JsonFormsRendererRegistryEntry,
   rankWith,
-  ControlElement,
-  JsonSchema,
   resolveSubSchemas,
-  findMatchingUISchema,
-  createCombinatorRenderInfos,
-  UISchemaElement,
-  CombinatorSubSchemaRenderInfo,
-  isAllOfControl,
 } from "@jsonforms/core";
-import { defineComponent } from "../../config/vue";
 import {
   DispatchRenderer,
   rendererProps,
   RendererProps,
   useJsonFormsAllOfControl,
 } from "../../config/jsonforms";
+import { defineComponent } from "../../config/vue";
 import { useVuetifyControl } from "../util";
 
 const controlRenderer = defineComponent({
@@ -59,7 +54,7 @@ const controlRenderer = defineComponent({
   },
   setup(props: RendererProps<ControlElement>) {
     const input = useJsonFormsAllOfControl(props);
-    const control = ((input.control as any).value) as typeof input.control;
+    const control = (input.control as any).value as typeof input.control;
 
     const _schema = resolveSubSchemas(
       control.schema,
@@ -72,15 +67,18 @@ const controlRenderer = defineComponent({
       control.path
     );
 
+    let allOfRenderInfos: CombinatorSubSchemaRenderInfo[] | undefined = undefined;
+
     if (delegateUISchema) {
       return {
         ...useVuetifyControl(input),
         delegateUISchema,
         _schema,
+        allOfRenderInfos,
       };
     }
 
-    const allOfRenderInfos = createCombinatorRenderInfos(
+    allOfRenderInfos = createCombinatorRenderInfos(
       _schema.allOf!,
       control.rootSchema,
       "allOf",

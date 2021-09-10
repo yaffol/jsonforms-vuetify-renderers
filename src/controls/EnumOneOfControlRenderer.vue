@@ -7,6 +7,7 @@
   >
     <v-hover v-slot="{ hover }">
       <v-select
+        v-disabled-icon-focus
         :id="control.id + '-input'"
         :class="styles.control.input"
         :disabled="!control.enabled"
@@ -18,7 +19,7 @@
         :required="control.required"
         :error-messages="control.errors"
         :readonly="appliedOptions.readonly"
-        :clearable="hover == true"
+        :clearable="hover"
         v-model="control.data"
         :items="control.options"
         item-text="label"
@@ -47,6 +48,7 @@ import {
 import { default as ControlWrapper } from "./ControlWrapper.vue";
 import { useVuetifyControl } from "../util";
 import { VSelect, VHover } from "vuetify/lib";
+import { DisabledIconFocus } from "./directives";
 
 const controlRenderer = defineComponent({
   name: "enum-oneof-control-renderer",
@@ -55,11 +57,17 @@ const controlRenderer = defineComponent({
     VSelect,
     VHover,
   },
+  directives: {
+    DisabledIconFocus,
+  },
   props: {
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useVuetifyControl(useJsonFormsOneOfEnumControl(props), value => value || undefined);
+    return useVuetifyControl(
+      useJsonFormsOneOfEnumControl(props),
+      (value) => value || undefined
+    );
   },
 });
 

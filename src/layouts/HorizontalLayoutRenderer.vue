@@ -1,19 +1,21 @@
 <template>
-  <v-layout v-if="layout.visible" row>
-    <v-flex
-      v-for="(element, index) in layoutUiSchema.elements"
-      :key="`${layout.path}-${index}`"
-    >
-      <dispatch-renderer
-        :schema="layout.schema"
-        :uischema="element"
-        :path="layout.path"
-        :enabled="layout.enabled"
-        :renderers="layout.renderers"
-        :cells="layout.cells"
-      />
-    </v-flex>
-  </v-layout>
+  <v-container v-if="layout.visible">
+    <v-row>
+      <v-col
+        v-for="(element, index) in layoutUiSchema.elements"
+        :key="`${layout.path}-${index}`"
+      >
+        <dispatch-renderer
+          :schema="layout.schema"
+          :uischema="element"
+          :path="layout.path"
+          :enabled="layout.enabled"
+          :renderers="layout.renderers"
+          :cells="layout.cells"
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -32,15 +34,15 @@ import {
   RendererProps,
 } from "../../config/jsonforms";
 import { useVuetifyLayout } from "../util";
-import { VContainer, VLayout, VFlex } from "vuetify/lib";
+import { VContainer, VRow, VCol } from "vuetify/lib";
 
 const layoutRenderer = defineComponent({
   name: "horizontal-layout-renderer",
   components: {
     DispatchRenderer,
     VContainer,
-    VLayout,
-    VFlex,
+    VRow,
+    VCol,
   },
   props: {
     ...rendererProps<Layout>(),

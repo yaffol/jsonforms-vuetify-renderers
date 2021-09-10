@@ -6,7 +6,7 @@
       >{{ groupLayoutUiSchema.label }}</v-card-title
     >
 
-    <v-container
+    <v-card-text
       v-for="(element, index) in groupLayoutUiSchema.elements"
       :key="`${layout.path}-${index}`"
       :class="styles.group.item"
@@ -19,7 +19,7 @@
         :renderers="layout.renderers"
         :cells="layout.cells"
       />
-    </v-container>
+    </v-card-text>
   </v-card>
 </template>
 
@@ -41,15 +41,15 @@ import {
   RendererProps,
 } from "../../config/jsonforms";
 import { useVuetifyLayout } from "../util";
-import { VCard, VContainer, VCardTitle } from "vuetify/lib";
+import { VCard, VCardTitle, VCardText } from "vuetify/lib";
 
 const layoutRenderer = defineComponent({
   name: "group-renderer",
   components: {
     DispatchRenderer,
     VCard,
-    VContainer,
     VCardTitle,
+    VCardText
   },
   props: {
     ...rendererProps<Layout>(),
