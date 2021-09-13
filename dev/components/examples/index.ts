@@ -1,5 +1,6 @@
 import { input as allOf } from './allOf';
 import { input as anyOf } from './anyOf';
+import { input as anyOfSimple } from './anyOf-simple';
 import { input as array } from './array';
 import { input as arrayWithReorder } from './array-with-reorder';
 import { input as basic } from './basic';
@@ -148,6 +149,10 @@ export const examples = [
     {
         title: "Combinators anyOf",
         input: anyOf
+    },
+    {
+        title: "Combinators anyOf simple",
+        input: anyOfSimple
     },
     {
         title: "Combinators allOf",
