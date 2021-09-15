@@ -6,7 +6,6 @@
           <v-toolbar-title>{{ control.label }}</v-toolbar-title>
           <validation-icon
             v-if="control.childErrors.length > 0"
-            id="tooltip-validation"
             :errors="control.childErrors"
           />
           <v-spacer></v-spacer>
@@ -38,7 +37,7 @@
         <v-list-item-group v-model="selectedIndex">
           <v-virtual-scroll
             :items="control.data"
-            :item-height="50"
+            :item-height="64"
             max-height="300"
             min-height="250"
             min-width="250"
@@ -66,45 +65,63 @@
                   </v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-action v-if="appliedOptions.showSortButtons">
-                  <v-btn
-                    fab
-                    text
-                    elevation="0"
-                    small
-                    class="ma-0"
-                    aria-label="Move up"
-                    :disabled="index <= 0"
-                    @click.native="moveUpClick($event, index)"
-                  >
-                    <v-icon class="notranslate">mdi-arrow-up</v-icon>
-                  </v-btn>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on: onTooltip }">
+                      <v-btn
+                        v-on="onTooltip"
+                        fab
+                        text
+                        elevation="0"
+                        small
+                        class="ma-0"
+                        aria-label="Move up"
+                        :disabled="index <= 0"
+                        @click.native="moveUpClick($event, index)"
+                      >
+                        <v-icon class="notranslate">mdi-arrow-up</v-icon>
+                      </v-btn>
+                    </template>
+                    Move Up
+                  </v-tooltip>
                 </v-list-item-action>
                 <v-list-item-action v-if="appliedOptions.showSortButtons">
-                  <v-btn
-                    fab
-                    text
-                    elevation="0"
-                    small
-                    class="ma-0"
-                    aria-label="Move down"
-                    :disabled="index >= control.data.length - 1"
-                    @click.native="moveDownClick($event, index)"
-                  >
-                    <v-icon class="notranslate">mdi-arrow-down</v-icon>
-                  </v-btn>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on: onTooltip }">
+                      <v-btn
+                        v-on="onTooltip"
+                        fab
+                        text
+                        elevation="0"
+                        small
+                        class="ma-0"
+                        aria-label="Move down"
+                        :disabled="index >= control.data.length - 1"
+                        @click.native="moveDownClick($event, index)"
+                      >
+                        <v-icon class="notranslate">mdi-arrow-down</v-icon>
+                      </v-btn>
+                    </template>
+                    Move Down
+                  </v-tooltip>
                 </v-list-item-action>
                 <v-list-item-action>
-                  <v-btn
-                    fab
-                    text
-                    elevation="0"
-                    small
-                    class="ma-0"
-                    aria-label="Delete"
-                    @click.native="removeItemsClick($event, [index])"
-                  >
-                    <v-icon class="notranslate">mdi-delete</v-icon>
-                  </v-btn>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on: onTooltip }">
+                      <v-btn
+                        v-on="onTooltip"
+                        fab
+                        text
+                        elevation="0"
+                        small
+                        class="ma-0"
+                        aria-label="Delete"
+                        @click.native="removeItemsClick($event, [index])"
+                      >
+                        <v-icon class="notranslate">mdi-delete</v-icon>
+                      </v-btn>
+                    </template>
+                    Delete
+                  </v-tooltip>
                 </v-list-item-action>
               </v-list-item>
             </template>
