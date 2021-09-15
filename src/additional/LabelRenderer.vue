@@ -2,11 +2,6 @@
   <v-label v-if="layout.visible" :class="styles.label.root">
     {{ this.layoutUiSchema.text }}
   </v-label>
-  <!--
-  <label v-if="layout.visible" :class="styles.label.root">
-    {{ this.layout.uischema.text }}
-  </label>
-  -->
 </template>
 
 <script lang="ts">

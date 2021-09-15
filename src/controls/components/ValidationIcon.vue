@@ -1,7 +1,6 @@
 <template>
   <validation-badge
     v-if="errors && errors.length > 0"
-    :id="id"
     :errors="errors"
   >
     <v-icon color="error"> mdi-alert-circle-outline </v-icon>
@@ -22,10 +21,6 @@ export default defineComponent({
     VIcon,
   },
   props: {
-    id: {
-      required: true,
-      type: String,
-    },
     errors: {
       required: true,
       type: Array as CompType<ErrorObject, ArrayConstructor>,

@@ -4,7 +4,7 @@
       v-for="(element, index) in layoutUiSchema.elements"
       :key="`${layout.path}-${index}`" no-gutters
     >
-      <v-col cols="12" class="d-flex flex-column">
+      <v-col cols="12">
         <dispatch-renderer
           :schema="layout.schema"
           :uischema="element"

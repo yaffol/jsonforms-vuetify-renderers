@@ -1,120 +1,139 @@
 <template>
-  <v-card v-if="control.visible" :class="styles.arrayList.root" elevation="2">
-    <v-container justify-space-around align-content-center>
-      <v-row align-content-center justify-space-between>
-        <v-toolbar flat>
-          <v-toolbar-title>{{ control.label }}</v-toolbar-title>
-          <validation-icon
-            v-if="control.childErrors.length > 0"
-            id="tooltip-validation"
-            :errors="control.childErrors"
-          />
-          <v-spacer></v-spacer>
+  <v-card v-if="control.visible" :class="styles.arrayList.root" elevation="0">
+    <v-card-title>
+      <v-toolbar flat>
+        <v-toolbar-title>{{ control.label }}</v-toolbar-title>
+        <validation-icon
+          v-if="control.childErrors.length > 0"
+          :errors="control.childErrors"
+        />
+        <v-spacer></v-spacer>
 
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on: onTooltip }">
-              <v-btn
-                fab
-                text
-                elevation="0"
-                small
-                :aria-label="`Add to ${control.label}`"
-                v-on="onTooltip"
-                @click="addButtonClick"
-              >
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-            </template>
-            {{ `Add to ${control.label}` }}
-          </v-tooltip>
-        </v-toolbar>
-      </v-row>
-      <v-row justify="center">
-        <v-expansion-panels accordion>
-          <v-expansion-panel
-            v-for="(element, index) in control.data"
-            :key="`${control.path}-${index}`"
-            :class="styles.arrayList.itemWrapper"
-          >
-            <v-expansion-panel-header>
-              <v-container grid-list-xl flex style="padding: 0px">
-                <v-layout row>
-                  <v-flex align-self-center shrink>
-                    <validation-badge
-                      overlap bordered
-                      id="`${control.path}-${index}-validation-tooltip`"
-                      :errors="childErrors(index)"
-                    >
-                      <v-avatar size="40" aria-label="Index" color="info"
-                        ><span class="info--text text--lighten-5">{{
-                          index + 1
-                        }}</span></v-avatar
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on: onTooltip }">
+            <v-btn
+              fab
+              text
+              elevation="0"
+              small
+              :aria-label="`Add to ${control.label}`"
+              v-on="onTooltip"
+              @click="addButtonClick"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          {{ `Add to ${control.label}` }}
+        </v-tooltip>
+      </v-toolbar>
+    </v-card-title>
+    <v-card-text>
+      <v-container justify-space-around align-content-center>
+        <v-row justify="center">
+          <v-expansion-panels accordion>
+            <v-expansion-panel
+              v-for="(element, index) in control.data"
+              :key="`${control.path}-${index}`"
+              :class="styles.arrayList.itemWrapper"
+            >
+              <v-expansion-panel-header>
+                <v-container grid-list-xl flex style="padding: 0px">
+                  <v-layout row>
+                    <v-flex align-self-center shrink>
+                      <validation-badge
+                        overlap
+                        bordered
+                        :errors="childErrors(index)"
                       >
-                    </validation-badge>
-                  </v-flex>
+                        <v-avatar size="40" aria-label="Index" color="info"
+                          ><span class="info--text text--lighten-5">{{
+                            index + 1
+                          }}</span></v-avatar
+                        >
+                      </validation-badge>
+                    </v-flex>
 
-                  <v-flex align-self-center grow>{{
-                    childLabelForIndex(index)
-                  }}</v-flex>
-                  <v-flex align-self-center shrink>
-                    <v-btn
-                      v-if="appliedOptions.showSortButtons"
-                      fab
-                      text
-                      elevation="0"
-                      small
-                      class="v-expansion-panel-header__icon"
-                      aria-label="Move up"
-                      :disabled="index <= 0"
-                      @click.native="moveUpClick($event, index)"
-                    >
-                      <v-icon class="notranslate">mdi-arrow-up</v-icon>
-                    </v-btn>
-                    <v-btn
-                      v-if="appliedOptions.showSortButtons"
-                      fab
-                      text
-                      elevation="0"
-                      small
-                      class="v-expansion-panel-header__icon"
-                      aria-label="Move down"
-                      :disabled="index >= control.data.length - 1"
-                      @click.native="moveDownClick($event, index)"
-                    >
-                      <v-icon class="notranslate">mdi-arrow-down</v-icon>
-                    </v-btn>
-                    <v-btn
-                      fab
-                      text
-                      elevation="0"
-                      small
-                      class="v-expansion-panel-header__icon"
-                      aria-label="Delete"
-                      @click.native="removeItemsClick($event, [index])"
-                    >
-                      <v-icon class="notranslate">mdi-delete</v-icon>
-                    </v-btn>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <dispatch-renderer
-                :schema="control.schema"
-                :uischema="childUiSchema"
-                :path="composePaths(control.path, `${index}`)"
-                :enabled="control.enabled"
-                :renderers="control.renderers"
-                :cells="control.cells"
-              />
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-row>
-    </v-container>
-    <v-container v-if="noData" :class="styles.arrayList.noData">
-      No data
-    </v-container>
+                    <v-flex align-self-center grow>{{
+                      childLabelForIndex(index)
+                    }}</v-flex>
+                    <v-flex align-self-center shrink>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on: onTooltip }">
+                          <v-btn
+                            v-on="onTooltip"
+                            v-if="appliedOptions.showSortButtons"
+                            fab
+                            text
+                            elevation="0"
+                            small
+                            class="v-expansion-panel-header__icon"
+                            aria-label="Move up"
+                            :disabled="index <= 0"
+                            @click.native="moveUpClick($event, index)"
+                          >
+                            <v-icon class="notranslate">mdi-arrow-up</v-icon>
+                          </v-btn>
+                        </template>
+                        Move Up
+                      </v-tooltip>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on: onTooltip }">
+                          <v-btn
+                            v-on="onTooltip"
+                            v-if="appliedOptions.showSortButtons"
+                            fab
+                            text
+                            elevation="0"
+                            small
+                            class="v-expansion-panel-header__icon"
+                            aria-label="Move down"
+                            :disabled="index >= control.data.length - 1"
+                            @click.native="moveDownClick($event, index)"
+                          >
+                            <v-icon class="notranslate">mdi-arrow-down</v-icon>
+                          </v-btn>
+                        </template>
+                        Move Down
+                      </v-tooltip>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on: onTooltip }">
+                          <v-btn
+                            v-on="onTooltip"
+                            fab
+                            text
+                            elevation="0"
+                            small
+                            class="v-expansion-panel-header__icon"
+                            aria-label="Delete"
+                            @click.native="removeItemsClick($event, [index])"
+                          >
+                            <v-icon class="notranslate">mdi-delete</v-icon>
+                          </v-btn>
+                        </template>
+                        Delete
+                      </v-tooltip>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <dispatch-renderer
+                  :schema="control.schema"
+                  :uischema="childUiSchema"
+                  :path="composePaths(control.path, `${index}`)"
+                  :enabled="control.enabled"
+                  :renderers="control.renderers"
+                  :cells="control.cells"
+                />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-row>
+      </v-container>
+      <v-container v-if="noData" :class="styles.arrayList.noData">
+        No data
+      </v-container></v-card-text
+    >
   </v-card>
 </template>
 
@@ -137,6 +156,8 @@ import {
 import { useVuetifyArrayControl } from "../util";
 import {
   VCard,
+  VCardTitle,
+  VCardText,
   VRow,
   VCol,
   VContainer,
@@ -159,6 +180,9 @@ const controlRenderer = defineComponent({
   components: {
     DispatchRenderer,
     VCard,
+    VCardTitle,
+    VCardText,
+
     VAvatar,
     VRow,
     VCol,

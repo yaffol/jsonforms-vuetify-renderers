@@ -14,6 +14,7 @@ import { input as enumInArray } from './enum-in-array';
 import { input as groupLayout } from './group-layout';
 import { input as horizontalLayout } from './horizontal-layout';
 import { input as listWithDetails } from './list-with-details';
+import { input as listWithDetailsAndReorder } from './list-with-details-and-reorder';
 import { input as login } from './login';
 import { input as main } from './main';
 import { input as multiEnum } from './multi-enum';
@@ -161,6 +162,10 @@ export const examples = [
     {
         title: "List With Details",
         input: listWithDetails
+    },
+    {
+        title: "List With Details And Reorder",
+        input: listWithDetailsAndReorder
     },
     {
         title: "If Then Else",

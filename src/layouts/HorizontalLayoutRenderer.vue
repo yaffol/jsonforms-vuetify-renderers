@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="layout.visible">
+  <v-container v-if="layout.visible" class="pa-0">
     <v-row>
       <v-col
         v-for="(element, index) in layoutUiSchema.elements"

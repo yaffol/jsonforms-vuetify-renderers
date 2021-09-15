@@ -1,6 +1,6 @@
 <template>
-  <div class="text-center d-flex align-center justify-space-around">
-    <v-tooltip :id="id" bottom v-if="errors.length > 0">
+  <div>
+    <v-tooltip bottom v-if="errors.length > 0">
       <template v-slot:activator="{ on: onTooltip }">
         <v-badge
           :color="color"
@@ -11,9 +11,9 @@
           :overlap="overlap"
         >
           <template v-slot:badge>
-            <span v-on="onTooltip">{{errors.length}}</span>
+            {{errors.length}}
           </template>
-          <slot></slot>
+          <div v-on="onTooltip"><slot></slot></div>
         </v-badge>
       </template>
 
@@ -26,7 +26,7 @@
         {{ message }}
       </p>
     </v-tooltip>
-    <slot v-if="errors.length === 0"></slot>
+    <slot v-else></slot>
   </div>
 </template>
 
@@ -48,10 +48,6 @@ export default defineComponent({
     VTooltip,
   },
   props: {
-    id: {
-      required: true,
-      type: String,
-    },
     errors: {
       required: true,
       type: Array as CompType<ErrorObject, ArrayConstructor>,
