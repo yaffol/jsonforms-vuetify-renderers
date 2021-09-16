@@ -53,7 +53,7 @@ import { useVuetifyControl } from "../util";
 import { VRadioGroup, VRadio, VLabel } from "vuetify/lib";
 
 const controlRenderer = defineComponent({
-  name: "radio-enum-control-renderer",
+  name: "radio-group-control-renderer",
   components: {
     ControlWrapper,
     VRadioGroup,

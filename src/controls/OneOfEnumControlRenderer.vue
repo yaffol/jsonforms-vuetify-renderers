@@ -51,7 +51,7 @@ import { VSelect, VHover } from "vuetify/lib";
 import { DisabledIconFocus } from "./directives";
 
 const controlRenderer = defineComponent({
-  name: "enum-oneof-control-renderer",
+  name: "oneof-enum-control-renderer",
   components: {
     ControlWrapper,
     VSelect,

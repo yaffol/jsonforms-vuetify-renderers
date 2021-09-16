@@ -1,13 +1,15 @@
+import { additionalRenderers } from './additional';
 import { arrayRenderers } from './array';
-import { controlRenderers } from './controls';
-import { labelRenderers } from './additional';
-import { layoutRenderers } from './layouts';
 import { complexRenderers } from './complex';
+import { controlRenderers } from './controls';
+import { extendedRenderers } from './extended';
+import { layoutRenderers } from './layouts';
 
 export const vuetifyRenderers = [
-  ...controlRenderers,
-  ...layoutRenderers,
+  ...additionalRenderers,
   ...arrayRenderers,
-  ...labelRenderers,
   ...complexRenderers,
+  ...controlRenderers,
+  ...extendedRenderers,
+  ...layoutRenderers,
 ];
