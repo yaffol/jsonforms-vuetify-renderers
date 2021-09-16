@@ -61,7 +61,14 @@
                 </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title>
-                    {{ childLabelForIndex(index) }}
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on: onTooltip }">
+                        <span v-on="onTooltip">
+                          {{ childLabelForIndex(index) }}</span
+                        >
+                      </template>
+                      {{ childLabelForIndex(index) }}
+                    </v-tooltip>
                   </v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-action v-if="appliedOptions.showSortButtons">

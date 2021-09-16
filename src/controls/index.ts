@@ -1,10 +1,11 @@
 export { default as ControlWrapper } from './ControlWrapper.vue';
+export { default as AnyOfStringOrEnumControlRenderer } from './AnyOfStringOrEnumControl.vue';
 export { default as StringControlRenderer } from './StringControlRenderer.vue';
 export { default as MultiStringControlRenderer } from './MultiStringControlRenderer.vue';
 export { default as NumberControlRenderer } from './NumberControlRenderer.vue';
 export { default as IntegerControlRenderer } from './IntegerControlRenderer.vue';
 export { default as EnumControlRenderer } from './EnumControlRenderer.vue';
-export { default as oneOfEnumControlRenderer} from './EnumOneOfControlRenderer.vue';
+export { default as EnumOneOfControlRenderer} from './EnumOneOfControlRenderer.vue';
 export { default as DateControlRenderer} from './DateControlRenderer.vue';
 export { default as DateTimeControlRenderer} from './DateTimeControlRenderer.vue';
 export { default as TimeControlRenderer} from './TimeControlRenderer.vue';
@@ -15,12 +16,13 @@ export { default as SliderControlRenderer } from './SliderControlRenderer.vue'
 export { default as RadioEnumControlRenderer } from './RadioEnumControlRenderer.vue'
 export { default as RadioEnumOneOfControlRenderer } from './RadioEnumOneOfControlRenderer.vue'
 
+import { entry as anyOfStringOrEnumControlRendererEntry } from './AnyOfStringOrEnumControl.vue';
 import { entry as stringControlRendererEntry } from './StringControlRenderer.vue';
 import { entry as multiStringControlRendererEntry } from './MultiStringControlRenderer.vue';
 import { entry as numberControlRendererEntry } from './NumberControlRenderer.vue';
 import { entry as integerControlRendererEntry } from './IntegerControlRenderer.vue';
 import { entry as enumControlRendererEntry } from './EnumControlRenderer.vue';
-import { entry as oneOfEnumControlRendererEntry } from './EnumOneOfControlRenderer.vue';
+import { entry as enumOneOfControlRendererEntry } from './EnumOneOfControlRenderer.vue';
 import { entry as dateControlRendererEntry } from './DateControlRenderer.vue';
 import { entry as dateTimeControlRendererEntry } from './DateTimeControlRenderer.vue';
 import { entry as timeControlRendererEntry } from './TimeControlRenderer.vue';
@@ -32,12 +34,13 @@ import { entry as radioEnumControlRenderer} from './RadioEnumControlRenderer.vue
 import { entry as radioEnumOneOfControlRenderer} from './RadioEnumOneOfControlRenderer.vue';
 
 export const controlRenderers = [
+  anyOfStringOrEnumControlRendererEntry,
   stringControlRendererEntry,
   multiStringControlRendererEntry,
   numberControlRendererEntry,
   integerControlRendererEntry,
   enumControlRendererEntry,
-  oneOfEnumControlRendererEntry,
+  enumOneOfControlRendererEntry,
   dateControlRendererEntry,
   dateTimeControlRendererEntry,
   timeControlRendererEntry,
