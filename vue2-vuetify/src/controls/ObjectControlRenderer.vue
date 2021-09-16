@@ -1,15 +1,17 @@
 <template>
-  <div>
-    this is the object renderer
-    <dispatch-renderer
-      :schema="control.schema"
-      :uischema="detailUiSchema"
-      :path="control.path"
-      :enabled="enabled"
-      :renderers="renderers"
-      :cells="cells"
-    />
-  </div>
+  <v-card elevation="2">
+    <v-card-text>
+      this is the object elevated renderer
+      <dispatch-renderer
+        :schema="control.schema"
+        :uischema="detailUiSchema"
+        :path="control.path"
+        :enabled="enabled"
+        :renderers="renderers"
+        :cells="cells"
+      />
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -29,11 +31,14 @@ import {
   DispatchRenderer,
 } from '@jsonforms/vue2';
 import { defineComponent } from '@vue/composition-api';
+import { VCard, VCardText } from 'vuetify/lib';
 
 const controlRenderer = defineComponent({
   name: 'object-renderer',
   components: {
     DispatchRenderer,
+    VCard,
+    VCardText,
   },
   props: {
     ...rendererProps(),
