@@ -42,6 +42,13 @@
         label="Vuetify Theme Dark"
         persistent-hint
       ></v-switch>
+      <v-switch
+        v-model="$vuetify.rtl"
+        hint="This toggles RTL"
+        inset
+        label="Vuetify RTL"
+        persistent-hint
+      ></v-switch>
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
