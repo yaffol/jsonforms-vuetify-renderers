@@ -1,8 +1,10 @@
 <template>
   <v-card v-if="control.visible" :class="styles.arrayList.root" elevation="0">
     <v-card-title>
-      <v-toolbar flat>
-        <v-toolbar-title>{{ control.label }}</v-toolbar-title>
+      <v-toolbar flat :class="styles.arrayList.toolbar">
+        <v-toolbar-title :class="styles.arrayList.label">{{
+          control.label
+        }}</v-toolbar-title>
         <validation-icon
           v-if="control.childErrors.length > 0"
           :errors="control.childErrors"
@@ -18,6 +20,7 @@
               small
               :aria-label="`Add to ${control.label}`"
               v-on="onTooltip"
+              :class="styles.arrayList.addButton"
               @click="addButtonClick"
             >
               <v-icon>mdi-plus</v-icon>
@@ -34,9 +37,9 @@
             <v-expansion-panel
               v-for="(element, index) in control.data"
               :key="`${control.path}-${index}`"
-              :class="styles.arrayList.itemWrapper"
+              :class="styles.arrayList.item"
             >
-              <v-expansion-panel-header>
+              <v-expansion-panel-header :class="styles.arrayList.itemHeader">
                 <v-container grid-list-xl flex style="padding: 0px">
                   <v-layout row>
                     <v-flex align-self-center shrink>
@@ -53,9 +56,12 @@
                       </validation-badge>
                     </v-flex>
 
-                    <v-flex align-self-center grow>{{
-                      childLabelForIndex(index)
-                    }}</v-flex>
+                    <v-flex
+                      align-self-center
+                      grow
+                      :class="styles.arrayList.itemLabel"
+                      >{{ childLabelForIndex(index) }}</v-flex
+                    >
                     <v-flex align-self-center shrink>
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on: onTooltip }">
@@ -69,6 +75,7 @@
                             class="v-expansion-panel-header__icon"
                             aria-label="Move up"
                             :disabled="index <= 0"
+                            :class="styles.arrayList.itemMoveUp"
                             @click.native="moveUpClick($event, index)"
                           >
                             <v-icon class="notranslate">mdi-arrow-up</v-icon>
@@ -88,6 +95,7 @@
                             class="v-expansion-panel-header__icon"
                             aria-label="Move down"
                             :disabled="index >= control.data.length - 1"
+                            :class="styles.arrayList.itemMoveDown"
                             @click.native="moveDownClick($event, index)"
                           >
                             <v-icon class="notranslate">mdi-arrow-down</v-icon>
@@ -105,6 +113,7 @@
                             small
                             class="v-expansion-panel-header__icon"
                             aria-label="Delete"
+                            :class="styles.arrayList.itemDelete"
                             @click.native="removeItemsClick($event, [index])"
                           >
                             <v-icon class="notranslate">mdi-delete</v-icon>
@@ -116,7 +125,7 @@
                   </v-layout>
                 </v-container>
               </v-expansion-panel-header>
-              <v-expansion-panel-content>
+              <v-expansion-panel-content :class="styles.arrayList.itemContent">
                 <dispatch-renderer
                   :schema="control.schema"
                   :uischema="childUiSchema"

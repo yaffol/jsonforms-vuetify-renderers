@@ -1,79 +1,65 @@
 <template>
-    
-    <div v-if="visible" :class="styles.control.root" :id="id">
-       <slot></slot>
-    </div>      
-  <!--
   <div v-if="visible" :class="styles.control.root" :id="id">
-    <label :for="id + '-input'" :class="styles.control.label">
-      {{ computedLabel }}
-    </label>
-    <div :class="styles.control.wrapper">
-      <slot></slot>
-    </div>
-    <div :class="errors ? styles.control.error : styles.control.description">
-      {{ errors ? errors : showDescription ? description : null }}
-    </div>
+    <slot></slot>
   </div>
-    -->
 </template>
 
 <script lang="ts">
-import { isDescriptionHidden, computeLabel } from '@jsonforms/core';
-import { defineComponent, CompType } from '../../config/vue';
-import { Styles } from '../styles';
-import { Options } from '../util';
-import { VContainer } from 'vuetify/lib';
+import { isDescriptionHidden, computeLabel } from "@jsonforms/core";
+import { defineComponent, CompType } from "../../config/vue";
+import { Styles } from "../styles";
+import { Options } from "../util";
+import { VContainer } from "vuetify/lib";
 
 export default defineComponent({
-  name: 'control-wrapper',
+  name: "control-wrapper",
   components: {
     VContainer,
   },
   props: {
     id: {
       required: true as true,
-      type: String
+      type: String,
     },
     description: {
       required: false as false,
       type: String,
-      default: undefined
+      default: undefined,
     },
     errors: {
       required: false as false,
       type: String,
-      default: undefined
+      default: undefined,
     },
     label: {
       required: false as false,
       type: String,
-      default: undefined
+      default: undefined,
     },
     appliedOptions: {
       required: false as false,
       type: Object as CompType<Options, ObjectConstructor>,
-      default: undefined
+      default: undefined,
     },
     visible: {
       required: false as false,
       type: Boolean,
-      default: true
+      default: true,
     },
     required: {
       required: false as false,
       type: Boolean,
-      default: false
+      default: false,
     },
     isFocused: {
       required: false as false,
       type: Boolean,
-      default: false
+      default: false,
     },
     styles: {
       required: true,
-      type: Object as CompType<Styles, ObjectConstructor>
-    }
+      type: Object as CompType<Styles, ObjectConstructor>,
+    },
   },
   computed: {
     showDescription(): boolean {
@@ -90,7 +76,7 @@ export default defineComponent({
         this.required,
         !!this.appliedOptions?.hideRequiredAsterisk
       );
-    }
-  }
+    },
+  },
 });
 </script>

@@ -1,9 +1,9 @@
 <template>
-  <v-container v-if="layout.visible" class="pa-0">
+  <v-container v-if="layout.visible" :class="styles.horizontalLayout.root">
     <v-row>
       <v-col
         v-for="(element, index) in layoutUiSchema.elements"
-        :key="`${layout.path}-${index}`"
+        :key="`${layout.path}-${index}`" :class="styles.horizontalLayout.item"
       >
         <dispatch-renderer
           :schema="layout.schema"

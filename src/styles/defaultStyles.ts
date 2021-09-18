@@ -3,14 +3,7 @@ import { Styles } from "./styles";
 export const defaultStyles: Styles = {
   control: {
     root: 'control',
-    wrapper: 'wrapper',
-    label: 'label',
-    description: 'description',
     input: 'input',
-    error: 'error',
-    textarea: 'text-area',
-    select: 'select',
-    option: 'option'
   },
   verticalLayout: {
     root: 'vertical-layout',
@@ -27,16 +20,14 @@ export const defaultStyles: Styles = {
   },
   arrayList: {
     root: 'array-list',
-    legend: 'array-list-legend',
+    toolbar: 'array-list-toolbar',
     addButton: 'array-list-add',
     label: 'array-list-label',
-    itemWrapper: 'array-list-item-wrapper',
     noData: 'array-list-no-data',
     item: 'array-list-item',
-    itemToolbar: 'array-list-item-toolbar',
+    itemHeader: 'array-list-item-header',
     itemLabel: 'array-list-item-label',
     itemContent: 'array-list-item-content',
-    itemExpanded: 'expanded',
     itemMoveUp: 'array-list-item-move-up',
     itemMoveDown: 'array-list-item-move-down',
     itemDelete: 'array-list-item-delete'

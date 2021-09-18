@@ -1,8 +1,10 @@
 <template>
-  <v-card v-if="control.visible" elevation="0">
+  <v-card v-if="control.visible" :class="styles.arrayList.root" elevation="0">
     <v-card-title>
-      <v-toolbar flat>
-        <v-toolbar-title>{{ control.label }}</v-toolbar-title>
+      <v-toolbar flat :class="styles.arrayList.toolbar">
+        <v-toolbar-title :class="styles.arrayList.label">{{
+          control.label
+        }}</v-toolbar-title>
         <validation-icon
           v-if="control.childErrors.length > 0"
           :errors="control.childErrors"
@@ -18,6 +20,7 @@
               small
               :aria-label="`Add to ${control.label}`"
               v-on="onTooltip"
+              :class="styles.arrayList.addButton"
               @click="addButtonClick"
             >
               <v-icon>mdi-plus</v-icon>
@@ -54,7 +57,7 @@
             <tbody>
               <tr
                 v-for="(element, index) in control.data"
-                :key="`${control.path}-${index}`"
+                :key="`${control.path}-${index}`" :class="styles.arrayList.item"
               >
                 <td
                   v-for="propName in getValidColumnProps(control.schema)"
@@ -93,6 +96,7 @@
                         small
                         aria-label="Move up"
                         :disabled="index <= 0"
+                        :class="styles.arrayList.itemMoveUp"
                         @click.native="moveUpClick($event, index)"
                       >
                         <v-icon class="notranslate">mdi-arrow-up</v-icon>
@@ -111,6 +115,7 @@
                         small
                         aria-label="Move down"
                         :disabled="index >= control.data.length - 1"
+                        :class="styles.arrayList.itemMoveDown"
                         @click.native="moveDownClick($event, index)"
                       >
                         <v-icon class="notranslate">mdi-arrow-down</v-icon>
@@ -127,6 +132,7 @@
                         elevation="0"
                         small
                         aria-label="Delete"
+                        :class="styles.arrayList.itemDelete"
                         @click.native="removeItemsClick($event, [index])"
                       >
                         <v-icon class="notranslate">mdi-delete</v-icon>
@@ -140,7 +146,7 @@
           </v-simple-table>
         </v-row>
       </v-container>
-      <v-container v-if="noData"> No data </v-container>
+      <v-container v-if="noData" :class="styles.arrayList.noData"> No data </v-container>
     </v-card-text>
   </v-card>
 </template>

@@ -1,78 +1,64 @@
 .horizontal-layout {
-  display: flex;
-  flex-direction: row;
+  padding: 0px !important;
 }
 
 .vertical-layout {
-  display: flex;
-  flex-direction: column;
+  padding: 0px !important;
 }
 
-.horizontal-layout-item, .vertical-layout-item {
-  flex: 1;
+.horizontal-layout-item,
+.vertical-layout-item {
 }
 
-.error {
-  color: red;
+.group {
+}
+
+.group-label {
+}
+
+.group-item {
+  padding: 0px !important;
 }
 
 .control {
-  display: flex;
-  flex-direction: column;
 }
 
-.control > .wrapper {
-  display: flex;
-}
-
-.control > .wrapper > input,
-.control > .wrapper > select,
-.control > .wrapper > textarea {
-  flex: 1
-}
-
-.control > .error,
-.control > .description {
-  min-height: 1.5em;
+.label-element {
 }
 
 .array-list {
-  display: flex;
-  flex-direction: column;
 }
 
-.array-list-item-toolbar {
-  cursor: pointer;
-  display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
-  margin: 0.2em 0;
+.array-list-label {
 }
 
-.array-list-item-toolbar > button {
-  user-select: none;
-  cursor: pointer;
+.array-list-add {
 }
-.array-list-item-toolbar > button:disabled {
-  cursor:initial;
+
+.array-list-item-move-up {
+}
+
+.array-list-item-move-down {
+}
+
+.array-list-item-delete {
+}
+
+.array-list-no-data {
+}
+
+.array-list-item {
+}
+
+.array-list-toolbar {
+}
+
+.array-list-item-header {
 }
 
 .array-list-item-label {
-  background-color: rgb(238,238,238);
-  flex: 1;
-  padding-left: 0.5em;
-  height: 1.5em;
-  line-height: 1.5em;
-}
-.array-list-item-label:hover {
-  background-color: rgb(221, 221, 221);
 }
 
 .array-list-item-content {
-  display: none;
-  padding: 0 1em;
 }
 
-.array-list-item-content.expanded {
-  display: block;
-}

@@ -15,14 +15,7 @@ const createEmptyStyles = (): Styles => ({
 export interface Styles {
   control: {
     root?: string;
-    wrapper?: string;
-    label?: string;
-    description?: string;
-    error?: string;
     input?: string;
-    textarea?: string;
-    select?: string;
-    option?: string;
   };
   verticalLayout: {
     root?: string;
@@ -39,16 +32,14 @@ export interface Styles {
   };
   arrayList: {
     root?: string;
-    legend?: string;
+    toolbar?: string;
     addButton?: string;
     label?: string;
-    itemWrapper?: string;
     noData?: string;
     item?: string;
-    itemToolbar?: string;
+    itemHeader?: string;
     itemLabel?: string;
     itemContent?: string;
-    itemExpanded?: string;
     itemMoveUp?: string;
     itemMoveDown?: string;
     itemDelete?: string;

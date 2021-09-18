@@ -1,10 +1,10 @@
 <template>
-  <v-container v-if="layout.visible" fill-height>
+  <v-container v-if="layout.visible" fill-height :class="styles.verticalLayout.root">
     <v-row
       v-for="(element, index) in layoutUiSchema.elements"
       :key="`${layout.path}-${index}`" no-gutters
     >
-      <v-col cols="12">
+      <v-col cols="12" :class="styles.verticalLayout.item">
         <dispatch-renderer
           :schema="layout.schema"
           :uischema="element"

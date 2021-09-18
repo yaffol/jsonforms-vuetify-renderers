@@ -1,9 +1,9 @@
 <template>
-  <v-container v-if="control.visible" :class="styles.arrayList.root">
+  <v-container v-if="control.visible" fill-height :class="styles.arrayList.root">
     <v-row>
-      <v-col>
-        <v-toolbar flat>
-          <v-toolbar-title>{{ control.label }}</v-toolbar-title>
+      <v-col class="pa-0">
+        <v-toolbar flat :class="styles.arrayList.toolbar">
+          <v-toolbar-title :class="styles.arrayList.label">{{ control.label }}</v-toolbar-title>
           <validation-icon
             v-if="control.childErrors.length > 0"
             :errors="control.childErrors"
@@ -19,6 +19,7 @@
                 small
                 :aria-label="`Add to ${control.label}`"
                 v-on="onTooltip"
+                :class="styles.arrayList.addButton"
                 @click="addButtonClick"
               >
                 <v-icon>mdi-plus</v-icon>
@@ -45,7 +46,7 @@
             max-width="350"
           >
             <template v-slot="{ index }">
-              <v-list-item dense :value="index">
+              <v-list-item dense :value="index" :class="styles.arrayList.item">
                 <v-list-item-avatar aria-label="Index" size="64" class="ma-0" tile color="rgba(0,0,0,0)">
                   <validation-badge
                     overlap
@@ -63,7 +64,7 @@
                   <v-list-item-title>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on: onTooltip }">
-                        <span v-on="onTooltip">
+                        <span v-on="onTooltip" :class="styles.arrayList.itemLabel">
                           {{ childLabelForIndex(index) }}</span
                         >
                       </template>
@@ -83,6 +84,7 @@
                         class="ma-0"
                         aria-label="Move up"
                         :disabled="index <= 0"
+                        :class="styles.arrayList.itemMoveUp"
                         @click.native="moveUpClick($event, index)"
                       >
                         <v-icon class="notranslate">mdi-arrow-up</v-icon>
@@ -103,6 +105,7 @@
                         class="ma-0"
                         aria-label="Move down"
                         :disabled="index >= control.data.length - 1"
+                        :class="styles.arrayList.itemMoveDown"
                         @click.native="moveDownClick($event, index)"
                       >
                         <v-icon class="notranslate">mdi-arrow-down</v-icon>
@@ -122,6 +125,7 @@
                         small
                         class="ma-0"
                         aria-label="Delete"
+                        :class="styles.arrayList.itemDelete"
                         @click.native="removeItemsClick($event, [index])"
                       >
                         <v-icon class="notranslate">mdi-delete</v-icon>
@@ -135,12 +139,13 @@
           </v-virtual-scroll>
         </v-list-item-group>
       </v-col>
-      <v-col class="grow pa-0">
-        <span class="text-h6" v-if="selectedIndex === undefined"
+      <v-col v-if="selectedIndex === undefined" class="grow">
+        <span class="text-h6" 
           >No Selection</span
         >
+      </v-col>
+      <v-col v-else :class="`grow ${styles.arrayList.itemContent}`">
         <dispatch-renderer
-          v-else
           :schema="control.schema"
           :uischema="foundUISchema"
           :path="composePaths(control.path, `${selectedIndex}`)"
