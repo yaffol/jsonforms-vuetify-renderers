@@ -6,7 +6,7 @@ import '@mdi/font/css/materialdesignicons.css';
 
 Vue.use(Vuetify);
 
-const preset: Partial<VuetifyPreset> = {
+export const preset: Partial<VuetifyPreset> = {
   icons: {
     iconfont: 'mdi',
     values: {},

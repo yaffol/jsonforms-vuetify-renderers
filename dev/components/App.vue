@@ -24,31 +24,32 @@
     </v-navigation-drawer>
 
     <v-app-bar app clipped-left>
-      <v-toolbar-title>JSON Forms</v-toolbar-title>
+      <v-toolbar-title class="primary--text">JSON Forms</v-toolbar-title>
 
       <v-spacer expand></v-spacer>
 
-      <v-select
-        class="shrink mx-4"
-        dense
-        rounded
-        v-model="validationMode"
-        :items="validationModes"
-      ></v-select>
-      <v-switch
-        v-model="$vuetify.theme.dark"
-        hint="This toggles the global state of the Vuetify theme"
-        inset
-        label="Vuetify Theme Dark"
-        persistent-hint
-      ></v-switch>
-      <v-switch
-        v-model="$vuetify.rtl"
-        hint="This toggles RTL"
-        inset
-        label="Vuetify RTL"
-        persistent-hint
-      ></v-switch>
+      <v-toolbar-items align-center>
+        <v-select
+          dense
+          rounded
+          v-model="validationMode"
+          :items="validationModes"
+        ></v-select>
+
+        <v-spacer></v-spacer>
+
+        <v-switch
+          dense
+          v-model="$vuetify.rtl"
+          hint="Toggles RTL"
+          inset
+          label="RTL"
+        ></v-switch>
+
+        <v-spacer></v-spacer>
+
+        <theme-changer />
+      </v-toolbar-items>
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
@@ -161,6 +162,8 @@ import {
   EditorApi,
 } from "../core/jsonSchemaValidation";
 
+import ThemeChanger from "./ThemeChanger";
+
 const ajv = createAjv({ useDefaults: true });
 ajvErrorsPlugin(ajv);
 
@@ -183,6 +186,7 @@ export default defineComponent({
   components: {
     JsonForms,
     MonacoEditor,
+    ThemeChanger,
   },
   data() {
     const selectedExample = ref(-1);
