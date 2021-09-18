@@ -38,18 +38,18 @@
           <v-virtual-scroll
             :items="control.data"
             :item-height="64"
-            max-height="300"
-            min-height="250"
-            min-width="250"
+            bench="4"
+            :min-height="`${4 * 64}`"
+            :max-height="`${6 * 64}`"
+            :min-width="appliedOptions.showSortButtons ? 350 : 250"
             max-width="350"
           >
             <template v-slot="{ index }">
               <v-list-item dense :value="index">
-                <v-list-item-avatar aria-label="Index" color="info">
+                <v-list-item-avatar aria-label="Index" size="64" class="ma-0" tile color="rgba(0,0,0,0)">
                   <validation-badge
                     overlap
                     bordered
-                    id="`${control.path}-${index}-validation-tooltip`"
                     :errors="childErrors(index)"
                   >
                     <v-avatar size="40" aria-label="Index" color="info"
