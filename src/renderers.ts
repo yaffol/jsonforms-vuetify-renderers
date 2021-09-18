@@ -10,6 +10,10 @@ export const vuetifyRenderers = [
   ...arrayRenderers,
   ...complexRenderers,
   ...controlRenderers,
-  ...extendedRenderers,
   ...layoutRenderers,
 ];
+
+export const extendedVuetifyRenderers = [
+  ...extendedRenderers,
+  ...vuetifyRenderers,
+]

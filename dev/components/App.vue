@@ -128,7 +128,7 @@ import { ErrorObject } from "ajv";
 import { JsonForms, JsonFormsChangeEvent } from "../../config/jsonforms";
 import {
   createAjv,
-  vuetifyRenderers,
+  extendedVuetifyRenderers,
   mergeStyles,
   defaultStyles,
 } from "../../src";
@@ -155,7 +155,7 @@ const myStyles = mergeStyles(defaultStyles, {
   control: { root: "my-control" },
 });
 
-const renderers = Object.freeze(vuetifyRenderers);
+const renderers = Object.freeze(extendedVuetifyRenderers);
 
 type JsonInput = {
   title: string;
