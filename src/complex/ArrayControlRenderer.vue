@@ -23,7 +23,7 @@
               :class="styles.arrayList.addButton"
               @click="addButtonClick"
             >
-              <v-icon>mdi-plus</v-icon>
+              <v-icon>{{ `${this.$vuetify.icons.iconfont}-plus` }}</v-icon>
             </v-btn>
           </template>
           {{ `Add to ${control.label}` }}
@@ -57,7 +57,8 @@
             <tbody>
               <tr
                 v-for="(element, index) in control.data"
-                :key="`${control.path}-${index}`" :class="styles.arrayList.item"
+                :key="`${control.path}-${index}`"
+                :class="styles.arrayList.item"
               >
                 <td
                   v-for="propName in getValidColumnProps(control.schema)"
@@ -99,7 +100,9 @@
                         :class="styles.arrayList.itemMoveUp"
                         @click.native="moveUpClick($event, index)"
                       >
-                        <v-icon class="notranslate">mdi-arrow-up</v-icon>
+                        <v-icon class="notranslate">{{
+                          `${this.$vuetify.icons.iconfont}-arrow-up`
+                        }}</v-icon>
                       </v-btn>
                     </template>
                     Move Up
@@ -118,7 +121,9 @@
                         :class="styles.arrayList.itemMoveDown"
                         @click.native="moveDownClick($event, index)"
                       >
-                        <v-icon class="notranslate">mdi-arrow-down</v-icon>
+                        <v-icon class="notranslate">{{
+                          `${this.$vuetify.icons.iconfont}-arrow-down`
+                        }}</v-icon>
                       </v-btn>
                     </template>
                     Move Down
@@ -135,7 +140,9 @@
                         :class="styles.arrayList.itemDelete"
                         @click.native="removeItemsClick($event, [index])"
                       >
-                        <v-icon class="notranslate">mdi-delete</v-icon>
+                        <v-icon class="notranslate">{{
+                          `${this.$vuetify.icons.iconfont}-delete`
+                        }}</v-icon>
                       </v-btn>
                     </template>
                     Delete
@@ -146,7 +153,9 @@
           </v-simple-table>
         </v-row>
       </v-container>
-      <v-container v-if="noData" :class="styles.arrayList.noData"> No data </v-container>
+      <v-container v-if="noData" :class="styles.arrayList.noData">
+        No data
+      </v-container>
     </v-card-text>
   </v-card>
 </template>

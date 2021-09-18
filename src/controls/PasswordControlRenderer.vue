@@ -5,12 +5,14 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-
     <v-text-field
-      :type="passwordVisible ? 'text': 'password'"
-      :append-icon="passwordVisible ?  'mdi-eye' : 'mdi-eye-off'"
+      :type="passwordVisible ? 'text' : 'password'"
+      :append-icon="
+        passwordVisible
+          ? `${this.$vuetify.icons.iconfont}-eye`
+          : `${this.$vuetify.icons.iconfont}-eye-off`
+      "
       @click:append="() => (passwordVisible = !passwordVisible)"
-
       :id="control.id + '-input'"
       :class="styles.control.input"
       :disabled="!control.enabled"
@@ -22,12 +24,15 @@
       :required="control.required"
       :error-messages="control.errors"
       :readonly="appliedOptions.readonly"
-
       v-model="control.data"
-
-      :maxlength="appliedOptions.restrict ? control.schema.maxLength : undefined"
-      :size="appliedOptions.trim && control.schema.maxLength !== undefined ? control.schema.maxLength : undefined"
-
+      :maxlength="
+        appliedOptions.restrict ? control.schema.maxLength : undefined
+      "
+      :size="
+        appliedOptions.trim && control.schema.maxLength !== undefined
+          ? control.schema.maxLength
+          : undefined
+      "
       @change="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
@@ -42,35 +47,44 @@ import {
   rankWith,
   isStringControl,
   and,
-  formatIs
-} from '@jsonforms/core';
-import { defineComponent, ref } from '../../config/vue';
-import { rendererProps, useJsonFormsControl, RendererProps } from '../../config/jsonforms';
-import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useVuetifyControl } from '../util';
-import { VTextField } from 'vuetify/lib';
+  formatIs,
+} from "@jsonforms/core";
+import { defineComponent, ref } from "../../config/vue";
+import {
+  rendererProps,
+  useJsonFormsControl,
+  RendererProps,
+} from "../../config/jsonforms";
+import { default as ControlWrapper } from "./ControlWrapper.vue";
+import { useVuetifyControl } from "../util";
+import { VTextField } from "vuetify/lib";
 
 const controlRenderer = defineComponent({
-  name: 'password-control-renderer',
+  name: "password-control-renderer",
   components: {
     ControlWrapper,
-    VTextField
+    VTextField,
   },
   props: {
-    ...rendererProps<ControlElement>()
+    ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
     const passwordVisible = ref(false);
 
-    return { ...useVuetifyControl(useJsonFormsControl(props), value => value || undefined), passwordVisible };
-  }
+    return {
+      ...useVuetifyControl(
+        useJsonFormsControl(props),
+        (value) => value || undefined
+      ),
+      passwordVisible,
+    };
+  },
 });
 
 export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(2, and(isStringControl, formatIs('password')))
+  tester: rankWith(2, and(isStringControl, formatIs("password"))),
 };
-
 </script>
