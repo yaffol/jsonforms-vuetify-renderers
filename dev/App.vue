@@ -327,8 +327,8 @@ export default defineComponent({
       cache: false,
       get(comp) {
         let data = undefined;
-        if (comp.example && comp.example.data) {
-          data = comp.example.data;
+        if (comp.data.value) {
+          data = comp.data.value;
         }
         if (data && !data.hasOwnProperty("$schema")) {
           if (
