@@ -2,6 +2,9 @@
   <v-app>
     <v-navigation-drawer app clipped>
       <v-list-item>
+        <v-list-item-icon>
+          <v-img src="./assets/vuetify.svg" max-height="64" max-width="64" />
+        </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title class="text-h6"> Examples </v-list-item-title>
           <v-list-item-subtitle> Vuetify Renderers </v-list-item-subtitle>
@@ -24,21 +27,38 @@
     </v-navigation-drawer>
 
     <v-app-bar app clipped-left>
-      <v-toolbar-title class="primary--text">JSON Forms</v-toolbar-title>
+      <v-toolbar-title>
+        <v-container fill-height fluid
+          ><v-row align="center" justify="center">
+            <v-col>
+              <v-img
+                src="./assets/jsonforms.svg"
+                max-height="64"
+                max-width="64"
+              />
+            </v-col>
+            <v-col>JSON Forms </v-col>
+          </v-row></v-container
+        ></v-toolbar-title
+      >
 
       <v-spacer expand></v-spacer>
 
-      <v-toolbar-items align-center>
-        <v-select
-          dense
-          rounded
-          v-model="validationMode"
-          :items="validationModes"
-        ></v-select>
-
-        <v-spacer></v-spacer>
-
-        <theme-changer />
+      <v-toolbar-items>
+        <v-container fill-height fluid
+          ><v-row>
+            <v-col style="max-width: 300px;">
+              <v-select
+                dense
+                rounded
+                outlined
+                v-model="validationMode"
+                :items="validationModes"
+              ></v-select>
+            </v-col>
+            <v-col cols="1"><theme-changer /> </v-col>
+          </v-row>
+        </v-container>
       </v-toolbar-items>
     </v-app-bar>
 

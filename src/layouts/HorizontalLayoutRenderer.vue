@@ -65,6 +65,6 @@ export default layoutRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: layoutRenderer,
-  tester: rankWith(1, uiTypeIs("HorizontalLayout")),
+  tester: rankWith(2, uiTypeIs("HorizontalLayout")),
 };
 </script>
