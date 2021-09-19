@@ -1,5 +1,5 @@
 import Vue, { VNode } from 'vue';
-import App from './components/App.vue';
+import App from './App.vue';
 import VueCompositionAPI from '@vue/composition-api'
 import vuetify from './plugins/vuetify' // path to vuetify export
 

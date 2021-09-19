@@ -21,6 +21,16 @@
           ><v-switch v-model="$vuetify.theme.dark" />
         </v-list-item-action>
       </v-list-item>
+      <v-list-item>
+        <v-list-item-content
+          ><v-list-item-title class="font-weight-bold">
+            RTL</v-list-item-title
+          >
+        </v-list-item-content>
+        <v-list-item-action
+          ><v-switch v-model="$vuetify.rtl" />
+        </v-list-item-action>
+      </v-list-item>
       <v-divider />
       <v-card-text>
         <v-card

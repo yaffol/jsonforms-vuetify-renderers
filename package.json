@@ -44,9 +44,9 @@
     "vuetify.css"
   ],
   "dependencies": {
+    "monaco-editor": "^0.26.0",
     "dayjs": "^1.10.6",
     "lodash": "^4.17.15",
-    "monaco-editor": "^0.27.0",
     "@jsonforms/core": "^3.0.0-alpha.1",
     "@jsonforms/vue2": "^3.0.0-alpha.1",
     "@mdi/font": "^5.9.55",
@@ -89,7 +89,7 @@
     "vuetify-loader": "^1.7.0"
   },
   "peerDependencies": {
-    "monaco-editor": "^0.27.0",
+    "monaco-editor": "^0.26.0",
     "@jsonforms/core": "^3.0.0-alpha.1",
     "@jsonforms/vue2": "^3.0.0-alpha.1",
     "@mdi/font": "^5.9.55",

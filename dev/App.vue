@@ -38,16 +38,6 @@
 
         <v-spacer></v-spacer>
 
-        <v-switch
-          dense
-          v-model="$vuetify.rtl"
-          hint="Toggles RTL"
-          inset
-          label="RTL"
-        ></v-switch>
-
-        <v-spacer></v-spacer>
-
         <theme-changer />
       </v-toolbar-items>
     </v-app-bar>
@@ -137,20 +127,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref } from "../../config/vue";
+import { defineComponent, ref, Ref } from "../config/vue";
 import { UISchemaElement, JsonSchema } from "@jsonforms/core";
 import { ErrorObject } from "ajv";
-import { JsonForms, JsonFormsChangeEvent } from "../../config/jsonforms";
+import { JsonForms, JsonFormsChangeEvent } from "../config/jsonforms";
 import {
   createAjv,
   extendedVuetifyRenderers,
   mergeStyles,
   defaultStyles,
-} from "../../src";
-import "../../vuetify.css";
+} from "../src";
+import "../vuetify.css";
 import ajvErrorsPlugin from "ajv-errors";
 
-import { examples } from "./examples";
+import { examples } from "./components/examples";
 import MonacoEditor from "monaco-editor-vue";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
@@ -160,9 +150,9 @@ import {
   configureUISchemaValidation,
   configureDataValidation,
   EditorApi,
-} from "../core/jsonSchemaValidation";
+} from "./core/jsonSchemaValidation";
 
-import ThemeChanger from "./ThemeChanger";
+import ThemeChanger from "./components/ThemeChanger";
 
 const ajv = createAjv({ useDefaults: true });
 ajvErrorsPlugin(ajv);
