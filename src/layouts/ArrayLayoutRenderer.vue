@@ -23,7 +23,7 @@
               :class="styles.arrayList.addButton"
               @click="addButtonClick"
             >
-              <v-icon>{{ `${this.$vuetify.icons.iconfont}-plus` }}</v-icon>
+              <v-icon>mdi-plus</v-icon>
             </v-btn>
           </template>
           {{ `Add to ${control.label}` }}
@@ -78,9 +78,7 @@
                             :class="styles.arrayList.itemMoveUp"
                             @click.native="moveUpClick($event, index)"
                           >
-                            <v-icon class="notranslate">{{
-                              `${this.$vuetify.icons.iconfont}-arrow-up`
-                            }}</v-icon>
+                            <v-icon class="notranslate">mdi-arrow-up</v-icon>
                           </v-btn>
                         </template>
                         Move Up
@@ -100,9 +98,7 @@
                             :class="styles.arrayList.itemMoveDown"
                             @click.native="moveDownClick($event, index)"
                           >
-                            <v-icon class="notranslate">{{
-                              `${this.$vuetify.icons.iconfont}-arrow-down`
-                            }}</v-icon>
+                            <v-icon class="notranslate">mdi-arrow-down</v-icon>
                           </v-btn>
                         </template>
                         Move Down
@@ -120,9 +116,7 @@
                             :class="styles.arrayList.itemDelete"
                             @click.native="removeItemsClick($event, [index])"
                           >
-                            <v-icon class="notranslate">{{
-                              `${this.$vuetify.icons.iconfont}-delete`
-                            }}</v-icon>
+                            <v-icon class="notranslate">mdi-delete</v-icon>
                           </v-btn>
                         </template>
                         Delete

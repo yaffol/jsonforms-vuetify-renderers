@@ -1,5 +1,9 @@
 <template>
-  <v-card v-if="layout.visible" :class="styles.group.root" elevation="2">
+  <v-card
+    v-if="layout.visible"
+    :class="`pa-0 ${styles.group.root}`"
+    elevation="2"
+  >
     <v-card-title
       v-if="groupLayoutUiSchema.label"
       :class="styles.group.label"
@@ -49,7 +53,7 @@ const layoutRenderer = defineComponent({
     DispatchRenderer,
     VCard,
     VCardTitle,
-    VCardText
+    VCardText,
   },
   props: {
     ...rendererProps<Layout>(),

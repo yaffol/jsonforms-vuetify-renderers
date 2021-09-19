@@ -137,7 +137,6 @@ import {
   mergeStyles,
   defaultStyles,
 } from "../src";
-import "../vuetify.css";
 import ajvErrorsPlugin from "ajv-errors";
 
 import { examples } from "./components/examples";

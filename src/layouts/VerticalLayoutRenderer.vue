@@ -1,8 +1,13 @@
 <template>
-  <v-container v-if="layout.visible" fill-height :class="styles.verticalLayout.root">
+  <v-container
+    v-if="layout.visible"
+    fill-height
+    :class="`pa-0 ${styles.verticalLayout.root}`"
+  >
     <v-row
       v-for="(element, index) in layoutUiSchema.elements"
-      :key="`${layout.path}-${index}`" no-gutters
+      :key="`${layout.path}-${index}`"
+      no-gutters
     >
       <v-col cols="12" :class="styles.verticalLayout.item">
         <dispatch-renderer
@@ -61,6 +66,6 @@ export default layoutRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: layoutRenderer,
-  tester: rankWith(2, uiTypeIs("VerticalLayout")),
+  tester: rankWith(1, uiTypeIs("VerticalLayout")),
 };
 </script>

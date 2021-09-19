@@ -1,8 +1,6 @@
 <template>
   <validation-badge v-if="errors && errors.length > 0" :errors="errors">
-    <v-icon color="error">{{
-      `${this.$vuetify.icons.iconfont}-alert-circle-outline`
-    }}</v-icon>
+    <v-icon color="error">mdi-alert-circle-outline</v-icon>
   </validation-badge>
 </template>
 

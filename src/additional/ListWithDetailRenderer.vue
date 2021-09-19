@@ -1,9 +1,15 @@
 <template>
-  <v-container v-if="control.visible" fill-height :class="styles.arrayList.root">
+  <v-container
+    v-if="control.visible"
+    fill-height
+    :class="styles.arrayList.root"
+  >
     <v-row>
       <v-col class="pa-0">
         <v-toolbar flat :class="styles.arrayList.toolbar">
-          <v-toolbar-title :class="styles.arrayList.label">{{ control.label }}</v-toolbar-title>
+          <v-toolbar-title :class="styles.arrayList.label">{{
+            control.label
+          }}</v-toolbar-title>
           <validation-icon
             v-if="control.childErrors.length > 0"
             :errors="control.childErrors"
@@ -22,7 +28,7 @@
                 :class="styles.arrayList.addButton"
                 @click="addButtonClick"
               >
-                <v-icon>{{`${this.$vuetify.icons.iconfont}-plus`}}</v-icon>
+                <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
             {{ `Add to ${control.label}` }}
@@ -47,7 +53,13 @@
           >
             <template v-slot="{ index }">
               <v-list-item dense :value="index" :class="styles.arrayList.item">
-                <v-list-item-avatar aria-label="Index" size="64" class="ma-0" tile color="rgba(0,0,0,0)">
+                <v-list-item-avatar
+                  aria-label="Index"
+                  size="64"
+                  class="ma-0"
+                  tile
+                  color="rgba(0,0,0,0)"
+                >
                   <validation-badge
                     overlap
                     bordered
@@ -64,7 +76,10 @@
                   <v-list-item-title>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on: onTooltip }">
-                        <span v-on="onTooltip" :class="styles.arrayList.itemLabel">
+                        <span
+                          v-on="onTooltip"
+                          :class="styles.arrayList.itemLabel"
+                        >
                           {{ childLabelForIndex(index) }}</span
                         >
                       </template>
@@ -87,7 +102,7 @@
                         :class="styles.arrayList.itemMoveUp"
                         @click.native="moveUpClick($event, index)"
                       >
-                        <v-icon class="notranslate">{{`${this.$vuetify.icons.iconfont}-arrow-up`}}</v-icon>
+                        <v-icon class="notranslate">mdi-arrow-up</v-icon>
                       </v-btn>
                     </template>
                     Move Up
@@ -108,7 +123,7 @@
                         :class="styles.arrayList.itemMoveDown"
                         @click.native="moveDownClick($event, index)"
                       >
-                        <v-icon class="notranslate">{{`${this.$vuetify.icons.iconfont}-arrow-down`}}</v-icon>
+                        <v-icon class="notranslate">mdi-arrow-down</v-icon>
                       </v-btn>
                     </template>
                     Move Down
@@ -128,7 +143,7 @@
                         :class="styles.arrayList.itemDelete"
                         @click.native="removeItemsClick($event, [index])"
                       >
-                        <v-icon class="notranslate">{{`${this.$vuetify.icons.iconfont}-delete`}}</v-icon>
+                        <v-icon class="notranslate">mdi-delete</v-icon>
                       </v-btn>
                     </template>
                     Delete
@@ -140,9 +155,7 @@
         </v-list-item-group>
       </v-col>
       <v-col v-if="selectedIndex === undefined" class="grow">
-        <span class="text-h6" 
-          >No Selection</span
-        >
+        <span class="text-h6">No Selection</span>
       </v-col>
       <v-col v-else :class="`grow ${styles.arrayList.itemContent}`">
         <dispatch-renderer

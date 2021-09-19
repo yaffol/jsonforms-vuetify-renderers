@@ -1,9 +1,13 @@
 <template>
-  <v-container v-if="layout.visible" :class="styles.horizontalLayout.root">
+  <v-container
+    v-if="layout.visible"
+    :class="`pa-0 ${styles.horizontalLayout.root}`"
+  >
     <v-row>
       <v-col
         v-for="(element, index) in layoutUiSchema.elements"
-        :key="`${layout.path}-${index}`" :class="styles.horizontalLayout.item"
+        :key="`${layout.path}-${index}`"
+        :class="styles.horizontalLayout.item"
       >
         <dispatch-renderer
           :schema="layout.schema"
@@ -61,6 +65,6 @@ export default layoutRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: layoutRenderer,
-  tester: rankWith(2, uiTypeIs("HorizontalLayout")),
+  tester: rankWith(1, uiTypeIs("HorizontalLayout")),
 };
 </script>

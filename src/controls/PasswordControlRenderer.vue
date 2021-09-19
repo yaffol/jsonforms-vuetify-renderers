@@ -7,11 +7,7 @@
   >
     <v-text-field
       :type="passwordVisible ? 'text' : 'password'"
-      :append-icon="
-        passwordVisible
-          ? `${this.$vuetify.icons.iconfont}-eye`
-          : `${this.$vuetify.icons.iconfont}-eye-off`
-      "
+      :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append="() => (passwordVisible = !passwordVisible)"
       :id="control.id + '-input'"
       :class="styles.control.input"
