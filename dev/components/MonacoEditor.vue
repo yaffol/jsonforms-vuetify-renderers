@@ -57,7 +57,7 @@ export default {
       type: Function as PropType<(api: MonacoApi) => Object>,
       default: (_api: MonacoApi) => undefined,
     },
-    className: String,
+    className: { type: String, required: false },
   },
   data(): BaseComponentData {
     return {

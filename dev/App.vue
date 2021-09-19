@@ -96,12 +96,12 @@
                     <v-card-title>Schema</v-card-title>
                     <v-divider class="mx-4"></v-divider>
                     <monaco-editor
+                      :theme="$vuetify.theme.dark ? 'vs-dark': 'vs'"
                       height="500"
                       :language="`json`"
                       v-model="monacoSchema"
                       @change="onChangeEditSchema"
-                      :editorBeforeMount="schemaEditorBeforeMount"
-                      :editorMounted="editorMounted"
+                      :editorBeforeMount="registerJsonSchemaValidation"
                     ></monaco-editor>
                   </v-card>
                 </v-tab-item>
@@ -110,12 +110,12 @@
                     <v-card-title>UI Schema</v-card-title>
                     <v-divider class="mx-4"></v-divider>
                     <monaco-editor
+                      :theme="$vuetify.theme.dark ? 'vs-dark': 'vs'"
                       height="500"
                       language="json"
                       v-model="monacoUISchema"
                       @change="onChangeEditUISchema"
-                      :editorBeforeMount="uiSchemaEditorBeforeMount"
-                      :editorMounted="editorMounted"
+                      :editorBeforeMount="registerUISchemaValidation"
                     ></monaco-editor>
                   </v-card>
                 </v-tab-item>
@@ -124,12 +124,12 @@
                     <v-card-title>Data</v-card-title>
                     <v-divider class="mx-4"></v-divider>
                     <monaco-editor
+                      :theme="$vuetify.theme.dark ? 'vs-dark': 'vs'"
                       height="500"
                       language="json"
                       v-model="monacoData"
                       @change="onChangeEditData"
-                      :editorBeforeMount="dataEditorBeforeMount"
-                      :editorMounted="editorMounted"
+                      :editorBeforeMount="registerDataValidaton"
                     ></monaco-editor>
                   </v-card>
                 </v-tab-item>
@@ -170,8 +170,8 @@ import {
   EditorApi,
 } from "./core/jsonSchemaValidation";
 
-import ThemeChanger from "./components/ThemeChanger";
-import MonacoEditor from "./components/MonacoEditor";
+import ThemeChanger from "./components/ThemeChanger.vue";
+import MonacoEditor from "./components/MonacoEditor.vue";
 
 const ajv = createAjv({ useDefaults: true });
 ajvErrorsPlugin(ajv);
@@ -243,35 +243,27 @@ export default defineComponent({
     onChangeEditData() {
       console.log("on change data");
     },
-    schemaEditorBeforeMount(editor: EditorApi) {
+    registerJsonSchemaValidation(editor: EditorApi) {
       const modelUri = Uri.parse("json://core/specification/schema.json");
       configureJsonSchemaValidation(editor, modelUri);
     },
-    uiSchemaEditorBeforeMount(editor: EditorApi) {
+    registerUISchemaValidation(editor: EditorApi) {
       const modelUri = Uri.parse("json://core/specification/uischema.json");
       configureUISchemaValidation(editor, modelUri);
     },
-    dataEditorBeforeMount(editor: EditorApi) {
-      if (true) return;
+    registerDataValidaton(editor: EditorApi) {
       const example = this.example;
-      let modelUri: string = "";
+      if (example && example.schema) {
+        let modelUri: string = "";
 
-      if (example && example.data && example.data.hasOwnProperty("$schema")) {
-        modelUri = example.data.data.$schema;
-      }
-      console.log("modelUri=" + modelUri);
-
-      if (example) {
-        console.log("register schema for JSON data");
+        if (example.data && example.data.hasOwnProperty("$schema")) {
+          modelUri = example.data.$schema;
+        }
         configureDataValidation(editor, {
           uri: modelUri,
           schema: example.schema,
         });
       }
-    },
-    editorMounted(editor: monaco.editor.IStandaloneCodeEditor, _: EditorApi) {
-      console.log("editor mounted");
-      console.log(editor);
     },
   },
   computed: {
