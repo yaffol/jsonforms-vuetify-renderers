@@ -47,7 +47,7 @@
       <v-toolbar-items>
         <v-container fill-height fluid
           ><v-row>
-            <v-col style="max-width: 300px;">
+            <v-col style="max-width: 300px">
               <v-select
                 dense
                 rounded
@@ -97,7 +97,7 @@
                     <v-divider class="mx-4"></v-divider>
                     <monaco-editor
                       height="500"
-                      language="json"
+                      :language="`json`"
                       v-model="monacoSchema"
                       @change="onChangeEditSchema"
                       :editorBeforeMount="schemaEditorBeforeMount"
@@ -160,7 +160,6 @@ import {
 import ajvErrorsPlugin from "ajv-errors";
 
 import { examples } from "./components/examples";
-import MonacoEditor from "monaco-editor-vue";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 import { Uri } from "monaco-editor/esm/vs/editor/editor.api";
@@ -172,6 +171,7 @@ import {
 } from "./core/jsonSchemaValidation";
 
 import ThemeChanger from "./components/ThemeChanger";
+import MonacoEditor from "./components/MonacoEditor";
 
 const ajv = createAjv({ useDefaults: true });
 ajvErrorsPlugin(ajv);
@@ -185,8 +185,8 @@ const renderers = Object.freeze(extendedVuetifyRenderers);
 
 type JsonInput = {
   title: string;
-  schema: JsonSchema;
-  uischema: UISchemaElement;
+  schema?: JsonSchema;
+  uischema?: UISchemaElement;
   data: any;
 } | null;
 
@@ -244,15 +244,11 @@ export default defineComponent({
       console.log("on change data");
     },
     schemaEditorBeforeMount(editor: EditorApi) {
-      if (true) return;
       const modelUri = Uri.parse("json://core/specification/schema.json");
-      console.log("register schema for JSON Schema");
       configureJsonSchemaValidation(editor, modelUri);
     },
     uiSchemaEditorBeforeMount(editor: EditorApi) {
-      if (true) return;
       const modelUri = Uri.parse("json://core/specification/uischema.json");
-      console.log("register schema for JSON UI Schema");
       configureUISchemaValidation(editor, modelUri);
     },
     dataEditorBeforeMount(editor: EditorApi) {
