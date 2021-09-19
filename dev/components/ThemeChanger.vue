@@ -6,9 +6,14 @@
     offset-y
   >
     <template v-slot:activator="{ on }">
-      <v-btn large icon dark v-on="on">
-        <v-icon size="30" color="primary">mdi-palette</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on: onTooltip }">
+          <v-btn large icon dark v-on="{ ...on, ...onTooltip }">
+            <v-icon size="30" color="primary">mdi-palette</v-icon>
+          </v-btn>
+        </template>
+        Theme Colors
+      </v-tooltip>
     </template>
     <v-card>
       <v-list-item>
@@ -23,9 +28,7 @@
       </v-list-item>
       <v-list-item>
         <v-list-item-content
-          ><v-list-item-title class="font-weight-bold">
-            RTL</v-list-item-title
-          >
+          ><v-list-item-title class="font-weight-bold"> RTL</v-list-item-title>
         </v-list-item-content>
         <v-list-item-action
           ><v-switch v-model="$vuetify.rtl" />

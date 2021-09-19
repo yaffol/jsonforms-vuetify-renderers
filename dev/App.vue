@@ -45,18 +45,15 @@
       <v-spacer expand></v-spacer>
 
       <v-toolbar-items>
-        <v-container fill-height fluid
-          ><v-row>
-            <v-col style="max-width: 300px">
-              <v-select
-                dense
-                rounded
-                outlined
-                v-model="validationMode"
-                :items="validationModes"
-              ></v-select>
+        <v-container fill-height fluid justify-end
+          ><v-row dense>
+            <v-col
+              ><settings
+                :validationMode="validationMode"
+                @validation-change="onValidationChange"
+              />
             </v-col>
-            <v-col cols="1"><theme-changer /> </v-col>
+            <v-col><theme-changer /> </v-col>
           </v-row>
         </v-container>
       </v-toolbar-items>
@@ -171,6 +168,7 @@ import {
 } from "./core/jsonSchemaValidation";
 
 import ThemeChanger from "./components/ThemeChanger.vue";
+import Settings from "./components/Settings.vue";
 import MonacoEditor from "./components/MonacoEditor.vue";
 import { jsonSchemaDraft7, uiSchema } from "./core/jsonschema";
 
@@ -198,6 +196,7 @@ export default defineComponent({
     JsonForms,
     MonacoEditor,
     ThemeChanger,
+    Settings,
   },
   data() {
     const selectedExample = ref(-1);
@@ -207,11 +206,6 @@ export default defineComponent({
     return {
       readonly: false,
       validationMode: "ValidateAndShow",
-      validationModes: [
-        { text: "Validate And Show", value: "ValidateAndShow" },
-        { text: "Validate And Hide", value: "ValidateAndHide" },
-        { text: "No Validation", value: "NoValidation" },
-      ],
       activeTab: 0,
       renderers: renderers,
       cells: renderers,
@@ -229,6 +223,9 @@ export default defineComponent({
     };
   },
   methods: {
+    onValidationChange(validation: string) {
+      this.validationMode = validation;
+    },
     onChange(event: JsonFormsChangeEvent) {
       this.data.value = event.data;
       this.errors.value = event.errors;
