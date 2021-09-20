@@ -5,7 +5,7 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <v-label :for="control.id + '-input'">{{ control.label }}</v-label>
+    <v-label :for="control.id + '-input'">{{ computedLabel }}</v-label>
     <v-radio-group
       :id="control.id + '-input'"
       :class="styles.control.input"
@@ -16,7 +16,6 @@
       :persistent-hint="persistentHint()"
       :required="control.required"
       :error-messages="control.errors"
-      :readonly="appliedOptions.readonly"
       row
       v-model="control.data"
       @change="onChange"

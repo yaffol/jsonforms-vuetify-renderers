@@ -2,6 +2,7 @@ import { input as allOf } from './allOf';
 import { input as anyOf } from './anyOf';
 import { input as anyOfSimple } from './anyOf-simple';
 import { input as array } from './array';
+import { input as arrayRestrict } from './array-restrict';
 import { input as arrayWithReorder } from './array-with-reorder';
 import { input as basic } from './basic';
 import { input as categorization } from './categorization';
@@ -15,10 +16,12 @@ import { input as groupLayout } from './group-layout';
 import { input as horizontalLayout } from './horizontal-layout';
 import { input as listWithDetails } from './list-with-details';
 import { input as listWithDetailsAndReorder } from './list-with-details-and-reorder';
+import { input as listWithDetailsRestrict } from './list-with-details-restrict';
 import { input as login } from './login';
 import { input as main } from './main';
 import { input as multiEnum } from './multi-enum';
 import { input as nestedArray } from './nested-array';
+import { input as nestedArrayRestrict } from './nested-array-restrict';
 import { input as nestedArrayWithReorder } from './nested-array-with-reorder';
 import { input as nestedLayout } from './nested-layout';
 import { input as noSchemas } from './no-schemas';
@@ -96,12 +99,20 @@ export const examples = [
         input: array
     },
     {
+        title: "Array Min/Max Items",
+        input: arrayRestrict
+    },
+    {
         title: "Array With Reorder",
         input: arrayWithReorder
     },
     {
         title: "Nested Array",
         input: nestedArray
+    },
+    {
+        title: "Nested Array Min/Max Items",
+        input: nestedArrayRestrict
     },
     {
         title: "Nested Array With Reorder",
@@ -162,6 +173,10 @@ export const examples = [
     {
         title: "List With Details",
         input: listWithDetails
+    },
+    {
+        title: "List With Details Min/Max Items",
+        input: listWithDetailsRestrict
     },
     {
         title: "List With Details And Reorder",

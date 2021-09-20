@@ -3,7 +3,7 @@
     <v-card-title>
       <v-toolbar flat :class="styles.arrayList.toolbar">
         <v-toolbar-title :class="styles.arrayList.label">{{
-          control.label
+          computedLabel
         }}</v-toolbar-title>
         <validation-icon
           v-if="control.childErrors.length > 0"
@@ -21,6 +21,12 @@
               :aria-label="`Add to ${control.label}`"
               v-on="onTooltip"
               :class="styles.arrayList.addButton"
+              :disabled="
+                !control.enabled ||
+                (appliedOptions.restrict &&
+                  arraySchema.maxItems !== undefined &&
+                  control.data.length >= arraySchema.maxItems)
+              "
               @click="addButtonClick"
             >
               <v-icon>mdi-plus</v-icon>
@@ -74,7 +80,7 @@
                             small
                             class="v-expansion-panel-header__icon"
                             aria-label="Move up"
-                            :disabled="index <= 0"
+                            :disabled="index <= 0 || !control.enabled"
                             :class="styles.arrayList.itemMoveUp"
                             @click.native="moveUpClick($event, index)"
                           >
@@ -94,7 +100,10 @@
                             small
                             class="v-expansion-panel-header__icon"
                             aria-label="Move down"
-                            :disabled="index >= control.data.length - 1"
+                            :disabled="
+                              index >= control.data.length - 1 ||
+                              !control.enabled
+                            "
                             :class="styles.arrayList.itemMoveDown"
                             @click.native="moveDownClick($event, index)"
                           >
@@ -114,6 +123,12 @@
                             class="v-expansion-panel-header__icon"
                             aria-label="Delete"
                             :class="styles.arrayList.itemDelete"
+                            :disabled="
+                              !control.enabled ||
+                              (appliedOptions.restrict &&
+                                arraySchema.minItems !== undefined &&
+                                control.data.length <= arraySchema.minItems)
+                            "
                             @click.native="removeItemsClick($event, [index])"
                           >
                             <v-icon class="notranslate">mdi-delete</v-icon>
@@ -154,6 +169,8 @@ import {
   isObjectArrayWithNesting,
   composePaths,
   createDefaultValue,
+  Resolve,
+  JsonSchema,
 } from "@jsonforms/core";
 import { defineComponent } from "../../config/vue";
 import {
@@ -217,6 +234,14 @@ const controlRenderer = defineComponent({
   computed: {
     noData(): boolean {
       return !this.control.data || this.control.data.length === 0;
+    },
+    //TODO: check is that is the appropate way to get the array schema, possibly it would be better for the core to have a property that exports that schema
+    arraySchema(): JsonSchema {
+      return Resolve.schema(
+        this.control.rootSchema,
+        this.control.uischema.scope,
+        this.control.rootSchema
+      );
     },
   },
   methods: {

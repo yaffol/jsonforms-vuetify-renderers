@@ -8,7 +8,7 @@
       <v-col class="pa-0">
         <v-toolbar flat :class="styles.arrayList.toolbar">
           <v-toolbar-title :class="styles.arrayList.label">{{
-            control.label
+            computedLabel
           }}</v-toolbar-title>
           <validation-icon
             v-if="control.childErrors.length > 0"
@@ -27,6 +27,12 @@
                 v-on="onTooltip"
                 :class="styles.arrayList.addButton"
                 @click="addButtonClick"
+                :disabled="
+                  !control.enabled ||
+                  (appliedOptions.restrict &&
+                    arraySchema.maxItems !== undefined &&
+                    control.data.length >= arraySchema.maxItems)
+                "
               >
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
@@ -98,7 +104,7 @@
                         small
                         class="ma-0"
                         aria-label="Move up"
-                        :disabled="index <= 0"
+                        :disabled="index <= 0 || !control.enabled"
                         :class="styles.arrayList.itemMoveUp"
                         @click.native="moveUpClick($event, index)"
                       >
@@ -119,7 +125,9 @@
                         small
                         class="ma-0"
                         aria-label="Move down"
-                        :disabled="index >= control.data.length - 1"
+                        :disabled="
+                          index >= control.data.length - 1 || !control.enabled
+                        "
                         :class="styles.arrayList.itemMoveDown"
                         @click.native="moveDownClick($event, index)"
                       >
@@ -142,6 +150,12 @@
                         aria-label="Delete"
                         :class="styles.arrayList.itemDelete"
                         @click.native="removeItemsClick($event, [index])"
+                        :disabled="
+                          !control.enabled ||
+                          (appliedOptions.restrict &&
+                            arraySchema.minItems !== undefined &&
+                            control.data.length <= arraySchema.minItems)
+                        "
                       >
                         <v-icon class="notranslate">mdi-delete</v-icon>
                       </v-btn>
@@ -183,6 +197,8 @@ import {
   isObjectArray,
   findUISchema,
   UISchemaElement,
+  Resolve,
+  JsonSchema,
 } from "@jsonforms/core";
 import { defineComponent, ref } from "../../config/vue";
 import {
@@ -267,6 +283,14 @@ const controlRenderer = defineComponent({
         this.control.path,
         undefined,
         this.control.uischema
+      );
+    },
+    //TODO: check is that is the appropate way to get the array schema, possibly it would be better for the core to have a property that exports that schema
+    arraySchema(): JsonSchema {
+      return Resolve.schema(
+        this.control.rootSchema,
+        this.control.uischema.scope,
+        this.control.rootSchema
       );
     },
   },

@@ -1,6 +1,12 @@
 <template>
   <v-app>
-    <v-navigation-drawer app clipped :clipped-left="!$vuetify.rtl" :clipped-right="$vuetify.rtl" :right="$vuetify.rtl">
+    <v-navigation-drawer
+      app
+      clipped
+      :clipped-left="!$vuetify.rtl"
+      :clipped-right="$vuetify.rtl"
+      :right="$vuetify.rtl"
+    >
       <v-list-item>
         <v-list-item-icon>
           <v-img src="./assets/vuetify.svg" max-height="64" max-width="64" />
@@ -50,7 +56,21 @@
             <v-col
               ><settings
                 :validationMode="validationMode"
-                @validation-change="onValidationChange"
+                :hideRequiredAsterisk="config.hideRequiredAsterisk"
+                :showUnfocusedDescription="config.showUnfocusedDescription"
+                :restrict="config.restrict"
+                :readonly="readonly"
+                @validation-changed="
+                  (validation) => (this.validationMode = validation)
+                "
+                @hide-required-asterisk-changed="
+                  (value) => (this.config.hideRequiredAsterisk = value)
+                "
+                @show-unfocused-description-changed="
+                  (value) => (this.config.showUnfocusedDescription = value)
+                "
+                @readonly-changed="(value) => (this.readonly = value)"
+                @restrict-changed="(value) => (this.config.restrict = value)"
               />
             </v-col>
             <v-col><theme-changer /> </v-col>
@@ -211,7 +231,10 @@ export default defineComponent({
       cells: renderers,
       handleDefaultsAjv: ajv,
       config: {
-        hideRequiredAsterisk: false,
+        restrict: true,
+        trim: false,
+        showUnfocusedDescription: false,
+        hideRequiredAsterisk: true,
       },
       selectedExample,
       data,

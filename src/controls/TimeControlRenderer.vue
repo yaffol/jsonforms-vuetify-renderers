@@ -13,12 +13,11 @@
       :disabled="!control.enabled"
       :autofocus="appliedOptions.focus"
       :placeholder="appliedOptions.placeholder"
-      :label="control.label"
+      :label="computedLabel"
       :hint="control.description"
       :persistent-hint="persistentHint()"
       :required="control.required"
       :error-messages="control.errors"
-      :readonly="appliedOptions.readonly"
 
       v-model="control.data"
 

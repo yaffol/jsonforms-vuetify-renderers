@@ -13,12 +13,11 @@
         :disabled="!control.enabled"
         :autofocus="appliedOptions.focus"
         :placeholder="appliedOptions.placeholder"
-        :label="control.label"
+        :label="computedLabel"
         :hint="control.description"
         :persistent-hint="persistentHint()"
         :required="control.required"
         :error-messages="control.errors"
-        :readonly="appliedOptions.readonly"
         v-model="control.data"
         :maxlength="
           appliedOptions.restrict ? control.schema.maxLength : undefined
@@ -35,7 +34,6 @@
       />
     </v-hover>
   </control-wrapper>
-  <!--         :full-width="!appliedOptions.trim || control.schema.maxLength === undefined" -->
 </template>
 
 <script lang="ts">

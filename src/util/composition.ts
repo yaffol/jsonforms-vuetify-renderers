@@ -1,7 +1,7 @@
 import {
   composePaths,
   findUISchema,
-  getFirstPrimitiveProp, isDescriptionHidden, Resolve
+  getFirstPrimitiveProp, isDescriptionHidden, Resolve, computeLabel
 } from '@jsonforms/core';
 import cloneDeep from 'lodash/cloneDeep';
 import merge from 'lodash/merge';
@@ -23,18 +23,12 @@ export const useVuetifyControl = <
       {},
       cloneDeep(input.control.value.config),
       cloneDeep(input.control.value.uischema.options)
-    )
-  );
+    ));
 
   const isFocused = ref(false);
   const onChange = (value: any) => {
     input.handleChange(input.control.value.path, adaptValue(value));
   };
-  /*
-  const onChange = (event: Event) => {
-    input.handleChange(input.control.value.path, adaptTarget(event.target));
-  };
-*/
 
   const persistentHint = (): boolean => {
     return !isDescriptionHidden(
@@ -45,16 +39,13 @@ export const useVuetifyControl = <
     );
   };
 
-  
-  /*
-  const finalLabel = computed((): string => {
+  const computedLabel = computed((): string => {
     return computeLabel(
       input.control.value.label,
       input.control.value.required,
       !!appliedOptions.value?.hideRequiredAsterisk
     );
   });
-  */
 
   const controlWrapper = computed(() => {
     const {
@@ -65,11 +56,10 @@ export const useVuetifyControl = <
       visible,
       required
     } = input.control.value;
-    return { id, description, errors, label, visible, required};
+    return { id, description, errors, label, visible, required };
   });
 
   const styles = useStyles(input.control.value.uischema);
-
 
   return {
     ...input,
@@ -78,9 +68,8 @@ export const useVuetifyControl = <
     appliedOptions,
     controlWrapper,
     onChange,
-
     persistentHint,
-    //onChangeValue
+    computedLabel
   };
 };
 
@@ -108,13 +97,11 @@ export const useVuetifyLayout = <I extends { layout: any }>(input: I) => {
 export const useVuetifyArrayControl = <I extends { control: any }>(
   input: I
 ) => {
-  const appliedOptions = computed(() =>
-    merge(
-      {},
-      cloneDeep(input.control.value.config),
-      cloneDeep(input.control.value.uischema.options)
-    )
-  );
+  const appliedOptions = computed(() => merge(
+    {},
+    cloneDeep(input.control.value.config),
+    cloneDeep(input.control.value.uischema.options)
+  ));
 
   const childUiSchema = computed(() =>
     findUISchema(
@@ -124,6 +111,14 @@ export const useVuetifyArrayControl = <I extends { control: any }>(
       input.control.value.path
     )
   );
+
+  const computedLabel = computed((): string => {
+    return computeLabel(
+      input.control.value.label,
+      input.control.value.required,
+      !!appliedOptions.value?.hideRequiredAsterisk
+    );
+  });
 
   const childLabelForIndex = (index: number) => {
     const childLabelProp =
@@ -146,7 +141,8 @@ export const useVuetifyArrayControl = <I extends { control: any }>(
     styles: useStyles(input.control.value.uischema),
     appliedOptions,
     childUiSchema,
-    childLabelForIndex
+    childLabelForIndex,
+    computedLabel
   };
 };
 
@@ -154,16 +150,14 @@ export const useVuetifyArrayControl = <I extends { control: any }>(
 /**
  * Adds styles, appliedOptions and childUiSchema
  */
- export const useVuetifyMultiEnumControl = <I extends { control: any }>(
+export const useVuetifyMultiEnumControl = <I extends { control: any }>(
   input: I
 ) => {
-  const appliedOptions = computed(() =>
-    merge(
-      {},
-      cloneDeep(input.control.value.config),
-      cloneDeep(input.control.value.uischema.options)
-    )
-  );
+  const appliedOptions = computed(() => merge(
+    {},
+    cloneDeep(input.control.value.config),
+    cloneDeep(input.control.value.uischema.options)
+  ));
 
   const childUiSchema = computed(() =>
     findUISchema(

@@ -8,8 +8,9 @@
           :id="control.id + `-input-${index}`"
           :path="composePaths(control.path, `${index}`)"
           :error-messages="control.errors"
-          :readonly="appliedOptions.readonly"
+          :disabled="!control.enabled"
           multiple
+          :indeterminate="control.data === undefined"
           v-model="control.data"
           @change="onChange"
         ></v-checkbox>

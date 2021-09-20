@@ -47,7 +47,14 @@
 
           <v-btn text @click="cancel"> No </v-btn>
 
-          <v-btn text ref="confirm" @click="confirm"> Yes </v-btn>
+          <v-btn
+            text
+            ref="confirm"
+            @click="confirm"
+            :disabled="!control.enabled"
+          >
+            Yes
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
