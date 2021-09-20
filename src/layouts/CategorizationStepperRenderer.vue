@@ -43,22 +43,21 @@
               <v-card-actions>
                 <v-btn
                   text
+                  left
+                  :disabled="activeCategory - 1 <= 0"
+                  @click="activeCategory--"
+                >
+                  Back
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                  text
                   right
                   color="primary"
                   :disabled="activeCategory - 1 >= visibleCategories.length - 1"
                   @click="activeCategory++"
                 >
                   Next
-                </v-btn>
-
-                <v-btn
-                  text
-                  left
-                  color="secondary"
-                  :disabled="activeCategory - 1 <= 0"
-                  @click="activeCategory--"
-                >
-                  Previous
                 </v-btn>
               </v-card-actions>
             </div>
