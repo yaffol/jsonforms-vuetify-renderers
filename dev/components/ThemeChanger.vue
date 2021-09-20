@@ -15,26 +15,18 @@
         Theme Colors
       </v-tooltip>
     </template>
+    <v-toolbar flat>
+      <v-toolbar-title>Theme Colors</v-toolbar-title>
+      <v-spacer />
+      <v-toolbar-items>
+        <v-btn icon @click="menu = false">
+          <v-icon>$close</v-icon>
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+
+    <v-divider />
     <v-card>
-      <v-list-item>
-        <v-list-item-content
-          ><v-list-item-title class="font-weight-bold">
-            Dark Mode</v-list-item-title
-          >
-        </v-list-item-content>
-        <v-list-item-action
-          ><v-switch v-model="$vuetify.theme.dark" />
-        </v-list-item-action>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content
-          ><v-list-item-title class="font-weight-bold"> RTL</v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-action
-          ><v-switch v-model="$vuetify.rtl" />
-        </v-list-item-action>
-      </v-list-item>
-      <v-divider />
       <v-card-text>
         <v-card
           class="my-2"
@@ -85,11 +77,6 @@
           </div>
         </v-card>
       </v-card-text>
-      <v-divider />
-      <v-card-actions>
-        <v-btn text @click="menu = false" color="grey">Close</v-btn>
-        <v-spacer />
-      </v-card-actions>
     </v-card>
   </v-menu>
 </template>

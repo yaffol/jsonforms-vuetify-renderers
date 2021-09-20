@@ -2,7 +2,13 @@
   <div>
     <v-tooltip bottom>
       <template v-slot:activator="{ on: onTooltip }">
-        <v-btn large icon dark @click.stop="settings = !settings" v-on="onTooltip">
+        <v-btn
+          large
+          icon
+          dark
+          @click.stop="settings = !settings"
+          v-on="onTooltip"
+        >
           <v-icon size="30" color="primary">mdi-cog</v-icon>
         </v-btn>
       </template>
@@ -25,11 +31,76 @@
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
+
       <v-divider />
+
       <v-container>
-        <v-row dense>
+        <v-row><v-col>Theme</v-col></v-row>
+        <v-row>
+          <v-col>
+            <v-btn-toggle
+              v-model="$vuetify.theme.dark"
+              borderless
+              mandatory
+              group
+              color="primary"
+              style="display: grid; grid-template-columns: 1fr 1fr"
+            >
+              <v-btn :value="false">
+                <span class="hidden-sm-and-down">Light</span>
+
+                <v-icon right> mdi-weather-sunny </v-icon>
+              </v-btn>
+
+              <v-btn :value="true">
+                <span class="hidden-sm-and-down">Dark</span>
+
+                <v-icon right> mdi-weather-night </v-icon>
+              </v-btn>
+            </v-btn-toggle>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-divider />
+
+      <v-container>
+        <v-row><v-col>Direction</v-col></v-row>
+        <v-row>
+          <v-col>
+            <v-btn-toggle
+              v-model="$vuetify.rtl"
+              borderless
+              mandatory
+              group
+              color="primary"
+              style="display: grid; grid-template-columns: 1fr 1fr"
+            >
+              <v-btn :value="false">
+                <span class="hidden-sm-and-down">LTR</span>
+
+                <v-icon right> mdi-format-textdirection-l-to-r</v-icon>
+              </v-btn>
+
+              <v-btn :value="true">
+                <span class="hidden-sm-and-down">RTL</span>
+
+                <v-icon right> mdi-format-textdirection-r-to-l </v-icon>
+              </v-btn>
+            </v-btn-toggle>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-divider />
+
+      <v-container>
+        <v-row><v-col>Validation</v-col></v-row>
+        <v-row>
           <v-col>
             <v-select
+              outlined
+              persistent-hint
               dense
               v-model="validation"
               :items="validationModes"
@@ -38,6 +109,8 @@
           </v-col>
         </v-row>
       </v-container>
+
+      <v-divider />
     </v-navigation-drawer>
   </div>
 </template>

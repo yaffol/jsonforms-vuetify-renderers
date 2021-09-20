@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app clipped>
+    <v-navigation-drawer app clipped :clipped-left="!$vuetify.rtl" :clipped-right="$vuetify.rtl" :right="$vuetify.rtl">
       <v-list-item>
         <v-list-item-icon>
           <v-img src="./assets/vuetify.svg" max-height="64" max-width="64" />
