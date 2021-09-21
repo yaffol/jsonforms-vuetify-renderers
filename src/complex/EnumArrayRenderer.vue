@@ -48,6 +48,7 @@ import {
 import { defineComponent, inject } from "../../config/vue";
 import { useVuetifyMultiEnumControl } from "../util";
 
+//TODO: move into JsonForm Vue project under src/components/jsonFormsCompositions.ts
 const useJsonFormsMultiEnumControl = (props: ControlProps) => {
   return useControl(
     props,
