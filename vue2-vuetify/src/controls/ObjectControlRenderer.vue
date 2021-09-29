@@ -1,7 +1,17 @@
 <template>
-  <v-card elevation="2">
+  <v-card :elevation="nesting">
+    <v-card-title>
+      {{ control.label }}
+      <v-tooltip right>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon v-bind="attrs" v-on="on" class="ml-2"
+            >mdi-information-outline</v-icon
+          >
+        </template>
+        <span>{{ control.description }}</span>
+      </v-tooltip>
+    </v-card-title>
     <v-card-text>
-      this is the object elevated renderer
       <dispatch-renderer
         :schema="control.schema"
         :uischema="detailUiSchema"
@@ -31,7 +41,7 @@ import {
   DispatchRenderer,
 } from '@jsonforms/vue2';
 import { defineComponent } from '@vue/composition-api';
-import { VCard, VCardText } from 'vuetify/lib';
+import { VCard, VCardText, VCardTitle, VTooltip, VIcon } from 'vuetify/lib';
 
 const controlRenderer = defineComponent({
   name: 'object-renderer',
@@ -39,12 +49,18 @@ const controlRenderer = defineComponent({
     DispatchRenderer,
     VCard,
     VCardText,
+    VCardTitle,
+    VTooltip,
+    VIcon,
   },
   props: {
     ...rendererProps(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useJsonFormsControlWithDetail(props);
+    const p = useJsonFormsControlWithDetail(props);
+    const control: any = p.control;
+    const nesting = control.value.path.split('.').length - 1 > 0 ? 0 : 1;
+    return { nesting, ...p };
   },
   computed: {
     detailUiSchema(): UISchemaElement {
