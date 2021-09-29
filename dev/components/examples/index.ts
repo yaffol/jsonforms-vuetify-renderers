@@ -36,6 +36,9 @@ import { input as rule } from './rule';
 import { input as verticalLayout } from './vertical-layout';
 import { input as huge } from './huge';
 import { input as ifThenElse } from './if-then-else';
+import { input as crossrefGrantSchema } from './crosssrefGrantSchema'
+import { input as crossrefArticleSchema } from './crosssrefArticleSchema'
+import { input as rorSchema } from './rorSchema'
 
 export const examples = [
     {
@@ -57,15 +60,15 @@ export const examples = [
     {
         title: "Enum",
         input: enumExample
-    },    
+    },
     {
         title: "Enum In Array",
         input: enumInArray
-    },    
+    },
     {
         title: "Multi Enum",
         input: multiEnum
-    },    
+    },
     {
         title: "Categorization",
         input: categorization
@@ -77,6 +80,18 @@ export const examples = [
     {
         title: "Categorization Stepper With Navigation",
         input: categorizationStepperNav
+    },
+    {
+        title: "Crossref Grant Schema",
+        input: crossrefGrantSchema
+    },
+    {
+        title: "Crossref Article Schema",
+        input: crossrefArticleSchema
+    },
+    {
+        title: "ROR Schema",
+        input: rorSchema
     },
     {
         title: "Horizontal Layout",
