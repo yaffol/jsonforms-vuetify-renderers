@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main :style="{ background: $vuetify.theme.themes[theme].background }">
       <v-container>
         <v-row>
           <v-col cols="12">
@@ -44,6 +44,11 @@ export default Vue.extend({
   name: 'App',
   components: {
     JsonFormsDemo,
+  },
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? 'dark' : 'light';
+    },
   },
 });
 </script>
