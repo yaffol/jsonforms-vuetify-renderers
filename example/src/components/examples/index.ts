@@ -10,6 +10,7 @@ import { input as categorizationStepper } from './categorization-stepper';
 import { input as categorizationStepperNav } from './categorization-stepper-nav';
 import { input as control } from './control';
 import { input as controlOptions } from './control-options';
+import { input as crossrefGrantSchema } from './crosssrefGrantSchema';
 import { input as enumExample } from './enum';
 import { input as enumInArray } from './enum-in-array';
 import { input as groupLayout } from './group-layout';
@@ -38,6 +39,10 @@ import { input as huge } from './huge';
 import { input as ifThenElse } from './if-then-else';
 
 export const examples = [
+  {
+    title: "Crossref Grant Schema",
+    input: crossrefGrantSchema
+  },
   {
     title: 'Main',
     input: main,
