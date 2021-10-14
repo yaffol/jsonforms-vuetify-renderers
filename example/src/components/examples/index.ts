@@ -11,6 +11,7 @@ import { input as categorizationStepperNav } from './categorization-stepper-nav'
 import { input as control } from './control';
 import { input as controlOptions } from './control-options';
 import { input as crossrefGrantSchema } from './crosssrefGrantSchema';
+import { input as rorSchema } from './rorSchema';
 import { input as enumExample } from './enum';
 import { input as enumInArray } from './enum-in-array';
 import { input as groupLayout } from './group-layout';
@@ -42,6 +43,10 @@ export const examples = [
   {
     title: "Crossref Grant Schema",
     input: crossrefGrantSchema
+  },
+  {
+    title: "ROR Schema",
+    input: rorSchema
   },
   {
     title: 'Main',

@@ -15,6 +15,7 @@ export { default as RadioGroupControlRenderer } from './RadioGroupControlRendere
 export { default as SliderControlRenderer } from './SliderControlRenderer.vue';
 export { default as StringControlRenderer } from './StringControlRenderer.vue';
 export { default as TimeControlRenderer } from './TimeControlRenderer.vue';
+export { default as GeoNamesLookupRenderer } from './GeoNamesLookupRenderer.vue';
 
 import { entry as anyOfStringOrEnumControlRendererEntry } from './AnyOfStringOrEnumControlRenderer.vue';
 import { entry as booleanControlRendererEntry } from './BooleanControlRenderer.vue';
@@ -32,6 +33,7 @@ import { entry as radioGroupControlRendererEntry } from './RadioGroupControlRend
 import { entry as sliderControlRendererEntry } from './SliderControlRenderer.vue';
 import { entry as stringControlRendererEntry } from './StringControlRenderer.vue';
 import { entry as timeControlRendererEntry } from './TimeControlRenderer.vue';
+import { entry as geoNamesLookupRenderer } from './GeoNamesLookupRenderer.vue';
 
 export const controlRenderers = [
   anyOfStringOrEnumControlRendererEntry,
@@ -50,4 +52,5 @@ export const controlRenderers = [
   sliderControlRendererEntry,
   stringControlRendererEntry,
   timeControlRendererEntry,
+  geoNamesLookupRenderer
 ];
