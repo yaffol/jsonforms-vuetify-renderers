@@ -1,6 +1,6 @@
 {
   "name": "@yaffol/vue2-vuetify",
-  "version": "3.0.0-beta.2-cr-1",
+  "version": "3.0.0-beta.2-cr-2",
   "description": "Vue 2 Vuetify renderers for JSON Forms",
   "repository": "https://github.com/eclipsesource/jsonforms-vuetify-renderers",
   "bugs": "https://github.com/eclipsesource/jsonforms/issues",
