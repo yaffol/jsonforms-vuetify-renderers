@@ -1,6 +1,6 @@
 # JSON Forms Vuetify renderers
 
-This is a monorepo containing the JSON Forms Vue 2 Vuetify renderers and an example application.
+This is a fork of the monorepo containing the JSON Forms Vue 2 Vuetify renderers and an example application.
 
 See [jsonforms-vuetify-renderers.netlify.app](https://jsonforms-vuetify-renderers.netlify.app) for the deployed example application.
 
