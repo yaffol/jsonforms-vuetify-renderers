@@ -9,7 +9,6 @@
       <h4>Blur Count: {{ blurCounter }}</h4>
       <h4>Touched: {{ touched }}</h4>
       <h4>Filtered Errors: {{ filteredErrors }}</h4>
-      <h4>Show All Errors: {{ showAllErrors }}</h4>
       <h4>Error Filtering Mode: {{ errorFilteringMode }}</h4>
       <h4>Is Required Message: {{ isRequiredMessage }}</h4>
     </div>
@@ -112,7 +111,6 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    const showAllErrors = inject('showAllErrors', ref(false));
     const errorFilteringMode = inject('errorFilteringMode', ref(ErrorFilteringMode.NoFiltering));
     const isRequiredMessage = inject('isRequiredMessage', ref(null));
     const isDevMode = process.env.NODE_ENV === 'development'
@@ -121,18 +119,6 @@ const controlRenderer = defineComponent({
       (value) => value || undefined,
       300
     );
-    // const blurCounter = ref(0)
-    // const onBlur = () => {
-    //   vControl.isFocused.value = false;
-    //   blurCounter.value = blurCounter.value + 1
-    // }
-    // // const filteredErrors = (vControl.control.value.errors ?? []).filter(error => error.keyword !== 'required')
-    // const touched = computed(() => blurCounter.value > 0);
-    // const filteredErrors = computed(() => {
-    //   if (touched.value) return vControl.control.value.errors
-    //   if (vControl.control.value.errors === 'is required') return ""
-    //   return vControl.control.value.errors
-    // })
 
     const { blurCounter, onFieldBlur, touched, getFilteredErrors } = useFieldInteraction();
 
@@ -147,7 +133,6 @@ const controlRenderer = defineComponent({
       blurCounter,
       touched,
       isDevMode,
-      showAllErrors,
       errorFilteringMode,
       isRequiredMessage
     }
