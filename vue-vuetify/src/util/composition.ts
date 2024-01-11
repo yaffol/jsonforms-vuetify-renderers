@@ -275,3 +275,30 @@ export const useNested = (element: false | 'array' | 'object'): NestedInfo => {
   }
   return nestedInfo;
 };
+
+export const useFieldInteraction = (initialValue = 0) => {
+  const blurCounter = ref(initialValue);
+  const onFieldBlur = () => {
+    blurCounter.value++;
+  };
+
+  const touched = computed(() => blurCounter.value > 0);
+  const getFilteredErrors =(errors: string) => {
+    debugger
+    if (touched.value) return errors
+    if (errors === 'is required') return ""
+    return errors
+  }
+
+  // const getFilteredErrors = (errors: any[], excludeKeyword = 'required') => {
+  //   if (!touched.value) return [];
+  //   return (errors ?? []).filter(error => error.keyword !== excludeKeyword);
+  // };
+
+  return {
+    blurCounter,
+    onFieldBlur,
+    touched,
+    getFilteredErrors
+  };
+}

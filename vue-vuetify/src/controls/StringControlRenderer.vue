@@ -64,7 +64,7 @@
         v-bind="vuetifyProps('v-text-field')"
         @update:model-value="onChange"
         @focus="isFocused = true"
-        @blur="onBlur"
+        @blur="onFieldBlur"
       />
     </v-hover>
   </control-wrapper>
@@ -89,7 +89,7 @@ import { VHover, VTextField, VCombobox } from 'vuetify/components';
 import { DisabledIconFocus } from './directives';
 import isArray from 'lodash/isArray';
 import every from 'lodash/every';
-import isString from 'lodash/isString';
+import { useFieldInteraction } from "../util";
 
 const controlRenderer = defineComponent({
   name: 'string-control-renderer',
@@ -111,23 +111,29 @@ const controlRenderer = defineComponent({
       (value) => value || undefined,
       300
     );
-    const blurCounter = ref(0)
-    const onBlur = () => {
-      vControl.isFocused.value = false;
-      blurCounter.value = blurCounter.value + 1
-    }
-    // const filteredErrors = (vControl.control.value.errors ?? []).filter(error => error.keyword !== 'required')
-    const touched = computed(() => blurCounter.value > 0);
+    // const blurCounter = ref(0)
+    // const onBlur = () => {
+    //   vControl.isFocused.value = false;
+    //   blurCounter.value = blurCounter.value + 1
+    // }
+    // // const filteredErrors = (vControl.control.value.errors ?? []).filter(error => error.keyword !== 'required')
+    // const touched = computed(() => blurCounter.value > 0);
+    // const filteredErrors = computed(() => {
+    //   if (touched.value) return vControl.control.value.errors
+    //   if (vControl.control.value.errors === 'is required') return ""
+    //   return vControl.control.value.errors
+    // })
+
+    const { blurCounter, onFieldBlur, touched, getFilteredErrors } = useFieldInteraction();
+
     const filteredErrors = computed(() => {
-      if (touched.value) return vControl.control.value.errors
-      if (vControl.control.value.errors === 'is required') return ""
-      return vControl.control.value.errors
-    })
+      return getFilteredErrors(vControl.control.value.errors);
+    });
 
     return {
       ...vControl,
       filteredErrors,
-      onBlur,
+      onFieldBlur,
       blurCounter,
       touched
     }
