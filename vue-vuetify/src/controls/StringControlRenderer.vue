@@ -5,9 +5,14 @@
     :isFocused="isFocused"
     :appliedOptions="appliedOptions"
   >
-    <h4>Blur Count: {{ blurCounter }}</h4>
-    <h4>Touched: {{ touched }}</h4>
-    <h4>Filtered Errors: {{ filteredErrors }}</h4>
+    <div v-if="isDevMode">
+      <h4>Blur Count: {{ blurCounter }}</h4>
+      <h4>Touched: {{ touched }}</h4>
+      <h4>Filtered Errors: {{ filteredErrors }}</h4>
+      <h4>Show All Errors: {{ showAllErrors }}</h4>
+      <h4>Error Filtering Mode: {{ errorFilteringMode }}</h4>
+      <h4>Is Required Message: {{ isRequiredMessage }}</h4>
+    </div>
     <v-hover v-slot="{ isHovering }">
       <v-combobox
         v-if="suggestions !== undefined"
@@ -77,7 +82,7 @@ import {
   rankWith,
   isStringControl,
 } from '@jsonforms/core';
-import {computed, defineComponent, ref} from 'vue';
+import {computed, defineComponent, inject, ref} from 'vue';
 import {
   rendererProps,
   useJsonFormsControl,
@@ -89,7 +94,8 @@ import { VHover, VTextField, VCombobox } from 'vuetify/components';
 import { DisabledIconFocus } from './directives';
 import isArray from 'lodash/isArray';
 import every from 'lodash/every';
-import { useFieldInteraction } from "../util";
+import isString from 'lodash/isString';
+import { useFieldInteraction, ErrorFilteringMode } from "../util";
 
 const controlRenderer = defineComponent({
   name: 'string-control-renderer',
@@ -106,6 +112,10 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
+    const showAllErrors = inject('showAllErrors', ref(false));
+    const errorFilteringMode = inject('errorFilteringMode', ref(ErrorFilteringMode.NoFiltering));
+    const isRequiredMessage = inject('isRequiredMessage', ref(null));
+    const isDevMode = process.env.NODE_ENV === 'development'
     const vControl = useVuetifyControl(
       useJsonFormsControl(props),
       (value) => value || undefined,
@@ -127,7 +137,7 @@ const controlRenderer = defineComponent({
     const { blurCounter, onFieldBlur, touched, getFilteredErrors } = useFieldInteraction();
 
     const filteredErrors = computed(() => {
-      return getFilteredErrors(vControl.control.value.errors);
+      return getFilteredErrors(vControl.control.value.errors, errorFilteringMode.value, isRequiredMessage.value);
     });
 
     return {
@@ -135,7 +145,11 @@ const controlRenderer = defineComponent({
       filteredErrors,
       onFieldBlur,
       blurCounter,
-      touched
+      touched,
+      isDevMode,
+      showAllErrors,
+      errorFilteringMode,
+      isRequiredMessage
     }
   },
   computed: {

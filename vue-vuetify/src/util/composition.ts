@@ -283,10 +283,9 @@ export const useFieldInteraction = (initialValue = 0) => {
   };
 
   const touched = computed(() => blurCounter.value > 0);
-  const getFilteredErrors =(errors: string) => {
-    debugger
-    if (touched.value) return errors
-    if (errors === 'is required') return ""
+  const getFilteredErrors =(errors: string, errorFilteringMode: ErrorFilteringMode = ErrorFilteringMode.NoFiltering, isRequiredMessage: String | null = 'is required') => {
+    if (errorFilteringMode === ErrorFilteringMode.NoFiltering || touched.value) return errors
+    if (errorFilteringMode === ErrorFilteringMode.FilterRequired && errors === isRequiredMessage) return ""
     return errors
   }
 
@@ -302,3 +301,9 @@ export const useFieldInteraction = (initialValue = 0) => {
     getFilteredErrors
   };
 }
+
+export enum ErrorFilteringMode {
+  FilterRequired = 'FilterRequired',
+  NoFiltering = 'NoFiltering'
+}
+
